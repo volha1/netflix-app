@@ -4,7 +4,7 @@ const { merge } = require('webpack-merge');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const baseConfig = {
-  entry: './src/index.jsx',
+  entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js',
@@ -18,19 +18,33 @@ const baseConfig = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(png|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/images/[name][ext][query]',
+        },
+      },
+      {
+        test: /\.(svg)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/svg/[name][ext][query]',
+        },
+      },
+      {
+        test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
           },
         },
       },
     ],
   },
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
 };
 
