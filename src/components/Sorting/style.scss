@@ -1,0 +1,22 @@
+@import '../../common/scss/base.scss';
+
+.sorting {
+  display: flex;
+  text-transform: uppercase;
+
+  label {
+    margin-right: 30px;
+    opacity: 0.6;
+    letter-spacing: 1px;
+  }
+
+  select {
+    background-color: $black;
+    border: none;
+    text-transform: uppercase;
+
+    option {
+      border: none;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+@import '../../common/scss/base.scss';
+
+.header {
+  height: 360px;
+  background-image: url('../../common/assets/images/header_bg.png');
+  background-color: rgba(0, 0, 0, 0.9);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  padding: 20px 0px;
+  border-bottom: 10px solid $gray;
+}

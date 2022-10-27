@@ -1,3 +1,33 @@
-h1 {
-  color: green;
+@import 'common/scss/base';
+
+html {
+  font-family: 'Montserrat', sans-serif;
+  background-color: $black;
+  color: $white;
+}
+
+button {
+  border-radius: 5px;
+  border: none;
+  box-sizing: border-box;
+  text-transform: uppercase;
+  color: $white;
+  transition: all 0.3s ease;
+}
+
+input {
+  border-radius: 5px;
+  border: none;
+}
+
+a {
+  transition: all 0.3s ease;
+}
+
+.logo {
+  color: $red;
+
+  span {
+    font-weight: 900;
+  }
 }

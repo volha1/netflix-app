@@ -1,0 +1,19 @@
+@import '../../common/scss/base.scss';
+
+.genres-list {
+  display: flex;
+}
+
+.genres-list a {
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: $white;
+  margin-right: 30px;
+  letter-spacing: 1px;
+
+  &.active,
+  &:hover {
+    color: $red;
+  }
+}

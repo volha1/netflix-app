@@ -1,0 +1,37 @@
+@import '../../common/scss/base.scss';
+
+.search-bar {
+  width: 90%;
+  margin: 0 auto;
+
+  .title {
+    font-size: 40px;
+    font-weight: 300;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .search-field {
+    box-sizing: border-box;
+    width: 700px;
+    height: 57px;
+    padding: 0px 10px;
+    margin-right: 10px;
+    background-color: rgba(32, 32, 32, 0.8);
+  }
+
+  ::placeholder {
+    color: $white;
+    opacity: 0.3;
+  }
+
+  .search-btn {
+    background-color: $red;
+    width: 200px;
+    height: 57px;
+
+    &:hover {
+      background-color: $dark-red;
+    }
+  }
+}

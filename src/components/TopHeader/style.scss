@@ -1,0 +1,19 @@
+@import '../../common/scss/base.scss';
+
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.add-btn {
+  width: 177px;
+  height: 46px;
+  font-weight: 600;
+  color: $red;
+  background-color: rgba(85, 85, 85, 0.7);
+
+  &:hover {
+    background-color: rgba(85, 85, 85, 1);
+  }
+}
