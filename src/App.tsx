@@ -1,8 +1,8 @@
-import React from 'react';
-import Main from './pages/Main';
+import React, { ReactElement } from 'react';
+import Main from './pages/index';
 
-const App = () => {
+const App = (): ReactElement => {
   return <Main />;
-}
+};
 
 export default App;

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import SearchBar from '../SearchBar';
 import TopHeader from '../TopHeader';
 import './style.scss';
 
-const Header = () => {
+const Header = (): ReactElement => {
   return (
     <div className="header">
       <div className="content">

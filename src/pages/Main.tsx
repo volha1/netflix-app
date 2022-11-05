@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import ErrorBoundary from '../components/ErrorBoundary';
+import ErrorBoundary from '../components/ErrorBoundary/index';
 import Filter from '../components/Filter';
 import Footer from '../components/Footer';
 import Header from '../components/Header';

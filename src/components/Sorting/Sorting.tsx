@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import './style.scss';
 
-const Sorting = () => {
+const Sorting = (): ReactElement => {
   return (
     <div className="sorting">
       <label htmlFor="params" className="sorting-label">

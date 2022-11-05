@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import './style.scss';
 
-const SearchBar = () => {
+const SearchBar = (): ReactElement => {
   return (
     <div className="search-bar">
       <h1 className="title">Find your movie</h1>
-      <input className="search-field" placeholder="What do you want to watch?"/>
+      <input className="search-field" placeholder="What do you want to watch?" />
       <button type="button" className="btn search-btn">
         Search
       </button>
