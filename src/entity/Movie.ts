@@ -1,5 +1,5 @@
 type Movie = {
-  readonly id: number;
+  readonly id: string;
   readonly title: string;
   readonly year: string;
   readonly imgPath: string;

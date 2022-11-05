@@ -3,13 +3,15 @@ import GenreFilter from '../GenreFilter';
 import Sorting from '../Sorting';
 import './style.scss';
 
-const Filter = (): ReactElement => {
-  return (
-    <div className="filter content">
-      <GenreFilter />
-      <Sorting />
-    </div>
-  );
+type FilterProps = {
+  setSort: () => void;
 };
+
+const Filter = ({ setSort }: FilterProps): ReactElement => (
+  <div className="filter content">
+    <GenreFilter />
+    <Sorting setSort={setSort} />
+  </div>
+);
 
 export default Filter;

@@ -1,0 +1,23 @@
+@import '../../common/scss/base.scss';
+
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: none;
+  background: rgba(23, 23, 23, 0.5);
+  z-index: 10;
+}
+
+.modal-content {
+  padding: 25px;
+  background: $black;
+}
+
+.modal.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
