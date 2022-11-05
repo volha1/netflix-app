@@ -1,13 +1,13 @@
 import React, { ReactElement } from 'react';
 import './style.scss';
-import { Card } from '../../entity/Card';
+import Movie from '../../entity/Movie';
 import menuIcon from '../../common/assets/svg/menu-icon.svg';
 
-type Movie = {
-  movie: Card;
+type MovieCardProps = {
+  movie: Movie;
 };
 
-const MovieCard = ({ movie }: Movie): ReactElement => {
+const MovieCard = ({ movie }: MovieCardProps): ReactElement => {
   return (
     <div className="card">
       <div className="movie-cover">
