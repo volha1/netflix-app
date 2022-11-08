@@ -1,0 +1,16 @@
+@import '../../common/scss/base.scss';
+
+.movies-list-wrapper {
+  padding: 25px 0px;
+  min-height: 60vh;
+
+  .counter {
+    margin-bottom: 25px;
+  }
+}
+
+.cards-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

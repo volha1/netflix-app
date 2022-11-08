@@ -1,0 +1,10 @@
+@import '../../common/scss/base.scss';
+
+.footer {
+  background-color: $gray;
+  padding: 25px 0px;
+
+  .logo {
+    text-align: center;
+  }
+}
