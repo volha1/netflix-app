@@ -8,7 +8,8 @@ import MovieForm from '../components/Forms/index';
 import MoviesList from '../components/MoviesList';
 import moviesData from '../helpers/constants';
 import './style.scss';
-import { ChangeMovieWindow } from '../components/ModalWindows/index';
+import { ModifyMovieWindow } from '../components/ModalWindows/index';
+import Movie from '../entity/Movie';
 
 const Main = (): ReactElement => {
   const [movies, setMovies] = useState(moviesData);
@@ -35,11 +36,10 @@ const Main = (): ReactElement => {
   };
 
   useEffect(() => {
-    console.log(`sort: ${sort}`);
     if (sort) {
       setMovies(
         [...movies].sort((a, b) => {
-          return a[sort].localeCompare(b[sort]);
+          return (a[sort as keyof Movie] as string).localeCompare(b[sort as keyof Movie] as string);
         })
       );
     }
@@ -64,10 +64,10 @@ const Main = (): ReactElement => {
         />
       </ModalWrapper>
       <ModalWrapper visible={isAddMovieWindowVisible}>
-        <ChangeMovieWindow handleClose={handleAddMovieWindow} text="added to" />
+        <ModifyMovieWindow handleClose={handleAddMovieWindow} text="added to" />
       </ModalWrapper>
       <ModalWrapper visible={isEditMovieWindowVisible}>
-        <ChangeMovieWindow handleClose={handleEditMovieWindow} text="edited in" />
+        <ModifyMovieWindow handleClose={handleEditMovieWindow} text="edited in" />
       </ModalWrapper>
 
       <Footer />

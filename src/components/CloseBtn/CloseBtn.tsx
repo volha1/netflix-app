@@ -5,6 +5,8 @@ type CloseBtnProps = {
   handleClose: () => void;
 };
 
-const CloseBtn = ({ handleClose }: CloseBtnProps): ReactElement => <div className="close-btn" onClick={handleClose} />;
+const CloseBtn = ({ handleClose }: CloseBtnProps): ReactElement => {
+  return <div className="close-btn" onClick={handleClose} />;
+};
 
 export default CloseBtn;

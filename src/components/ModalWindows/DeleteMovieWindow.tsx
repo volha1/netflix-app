@@ -6,17 +6,19 @@ type DeleteMovieWindowProps = {
   handleClose: () => void;
 };
 
-const DeleteMovieWindow = ({ handleClose }: DeleteMovieWindowProps): ReactElement => (
-  <div className="modal-window">
-    <CloseBtn handleClose={handleClose} />
-    <h1 className="title">Delete movie</h1>
-    <p>Are you sure you want to delete this movie?</p>
-    <div className="btn-wrapper">
-      <button type="button" className="btn" onClick={handleClose}>
-        Confirm
-      </button>
+const DeleteMovieWindow = ({ handleClose }: DeleteMovieWindowProps): ReactElement => {
+  return (
+    <div className="modal-window">
+      <CloseBtn handleClose={handleClose} />
+      <h1 className="title">Delete movie</h1>
+      <p>Are you sure you want to delete this movie?</p>
+      <div className="btn-wrapper">
+        <button type="button" className="btn" onClick={handleClose}>
+          Confirm
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default DeleteMovieWindow;

@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, { Dispatch, ReactElement, SetStateAction } from 'react';
 import './style.scss';
 
 type SortingProps = {
-  setSort: () => void;
+  setSort: Dispatch<SetStateAction<string>>;
 };
 
 const Sorting = ({ setSort }: SortingProps): ReactElement => {

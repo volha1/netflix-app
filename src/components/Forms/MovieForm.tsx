@@ -11,8 +11,8 @@ type MovieFormProps = {
 const MovieForm = ({ action, handleMovieForm, handleChangeMovieWindow }: MovieFormProps): ReactElement => {
   const [genresShown, setGenresShown] = useState(false);
 
-  const handleSubmit = (e): void => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
     handleMovieForm();
     handleChangeMovieWindow();
   };
