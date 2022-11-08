@@ -11,7 +11,7 @@ import './style.scss';
 import { ChangeMovieWindow } from '../components/ModalWindows/index';
 
 const Main = (): ReactElement => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(moviesData);
   const [isAddMovieFormVisible, setAddMovieFormVisible] = useState(false);
   const [isEditMovieFormVisible, setEditMovieFormVisible] = useState(false);
   const [isAddMovieWindowVisible, setAddMovieWindowVisible] = useState(false);
@@ -42,8 +42,6 @@ const Main = (): ReactElement => {
           return a[sort].localeCompare(b[sort]);
         })
       );
-    } else {
-      setMovies(moviesData);
     }
   }, [sort]);
 
