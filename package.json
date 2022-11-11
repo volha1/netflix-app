@@ -62,8 +62,16 @@
     "webpack-merge": "^5.8.0"
   },
   "lint-staged": {
-    "src/**/*.scss": ["prettier --write"],
-    "src/**/*.jsx": ["prettier --write", "eslint --fix"],
-    "src/**/*.tsx": ["prettier --write", "eslint --fix"]
+    "src/**/*.scss": [
+      "prettier --write"
+    ],
+    "src/**/*.jsx": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "src/**/*.tsx": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }

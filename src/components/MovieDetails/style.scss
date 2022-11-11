@@ -1,0 +1,72 @@
+@import '../../common/scss/base.scss';
+
+.movie-details {
+  padding: 35px 0px;
+
+  .nav-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .search-icon {
+    cursor: pointer;
+  }
+
+  .details-wrapper {
+    display: flex;
+  }
+
+  .movie-img {
+    display: block;
+    width: 323px;
+    height: 486px;
+    margin-right: 60px;
+  }
+
+  .title-wrapper {
+    display: flex;
+
+    .title {
+      margin-bottom: 10px;
+    }
+
+    .rating {
+      border: 1px solid $white;
+      border-radius: 50%;
+      width: auto;
+      display: inline-block;
+      font-size: 20px;
+      line-height: 40px;
+      vertical-align: 7px;
+      margin-left: 40px;
+      height: 40px;
+      width: 40px;
+      text-align: center;
+    }
+  }
+
+  .genres {
+    opacity: 0.5;
+    margin-bottom: 30px;
+  }
+
+  .movie-characteristics {
+    color: $red;
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 30px;
+
+    span {
+      margin-right: 30px;
+    }
+  }
+
+  .overview {
+    opacity: 0.5;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}

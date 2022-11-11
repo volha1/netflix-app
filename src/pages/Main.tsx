@@ -10,6 +10,7 @@ import moviesData from '../helpers/constants';
 import './style.scss';
 import { ModifyMovieWindow } from '../components/ModalWindows/index';
 import Movie from '../entity/Movie';
+import MovieDetails from '../components/MovieDetails';
 
 const Main = (): ReactElement => {
   const [movies, setMovies] = useState(moviesData);
@@ -43,11 +44,12 @@ const Main = (): ReactElement => {
         })
       );
     }
-  }, [sort]);
+  }, [sort, movies]);
 
   return (
     <div className="main">
-      <Header handleAddMovieForm={handleAddMovieForm} />
+      {/* <Header handleAddMovieForm={handleAddMovieForm} /> */}
+      <MovieDetails />
       <Filter setSort={setSort} />
       <ErrorBoundary>
         <MoviesList handleEditMovieForm={handleEditMovieForm} movies={movies} />
