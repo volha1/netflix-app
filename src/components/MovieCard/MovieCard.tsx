@@ -7,11 +7,10 @@ import { getYear } from '../../helpers/utils';
 
 type MovieCardProps = {
   movie: Movie;
-  deleteMovie: () => void;
   selectMovie: Dispatch<SetStateAction<Movie>>;
 };
 
-const MovieCard = ({ movie, deleteMovie, selectMovie }: MovieCardProps): ReactElement => {
+const MovieCard = ({ movie, selectMovie }: MovieCardProps): ReactElement => {
   const [isMenuVisible, setMenuVisible] = useState(false);
 
   const handleMenuClose = useCallback((): void => {
@@ -32,7 +31,7 @@ const MovieCard = ({ movie, deleteMovie, selectMovie }: MovieCardProps): ReactEl
       <div className="movie-cover">
         <img className="movie-img" src={movie.imgPath} alt={movie.title} />
         <img className="menu-icon" src={menuIcon} alt="Menu" onClick={handleMenuIconClick} />
-        <Menu visible={isMenuVisible} handleClose={handleMenuClose} deleteMovie={deleteMovie} />
+        <Menu visible={isMenuVisible} handleClose={handleMenuClose} />
       </div>
       <div className="title-wrapper">
         <p className="card-title">{movie.title}</p>

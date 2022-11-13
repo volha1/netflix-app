@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect, useCallback, createContext } from 'react';
+import React, { ReactElement, useState, useEffect, useCallback, useMemo } from 'react';
 import ErrorBoundary from '../components/ErrorBoundary/index';
 import Filter from '../components/Filter/index';
 import Footer from '../components/Footer/index';
@@ -8,7 +8,7 @@ import MovieForm from '../components/Forms/index';
 import MoviesList from '../components/MoviesList';
 import moviesData from '../helpers/constants';
 import './style.scss';
-import { ModifyMovieMessage } from '../components/Messages/index';
+import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/index';
 import Movie from '../entity/Movie';
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
@@ -21,6 +21,11 @@ const Main = (): ReactElement => {
   const [isEditMovieMessageVisible, setEditMovieMessageVisible] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [sort, setSort] = useState('');
+  const [isDeleteMovieMessageVisible, setDeleteMovieMessageVisible] = useState(false);
+
+  const handleDeleteMovieMessage = useCallback(() => {
+    setDeleteMovieMessageVisible(!isDeleteMovieMessageVisible);
+  }, [isDeleteMovieMessageVisible]);
 
   const handleAddMovieForm = useCallback(() => {
     setAddMovieFormVisible(!isAddMovieFormVisible);
@@ -48,6 +53,10 @@ const Main = (): ReactElement => {
     }
   }, [sort]);
 
+  const handleMovieMenuFunctions = useMemo(() => {
+    return [handleEditMovieForm, handleDeleteMovieMessage];
+  }, [handleEditMovieForm, handleDeleteMovieMessage]);
+
   return (
     <div className="main">
       <Header handleAddMovieForm={handleAddMovieForm} visible={!selectedMovie} />
@@ -55,7 +64,7 @@ const Main = (): ReactElement => {
       <Filter setSort={setSort} />
 
       <ErrorBoundary>
-        <Context.Provider value={handleEditMovieForm}>
+        <Context.Provider value={handleMovieMenuFunctions}>
           <MoviesList movies={movies} selectMovie={setSelectedMovie} />
         </Context.Provider>
       </ErrorBoundary>
@@ -75,6 +84,9 @@ const Main = (): ReactElement => {
       </ModalWrapper>
       <ModalWrapper visible={isEditMovieMessageVisible}>
         <ModifyMovieMessage handleClose={handleEditMovieMessage} text="edited in" />
+      </ModalWrapper>
+      <ModalWrapper visible={isDeleteMovieMessageVisible}>
+        <DeleteMovieMessage handleClose={handleDeleteMovieMessage} />
       </ModalWrapper>
 
       <Footer />

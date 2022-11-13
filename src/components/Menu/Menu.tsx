@@ -6,12 +6,11 @@ import './style.scss';
 type SortingProps = {
   visible: boolean;
   handleClose: () => void;
-  deleteMovie: () => void;
 };
 
-const Menu = ({ visible, handleClose, deleteMovie }: SortingProps): ReactElement => {
+const Menu = ({ visible, handleClose }: SortingProps): ReactElement => {
   const classes = ['menu'];
-  const handleEditMovieForm = useContext(Context);
+  const [handleEditMovieForm, handleDeleteMovieMessage] = useContext(Context);
 
   if (visible) {
     classes.push('active');
@@ -24,7 +23,7 @@ const Menu = ({ visible, handleClose, deleteMovie }: SortingProps): ReactElement
 
   const handleDeleteBtn = (): void => {
     handleClose();
-    deleteMovie();
+    handleDeleteMovieMessage();
   };
 
   return (
