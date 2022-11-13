@@ -6,12 +6,11 @@ import Modal from '../ModalWrapper';
 import { DeleteMovieMessage } from '../Messages';
 
 type MoviesListProps = {
-  handleEditMovieForm: () => void;
   movies: Movie[];
   selectMovie: Dispatch<SetStateAction<null>>;
 };
 
-const MoviesList = ({ handleEditMovieForm, movies, selectMovie }: MoviesListProps): ReactElement => {
+const MoviesList = ({ movies, selectMovie }: MoviesListProps): ReactElement => {
   const [isDeleteMovieMessageVisible, setDeleteMovieMessageVisible] = useState(false);
 
   const handleDeleteMovieMessage = useCallback(() => {
@@ -24,13 +23,7 @@ const MoviesList = ({ handleEditMovieForm, movies, selectMovie }: MoviesListProp
       <div className="cards-list">
         {movies.map((movie: Movie) => {
           return (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              deleteMovie={handleDeleteMovieMessage}
-              editMovie={handleEditMovieForm}
-              selectMovie={selectMovie}
-            />
+            <MovieCard key={movie.id} movie={movie} deleteMovie={handleDeleteMovieMessage} selectMovie={selectMovie} />
           );
         })}
       </div>

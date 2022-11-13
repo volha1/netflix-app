@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext } from 'react';
+import Context from '../../context/Context';
 import CloseBtn from '../CloseBtn';
 import './style.scss';
 
@@ -6,11 +7,11 @@ type SortingProps = {
   visible: boolean;
   handleClose: () => void;
   deleteMovie: () => void;
-  editMovie: () => void;
 };
 
-const Menu = ({ visible, handleClose, deleteMovie, editMovie }: SortingProps): ReactElement => {
+const Menu = ({ visible, handleClose, deleteMovie }: SortingProps): ReactElement => {
   const classes = ['menu'];
+  const handleEditMovieForm = useContext(Context);
 
   if (visible) {
     classes.push('active');
@@ -18,7 +19,7 @@ const Menu = ({ visible, handleClose, deleteMovie, editMovie }: SortingProps): R
 
   const handleEditBtn = (): void => {
     handleClose();
-    editMovie();
+    handleEditMovieForm();
   };
 
   const handleDeleteBtn = (): void => {

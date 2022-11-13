@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, memo, Dispatch, SetStateAction, useCallback, useContext } from 'react';
+import React, { ReactElement, useState, memo, Dispatch, SetStateAction, useCallback } from 'react';
 import './style.scss';
 import Movie from '../../entity/Movie';
 import menuIcon from '../../common/assets/svg/menu-icon.svg';
@@ -8,11 +8,10 @@ import { getYear } from '../../helpers/utils';
 type MovieCardProps = {
   movie: Movie;
   deleteMovie: () => void;
-  editMovie: () => void;
   selectMovie: Dispatch<SetStateAction<Movie>>;
 };
 
-const MovieCard = ({ movie, deleteMovie, editMovie, selectMovie }: MovieCardProps): ReactElement => {
+const MovieCard = ({ movie, deleteMovie, selectMovie }: MovieCardProps): ReactElement => {
   const [isMenuVisible, setMenuVisible] = useState(false);
 
   const handleMenuClick = useCallback(() => {
@@ -28,7 +27,7 @@ const MovieCard = ({ movie, deleteMovie, editMovie, selectMovie }: MovieCardProp
       <div className="movie-cover">
         <img className="movie-img" src={movie.imgPath} alt={movie.title} />
         <img className="menu-icon" src={menuIcon} alt="Menu" onClick={handleMenuClick} />
-        <Menu visible={isMenuVisible} handleClose={handleMenuClick} deleteMovie={deleteMovie} editMovie={editMovie} />
+        <Menu visible={isMenuVisible} handleClose={handleMenuClick} deleteMovie={deleteMovie} />
       </div>
       <div className="title-wrapper">
         <p className="card-title">{movie.title}</p>

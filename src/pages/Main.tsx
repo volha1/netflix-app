@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect, useCallback } from 'react';
+import React, { ReactElement, useState, useEffect, useCallback, createContext } from 'react';
 import ErrorBoundary from '../components/ErrorBoundary/index';
 import Filter from '../components/Filter/index';
 import Footer from '../components/Footer/index';
@@ -11,6 +11,7 @@ import './style.scss';
 import { ModifyMovieMessage } from '../components/Messages/index';
 import Movie from '../entity/Movie';
 import MovieDetails from '../components/MovieDetails';
+import Context from '../context/Context';
 
 const Main = (): ReactElement => {
   const [movies, setMovies] = useState(moviesData);
@@ -54,7 +55,9 @@ const Main = (): ReactElement => {
       <Filter setSort={setSort} />
 
       <ErrorBoundary>
-        <MoviesList handleEditMovieForm={handleEditMovieForm} movies={movies} selectMovie={setSelectedMovie} />
+        <Context.Provider value={handleEditMovieForm}>
+          <MoviesList movies={movies} selectMovie={setSelectedMovie} />
+        </Context.Provider>
       </ErrorBoundary>
 
       <ModalWrapper visible={isAddMovieFormVisible}>
