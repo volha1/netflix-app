@@ -14,9 +14,14 @@ type MovieCardProps = {
 const MovieCard = ({ movie, deleteMovie, selectMovie }: MovieCardProps): ReactElement => {
   const [isMenuVisible, setMenuVisible] = useState(false);
 
-  const handleMenuClick = useCallback(() => {
+  const handleMenuClose = useCallback((): void => {
     setMenuVisible(!isMenuVisible);
   }, [isMenuVisible]);
+
+  const handleMenuIconClick = (event: Event): void => {
+    event.stopPropagation();
+    handleMenuClose();
+  };
 
   const handleCardClick = (): void => {
     selectMovie(movie);
@@ -26,8 +31,8 @@ const MovieCard = ({ movie, deleteMovie, selectMovie }: MovieCardProps): ReactEl
     <div className="card" onClick={handleCardClick}>
       <div className="movie-cover">
         <img className="movie-img" src={movie.imgPath} alt={movie.title} />
-        <img className="menu-icon" src={menuIcon} alt="Menu" onClick={handleMenuClick} />
-        <Menu visible={isMenuVisible} handleClose={handleMenuClick} deleteMovie={deleteMovie} />
+        <img className="menu-icon" src={menuIcon} alt="Menu" onClick={handleMenuIconClick} />
+        <Menu visible={isMenuVisible} handleClose={handleMenuClose} deleteMovie={deleteMovie} />
       </div>
       <div className="title-wrapper">
         <p className="card-title">{movie.title}</p>

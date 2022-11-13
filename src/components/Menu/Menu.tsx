@@ -28,7 +28,12 @@ const Menu = ({ visible, handleClose, deleteMovie }: SortingProps): ReactElement
   };
 
   return (
-    <div className={classes.join(' ')}>
+    <div
+      className={classes.join(' ')}
+      onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+        event.stopPropagation();
+      }}
+    >
       <CloseBtn handleClose={handleClose} />
       <ul>
         <li>
