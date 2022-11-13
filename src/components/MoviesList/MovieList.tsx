@@ -1,16 +1,17 @@
-import React, { ReactElement, useState } from 'react';
+import React, { Dispatch, ReactElement, useState, SetStateAction } from 'react';
 import MovieCard from '../MovieCard';
 import './style.scss';
 import Movie from '../../entity/Movie';
 import Modal from '../ModalWrapper';
-import { DeleteMovieWindow } from '../ModalWindows';
+import { DeleteMovieMessage } from '../ModalWindows';
 
 type MoviesListProps = {
   handleEditMovieForm: () => void;
   movies: Movie[];
+  selectMovie: Dispatch<SetStateAction<null>>;
 };
 
-const MoviesList = ({ handleEditMovieForm, movies }: MoviesListProps): ReactElement => {
+const MoviesList = ({ handleEditMovieForm, movies, selectMovie }: MoviesListProps): ReactElement => {
   const [isDeleteMovieWindowVisible, setDeleteMovieWindowVisible] = useState(false);
 
   const handleDeleteMovieWindow = (): void => {
@@ -28,12 +29,13 @@ const MoviesList = ({ handleEditMovieForm, movies }: MoviesListProps): ReactElem
               movie={movie}
               deleteMovie={handleDeleteMovieWindow}
               editMovie={handleEditMovieForm}
+              selectMovie={selectMovie}
             />
           );
         })}
       </div>
       <Modal visible={isDeleteMovieWindowVisible}>
-        <DeleteMovieWindow handleClose={handleDeleteMovieWindow} />
+        <DeleteMovieMessage handleClose={handleDeleteMovieWindow} />
       </Modal>
     </div>
   );

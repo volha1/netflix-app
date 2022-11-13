@@ -18,6 +18,7 @@ const Main = (): ReactElement => {
   const [isEditMovieFormVisible, setEditMovieFormVisible] = useState(false);
   const [isAddMovieWindowVisible, setAddMovieWindowVisible] = useState(false);
   const [isEditMovieWindowVisible, setEditMovieWindowVisible] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
   const [sort, setSort] = useState('');
 
   const handleAddMovieForm = (): void => {
@@ -48,11 +49,11 @@ const Main = (): ReactElement => {
 
   return (
     <div className="main">
-      {/* <Header handleAddMovieForm={handleAddMovieForm} /> */}
-      <MovieDetails />
+      <Header handleAddMovieForm={handleAddMovieForm} visible={!selectedMovie} />
+      <MovieDetails movie={selectedMovie} selectMovie={setSelectedMovie} />
       <Filter setSort={setSort} />
       <ErrorBoundary>
-        <MoviesList handleEditMovieForm={handleEditMovieForm} movies={movies} />
+        <MoviesList handleEditMovieForm={handleEditMovieForm} movies={movies} selectMovie={setSelectedMovie} />
       </ErrorBoundary>
 
       <ModalWrapper visible={isAddMovieFormVisible}>

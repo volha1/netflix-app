@@ -1,4 +1,4 @@
-import DeleteMovieWindow from './DeleteMovieWindow';
+import DeleteMovieMessage from './DeleteMovieMessage';
 import ModifyMovieWindow from './ModifyMovieWindow';
 
-export { DeleteMovieWindow, ModifyMovieWindow };
+export { DeleteMovieMessage, ModifyMovieWindow };

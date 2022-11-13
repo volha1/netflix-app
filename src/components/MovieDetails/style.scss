@@ -1,6 +1,10 @@
 @import '../../common/scss/base.scss';
 
 .movie-details {
+  border-bottom: 10px solid $gray;
+}
+
+.movie-details-wrapper {
   padding: 35px 0px;
 
   .nav-block {
