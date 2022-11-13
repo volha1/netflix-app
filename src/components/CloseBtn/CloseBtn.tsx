@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, memo } from 'react';
 import './style.scss';
 
 type CloseBtnProps = {
@@ -9,4 +9,4 @@ const CloseBtn = ({ handleClose }: CloseBtnProps): ReactElement => {
   return <div className="close-btn" onClick={handleClose} />;
 };
 
-export default CloseBtn;
+export default memo(CloseBtn);

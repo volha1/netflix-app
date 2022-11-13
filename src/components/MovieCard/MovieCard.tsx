@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, memo, Dispatch, SetStateAction, useCallback, useContext } from 'react';
 import './style.scss';
 import Movie from '../../entity/Movie';
 import menuIcon from '../../common/assets/svg/menu-icon.svg';
@@ -9,15 +9,15 @@ type MovieCardProps = {
   movie: Movie;
   deleteMovie: () => void;
   editMovie: () => void;
-  selectMovie: (movie: Movie) => void;
+  selectMovie: Dispatch<SetStateAction<Movie>>;
 };
 
 const MovieCard = ({ movie, deleteMovie, editMovie, selectMovie }: MovieCardProps): ReactElement => {
   const [isMenuVisible, setMenuVisible] = useState(false);
 
-  const handleMenuClick = (): void => {
+  const handleMenuClick = useCallback(() => {
     setMenuVisible(!isMenuVisible);
-  };
+  }, [isMenuVisible]);
 
   const handleCardClick = (): void => {
     selectMovie(movie);
@@ -39,4 +39,4 @@ const MovieCard = ({ movie, deleteMovie, editMovie, selectMovie }: MovieCardProp
   );
 };
 
-export default MovieCard;
+export default memo(MovieCard);

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, memo } from 'react';
 import CloseBtn from '../CloseBtn/index';
 import './style.scss';
 
@@ -6,7 +6,7 @@ type DeleteMovieWindowProps = {
   handleClose: () => void;
 };
 
-const DeleteMovieWindow = ({ handleClose }: DeleteMovieWindowProps): ReactElement => {
+const DeleteMovieMessage = ({ handleClose }: DeleteMovieWindowProps): ReactElement => {
   return (
     <div className="modal-window">
       <CloseBtn handleClose={handleClose} />
@@ -21,4 +21,4 @@ const DeleteMovieWindow = ({ handleClose }: DeleteMovieWindowProps): ReactElemen
   );
 };
 
-export default DeleteMovieWindow;
+export default memo(DeleteMovieMessage);

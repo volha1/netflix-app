@@ -1,9 +1,9 @@
-import React, { Dispatch, ReactElement, useState, SetStateAction } from 'react';
+import React, { Dispatch, ReactElement, useState, SetStateAction, useCallback } from 'react';
 import MovieCard from '../MovieCard';
 import './style.scss';
 import Movie from '../../entity/Movie';
 import Modal from '../ModalWrapper';
-import { DeleteMovieMessage } from '../ModalWindows';
+import { DeleteMovieMessage } from '../Messages';
 
 type MoviesListProps = {
   handleEditMovieForm: () => void;
@@ -12,11 +12,11 @@ type MoviesListProps = {
 };
 
 const MoviesList = ({ handleEditMovieForm, movies, selectMovie }: MoviesListProps): ReactElement => {
-  const [isDeleteMovieWindowVisible, setDeleteMovieWindowVisible] = useState(false);
+  const [isDeleteMovieMessageVisible, setDeleteMovieMessageVisible] = useState(false);
 
-  const handleDeleteMovieWindow = (): void => {
-    setDeleteMovieWindowVisible(!isDeleteMovieWindowVisible);
-  };
+  const handleDeleteMovieMessage = useCallback(() => {
+    setDeleteMovieMessageVisible(!isDeleteMovieMessageVisible);
+  }, [isDeleteMovieMessageVisible]);
 
   return (
     <div className="movies-list-wrapper content">
@@ -27,15 +27,15 @@ const MoviesList = ({ handleEditMovieForm, movies, selectMovie }: MoviesListProp
             <MovieCard
               key={movie.id}
               movie={movie}
-              deleteMovie={handleDeleteMovieWindow}
+              deleteMovie={handleDeleteMovieMessage}
               editMovie={handleEditMovieForm}
               selectMovie={selectMovie}
             />
           );
         })}
       </div>
-      <Modal visible={isDeleteMovieWindowVisible}>
-        <DeleteMovieMessage handleClose={handleDeleteMovieWindow} />
+      <Modal visible={isDeleteMovieMessageVisible}>
+        <DeleteMovieMessage handleClose={handleDeleteMovieMessage} />
       </Modal>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect, useCallback } from 'react';
 import ErrorBoundary from '../components/ErrorBoundary/index';
 import Filter from '../components/Filter/index';
 import Footer from '../components/Footer/index';
@@ -8,7 +8,7 @@ import MovieForm from '../components/Forms/index';
 import MoviesList from '../components/MoviesList';
 import moviesData from '../helpers/constants';
 import './style.scss';
-import { ModifyMovieWindow } from '../components/ModalWindows/index';
+import { ModifyMovieMessage } from '../components/Messages/index';
 import Movie from '../entity/Movie';
 import MovieDetails from '../components/MovieDetails';
 
@@ -16,26 +16,26 @@ const Main = (): ReactElement => {
   const [movies, setMovies] = useState(moviesData);
   const [isAddMovieFormVisible, setAddMovieFormVisible] = useState(false);
   const [isEditMovieFormVisible, setEditMovieFormVisible] = useState(false);
-  const [isAddMovieWindowVisible, setAddMovieWindowVisible] = useState(false);
-  const [isEditMovieWindowVisible, setEditMovieWindowVisible] = useState(false);
+  const [isAddMovieMessageVisible, setAddMovieMessageVisible] = useState(false);
+  const [isEditMovieMessageVisible, setEditMovieMessageVisible] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [sort, setSort] = useState('');
 
-  const handleAddMovieForm = (): void => {
+  const handleAddMovieForm = useCallback(() => {
     setAddMovieFormVisible(!isAddMovieFormVisible);
-  };
+  }, [isAddMovieFormVisible]);
 
-  const handleEditMovieForm = (): void => {
+  const handleEditMovieForm = useCallback(() => {
     setEditMovieFormVisible(!isEditMovieFormVisible);
-  };
+  }, [isEditMovieFormVisible]);
 
-  const handleAddMovieWindow = (): void => {
-    setAddMovieWindowVisible(!isAddMovieWindowVisible);
-  };
+  const handleAddMovieMessage = useCallback(() => {
+    setAddMovieMessageVisible(!isAddMovieMessageVisible);
+  }, [isAddMovieMessageVisible]);
 
-  const handleEditMovieWindow = (): void => {
-    setEditMovieWindowVisible(!isEditMovieWindowVisible);
-  };
+  const handleEditMovieMessage = useCallback(() => {
+    setEditMovieMessageVisible(!isEditMovieMessageVisible);
+  }, [isEditMovieMessageVisible]);
 
   useEffect(() => {
     if (sort) {
@@ -45,32 +45,33 @@ const Main = (): ReactElement => {
         })
       );
     }
-  }, [sort, movies]);
+  }, [sort]);
 
   return (
     <div className="main">
       <Header handleAddMovieForm={handleAddMovieForm} visible={!selectedMovie} />
       <MovieDetails movie={selectedMovie} selectMovie={setSelectedMovie} />
       <Filter setSort={setSort} />
+
       <ErrorBoundary>
         <MoviesList handleEditMovieForm={handleEditMovieForm} movies={movies} selectMovie={setSelectedMovie} />
       </ErrorBoundary>
 
       <ModalWrapper visible={isAddMovieFormVisible}>
-        <MovieForm action="Add" handleMovieForm={handleAddMovieForm} handleChangeMovieWindow={handleAddMovieWindow} />
+        <MovieForm action="Add" handleMovieForm={handleAddMovieForm} handleChangeMovieMessage={handleAddMovieMessage} />
       </ModalWrapper>
       <ModalWrapper visible={isEditMovieFormVisible}>
         <MovieForm
           action="Edit"
           handleMovieForm={handleEditMovieForm}
-          handleChangeMovieWindow={handleEditMovieWindow}
+          handleChangeMovieMessage={handleEditMovieMessage}
         />
       </ModalWrapper>
-      <ModalWrapper visible={isAddMovieWindowVisible}>
-        <ModifyMovieWindow handleClose={handleAddMovieWindow} text="added to" />
+      <ModalWrapper visible={isAddMovieMessageVisible}>
+        <ModifyMovieMessage handleClose={handleAddMovieMessage} text="added to" />
       </ModalWrapper>
-      <ModalWrapper visible={isEditMovieWindowVisible}>
-        <ModifyMovieWindow handleClose={handleEditMovieWindow} text="edited in" />
+      <ModalWrapper visible={isEditMovieMessageVisible}>
+        <ModifyMovieMessage handleClose={handleEditMovieMessage} text="edited in" />
       </ModalWrapper>
 
       <Footer />

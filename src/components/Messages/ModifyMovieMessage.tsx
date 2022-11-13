@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, memo } from 'react';
 import CloseBtn from '../CloseBtn/index';
 import successIcon from '../../common/assets/svg/success-icon.svg';
 import './style.scss';
@@ -8,7 +8,7 @@ type ModifyMovieWindowProps = {
   text: string;
 };
 
-const ModifyMovieWindow = ({ handleClose, text }: ModifyMovieWindowProps): ReactElement => {
+const ModifyMovieMessage = ({ handleClose, text }: ModifyMovieWindowProps): ReactElement => {
   return (
     <div className="modal-window add-movie">
       <CloseBtn handleClose={handleClose} />
@@ -21,4 +21,4 @@ const ModifyMovieWindow = ({ handleClose, text }: ModifyMovieWindowProps): React
   );
 };
 
-export default ModifyMovieWindow;
+export default memo(ModifyMovieMessage);

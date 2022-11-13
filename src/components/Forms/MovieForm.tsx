@@ -1,20 +1,20 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useState, memo } from 'react';
 import CloseBtn from '../CloseBtn/index';
 import './style.scss';
 
 type MovieFormProps = {
   action: string;
   handleMovieForm: () => void;
-  handleChangeMovieWindow: () => void;
+  handleChangeMovieMessage: () => void;
 };
 
-const MovieForm = ({ action, handleMovieForm, handleChangeMovieWindow }: MovieFormProps): ReactElement => {
+const MovieForm = ({ action, handleMovieForm, handleChangeMovieMessage }: MovieFormProps): ReactElement => {
   const [genresShown, setGenresShown] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     handleMovieForm();
-    handleChangeMovieWindow();
+    handleChangeMovieMessage();
   };
 
   const showGenres = (): void => {
@@ -107,4 +107,4 @@ const MovieForm = ({ action, handleMovieForm, handleChangeMovieWindow }: MovieFo
   );
 };
 
-export default MovieForm;
+export default memo(MovieForm);
