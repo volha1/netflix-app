@@ -1,26 +1,22 @@
 import React, { ReactElement } from 'react';
+import classNames from 'classnames';
 import './style.scss';
 
 type ChangeMovieWindowProps = {
   children: ReactElement;
-  visible: boolean;
+  isVisible: boolean;
 };
 
-const ModalWrapper = ({ children, visible }: ChangeMovieWindowProps): ReactElement => {
-  const classes = ['modal'];
+const ModalWrapper = ({ children, isVisible }: ChangeMovieWindowProps): ReactElement => {
+  const classes = classNames('modal', { active: isVisible });
 
-  if (visible) {
-    classes.push('active');
-  }
+  const handleClick = (e: Event): void => {
+    e.stopPropagation();
+  };
 
   return (
-    <div className={classes.join(' ')}>
-      <div
-        className="modal-content"
-        onClick={(e): void => {
-          return e.stopPropagation();
-        }}
-      >
+    <div className={classes}>
+      <div className="modal-content" onClick={handleClick}>
         {children}
       </div>
     </div>

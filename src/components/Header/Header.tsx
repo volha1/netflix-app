@@ -5,11 +5,11 @@ import './style.scss';
 
 type HeaderProps = {
   handleAddMovieForm: () => void;
-  visible: boolean;
+  isVisible: boolean;
 };
 
-const Header = ({ handleAddMovieForm, visible }: HeaderProps): ReactElement | null => {
-  return visible ? (
+const Header = ({ handleAddMovieForm, isVisible }: HeaderProps): ReactElement | null => {
+  return isVisible ? (
     <div className="header">
       <div className="content">
         <TopHeader handleMovieForm={handleAddMovieForm} />

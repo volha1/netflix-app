@@ -1,20 +1,17 @@
 import React, { ReactElement, useContext } from 'react';
+import classNames from 'classnames';
 import Context from '../../context/Context';
 import CloseBtn from '../CloseBtn';
 import './style.scss';
 
 type SortingProps = {
-  visible: boolean;
+  isVisible: boolean;
   handleClose: () => void;
 };
 
-const Menu = ({ visible, handleClose }: SortingProps): ReactElement => {
-  const classes = ['menu'];
+const Menu = ({ isVisible, handleClose }: SortingProps): ReactElement => {
+  const classes = classNames('menu', { active: isVisible });
   const [handleEditMovieForm, handleDeleteMovieMessage] = useContext(Context);
-
-  if (visible) {
-    classes.push('active');
-  }
 
   const handleEditBtn = (): void => {
     handleClose();
@@ -28,7 +25,7 @@ const Menu = ({ visible, handleClose }: SortingProps): ReactElement => {
 
   return (
     <div
-      className={classes.join(' ')}
+      className={classes}
       onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
         event.stopPropagation();
       }}

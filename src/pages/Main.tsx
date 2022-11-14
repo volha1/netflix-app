@@ -12,6 +12,7 @@ import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/i
 import Movie from '../entity/Movie';
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
+import useToggle from '../hooks/useToggle';
 
 const Main = (): ReactElement => {
   const [movies, setMovies] = useState(moviesData);
@@ -19,29 +20,15 @@ const Main = (): ReactElement => {
   const [isEditMovieFormVisible, setEditMovieFormVisible] = useState(false);
   const [isAddMovieMessageVisible, setAddMovieMessageVisible] = useState(false);
   const [isEditMovieMessageVisible, setEditMovieMessageVisible] = useState(false);
+  const [isDeleteMovieMessageVisible, setDeleteMovieMessageVisible] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [sort, setSort] = useState('');
-  const [isDeleteMovieMessageVisible, setDeleteMovieMessageVisible] = useState(false);
 
-  const handleDeleteMovieMessage = useCallback(() => {
-    setDeleteMovieMessageVisible(!isDeleteMovieMessageVisible);
-  }, [isDeleteMovieMessageVisible]);
-
-  const handleAddMovieForm = useCallback(() => {
-    setAddMovieFormVisible(!isAddMovieFormVisible);
-  }, [isAddMovieFormVisible]);
-
-  const handleEditMovieForm = useCallback(() => {
-    setEditMovieFormVisible(!isEditMovieFormVisible);
-  }, [isEditMovieFormVisible]);
-
-  const handleAddMovieMessage = useCallback(() => {
-    setAddMovieMessageVisible(!isAddMovieMessageVisible);
-  }, [isAddMovieMessageVisible]);
-
-  const handleEditMovieMessage = useCallback(() => {
-    setEditMovieMessageVisible(!isEditMovieMessageVisible);
-  }, [isEditMovieMessageVisible]);
+  const handleDeleteMovieMessage = useToggle(isDeleteMovieMessageVisible, setDeleteMovieMessageVisible);
+  const handleAddMovieForm = useToggle(isAddMovieFormVisible, setAddMovieFormVisible);
+  const handleEditMovieForm = useToggle(isEditMovieFormVisible, setEditMovieFormVisible);
+  const handleAddMovieMessage = useToggle(isAddMovieMessageVisible, setAddMovieMessageVisible);
+  const handleEditMovieMessage = useToggle(isEditMovieMessageVisible, setEditMovieMessageVisible);
 
   useEffect(() => {
     if (sort) {
@@ -59,7 +46,7 @@ const Main = (): ReactElement => {
 
   return (
     <div className="main">
-      <Header handleAddMovieForm={handleAddMovieForm} visible={!selectedMovie} />
+      <Header handleAddMovieForm={handleAddMovieForm} isVisible={!selectedMovie} />
       <MovieDetails movie={selectedMovie} selectMovie={setSelectedMovie} />
       <Filter setSort={setSort} />
 
@@ -69,23 +56,23 @@ const Main = (): ReactElement => {
         </Context.Provider>
       </ErrorBoundary>
 
-      <ModalWrapper visible={isAddMovieFormVisible}>
+      <ModalWrapper isVisible={isAddMovieFormVisible}>
         <MovieForm action="Add" handleMovieForm={handleAddMovieForm} handleChangeMovieMessage={handleAddMovieMessage} />
       </ModalWrapper>
-      <ModalWrapper visible={isEditMovieFormVisible}>
+      <ModalWrapper isVisible={isEditMovieFormVisible}>
         <MovieForm
           action="Edit"
           handleMovieForm={handleEditMovieForm}
           handleChangeMovieMessage={handleEditMovieMessage}
         />
       </ModalWrapper>
-      <ModalWrapper visible={isAddMovieMessageVisible}>
+      <ModalWrapper isVisible={isAddMovieMessageVisible}>
         <ModifyMovieMessage handleClose={handleAddMovieMessage} text="added to" />
       </ModalWrapper>
-      <ModalWrapper visible={isEditMovieMessageVisible}>
+      <ModalWrapper isVisible={isEditMovieMessageVisible}>
         <ModifyMovieMessage handleClose={handleEditMovieMessage} text="edited in" />
       </ModalWrapper>
-      <ModalWrapper visible={isDeleteMovieMessageVisible}>
+      <ModalWrapper isVisible={isDeleteMovieMessageVisible}>
         <DeleteMovieMessage handleClose={handleDeleteMovieMessage} />
       </ModalWrapper>
 
