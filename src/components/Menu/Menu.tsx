@@ -1,4 +1,4 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement, useContext, useCallback } from 'react';
 import classNames from 'classnames';
 import Context from '../../context/Context';
 import CloseBtn from '../CloseBtn';
@@ -6,22 +6,22 @@ import './style.scss';
 
 type SortingProps = {
   isVisible: boolean;
-  handleClose: () => void;
+  onClose: () => void;
 };
 
-const Menu = ({ isVisible, handleClose }: SortingProps): ReactElement => {
+const Menu = ({ isVisible, onClose }: SortingProps): ReactElement => {
   const classes = classNames('menu', { active: isVisible });
   const [handleEditMovieForm, handleDeleteMovieMessage] = useContext(Context);
 
-  const handleEditBtn = (): void => {
-    handleClose();
+  const handleEditBtn = useCallback((): void => {
+    onClose();
     handleEditMovieForm();
-  };
+  }, []);
 
-  const handleDeleteBtn = (): void => {
-    handleClose();
+  const handleDeleteBtn = useCallback((): void => {
+    onClose();
     handleDeleteMovieMessage();
-  };
+  }, []);
 
   return (
     <div
@@ -30,7 +30,7 @@ const Menu = ({ isVisible, handleClose }: SortingProps): ReactElement => {
         event.stopPropagation();
       }}
     >
-      <CloseBtn handleClose={handleClose} />
+      <CloseBtn onClose={onClose} />
       <ul>
         <li>
           <button type="button" onClick={handleEditBtn}>

@@ -4,14 +4,14 @@ import Sorting from '../Sorting';
 import './style.scss';
 
 type FilterProps = {
-  setSort: Dispatch<SetStateAction<string>>;
+  onSort: Dispatch<SetStateAction<string>>;
 };
 
-const Filter = ({ setSort }: FilterProps): ReactElement => {
+const Filter = ({ onSort }: FilterProps): ReactElement => {
   return (
     <div className="filter content">
       <GenreFilter />
-      <Sorting setSort={setSort} />
+      <Sorting onSort={onSort} />
     </div>
   );
 };

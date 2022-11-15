@@ -2,11 +2,11 @@ import React, { ReactElement, memo } from 'react';
 import './style.scss';
 
 type CloseBtnProps = {
-  handleClose: () => void;
+  onClose: () => void;
 };
 
-const CloseBtn = ({ handleClose }: CloseBtnProps): ReactElement => {
-  return <div className="close-btn" onClick={handleClose} />;
+const CloseBtn = ({ onClose }: CloseBtnProps): ReactElement => {
+  return <div className="close-btn" onClick={onClose} />;
 };
 
 export default memo(CloseBtn);

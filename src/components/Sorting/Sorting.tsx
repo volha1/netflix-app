@@ -2,10 +2,10 @@ import React, { Dispatch, ReactElement, SetStateAction } from 'react';
 import './style.scss';
 
 type SortingProps = {
-  setSort: Dispatch<SetStateAction<string>>;
+  onSort: Dispatch<SetStateAction<string>>;
 };
 
-const Sorting = ({ setSort }: SortingProps): ReactElement => {
+const Sorting = ({ onSort }: SortingProps): ReactElement => {
   return (
     <div className="sorting">
       <label htmlFor="params" className="sorting-label">
@@ -16,7 +16,7 @@ const Sorting = ({ setSort }: SortingProps): ReactElement => {
         id="params"
         defaultValue="default"
         onChange={(event): void => {
-          return setSort(event.target.value);
+          return onSort(event.target.value);
         }}
       >
         <option disabled value="default">

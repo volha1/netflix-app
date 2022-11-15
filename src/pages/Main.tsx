@@ -15,7 +15,6 @@ import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
 
 const Main = (): ReactElement => {
-  const [movies, setMovies] = useState(moviesData);
   const [isAddMovieFormVisible, toggleAddMovieForm] = useToggle();
   const [isEditMovieFormVisible, toggleEditMovieForm] = useToggle();
   const [isAddMovieMessageVisible, toggleAddMovieMessage] = useToggle();
@@ -24,14 +23,13 @@ const Main = (): ReactElement => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [sort, setSort] = useState('');
 
-  useEffect(() => {
+  const sortedArray = useMemo(() => {
     if (sort) {
-      setMovies(
-        [...movies].sort((a, b) => {
-          return (a[sort as keyof Movie] as string).localeCompare(b[sort as keyof Movie] as string);
-        })
-      );
+      return moviesData.sort((a, b) => {
+        return (a[sort as keyof Movie] as string).localeCompare(b[sort as keyof Movie] as string);
+      });
     }
+    return moviesData;
   }, [sort]);
 
   const handleMovieMenuFunctions = useMemo(() => {
@@ -40,34 +38,34 @@ const Main = (): ReactElement => {
 
   return (
     <div className="main">
-      <Header handleAddMovieForm={toggleAddMovieForm} isVisible={!selectedMovie} />
-      <MovieDetails movie={selectedMovie} selectMovie={setSelectedMovie} />
-      <Filter setSort={setSort} />
+      <Header onAddMovieForm={toggleAddMovieForm} isVisible={!selectedMovie} />
+      <MovieDetails movie={selectedMovie} onSelectMovie={setSelectedMovie} />
+      <Filter onSort={setSort} />
 
       <ErrorBoundary>
         <Context.Provider value={handleMovieMenuFunctions}>
-          <MoviesList movies={movies} selectMovie={setSelectedMovie} />
+          <MoviesList movies={sortedArray} onSelectMovie={setSelectedMovie} />
         </Context.Provider>
       </ErrorBoundary>
 
       <ModalWrapper isVisible={isAddMovieFormVisible}>
-        <MovieForm action="Add" handleMovieForm={toggleAddMovieForm} handleChangeMovieMessage={toggleAddMovieMessage} />
+        <MovieForm actionText="Add" onCloseMovieForm={toggleAddMovieForm} onShowMovieMessage={toggleAddMovieMessage} />
       </ModalWrapper>
       <ModalWrapper isVisible={isEditMovieFormVisible}>
         <MovieForm
-          action="Edit"
-          handleMovieForm={toggleEditMovieForm}
-          handleChangeMovieMessage={toggleEditMovieMessage}
+          actionText="Edit"
+          onCloseMovieForm={toggleEditMovieForm}
+          onShowMovieMessage={toggleEditMovieMessage}
         />
       </ModalWrapper>
       <ModalWrapper isVisible={isAddMovieMessageVisible}>
-        <ModifyMovieMessage handleClose={toggleAddMovieMessage} text="added to" />
+        <ModifyMovieMessage onClose={toggleAddMovieMessage} text="added to" />
       </ModalWrapper>
       <ModalWrapper isVisible={isEditMovieMessageVisible}>
-        <ModifyMovieMessage handleClose={toggleEditMovieMessage} text="edited in" />
+        <ModifyMovieMessage onClose={toggleEditMovieMessage} text="edited in" />
       </ModalWrapper>
       <ModalWrapper isVisible={isDeleteMovieMessageVisible}>
-        <DeleteMovieMessage handleClose={toggleDeleteMovieMessage} />
+        <DeleteMovieMessage onClose={toggleDeleteMovieMessage} />
       </ModalWrapper>
 
       <Footer />

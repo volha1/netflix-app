@@ -4,14 +4,14 @@ import successIcon from '../../common/assets/svg/success-icon.svg';
 import './style.scss';
 
 type ModifyMovieWindowProps = {
-  handleClose: () => void;
+  onClose: () => void;
   text: string;
 };
 
-const ModifyMovieMessage = ({ handleClose, text }: ModifyMovieWindowProps): ReactElement => {
+const ModifyMovieMessage = ({ onClose, text }: ModifyMovieWindowProps): ReactElement => {
   return (
     <div className="modal-window add-movie">
-      <CloseBtn handleClose={handleClose} />
+      <CloseBtn onClose={onClose} />
       <div className="icon-wrapper">
         <img className="menu-icon" src={successIcon} alt="Success" />
       </div>

@@ -1,30 +1,30 @@
-import React, { ReactElement, useState, memo } from 'react';
+import React, { ReactElement, useState, memo, useCallback } from 'react';
 import CloseBtn from '../CloseBtn/index';
 import './style.scss';
 
 type MovieFormProps = {
-  action: string;
-  handleMovieForm: () => void;
-  handleChangeMovieMessage: () => void;
+  actionText: string;
+  onCloseMovieForm: () => void;
+  onShowMovieMessage: () => void;
 };
 
-const MovieForm = ({ action, handleMovieForm, handleChangeMovieMessage }: MovieFormProps): ReactElement => {
+const MovieForm = ({ actionText, onCloseMovieForm, onShowMovieMessage }: MovieFormProps): ReactElement => {
   const [genresShown, setGenresShown] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = useCallback((event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    handleMovieForm();
-    handleChangeMovieMessage();
-  };
+    onCloseMovieForm();
+    onShowMovieMessage();
+  }, []);
 
-  const showGenres = (): void => {
+  const showGenres = useCallback((): void => {
     setGenresShown(!genresShown);
-  };
+  }, []);
 
   return (
     <form className="movie-form" onSubmit={handleSubmit}>
-      <CloseBtn handleClose={handleMovieForm} />
-      <h1 className="title">{action} movie</h1>
+      <CloseBtn onClose={onCloseMovieForm} />
+      <h1 className="title">{actionText} movie</h1>
       <div className="row">
         <label>
           Title

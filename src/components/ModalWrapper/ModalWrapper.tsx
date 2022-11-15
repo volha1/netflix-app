@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 import classNames from 'classnames';
 import './style.scss';
 
@@ -10,9 +10,9 @@ type ChangeMovieWindowProps = {
 const ModalWrapper = ({ children, isVisible }: ChangeMovieWindowProps): ReactElement => {
   const classes = classNames('modal', { active: isVisible });
 
-  const handleClick = (e: Event): void => {
+  const handleClick = useCallback((e: Event): void => {
     e.stopPropagation();
-  };
+  }, []);
 
   return (
     <div className={classes}>

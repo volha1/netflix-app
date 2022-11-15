@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useCallback } from 'react';
 import searchIcon from '../../common/assets/svg/search-icon.svg';
 import Movie from '../../entity/Movie';
 import { getMovieDuration, getYear } from '../../helpers/utils';
@@ -6,13 +6,13 @@ import './style.scss';
 
 type MovieDetailsProps = {
   movie: Movie | null;
-  selectMovie: (value: null) => void;
+  onSelectMovie: (value: null) => void;
 };
 
-const MovieDetails = ({ movie, selectMovie }: MovieDetailsProps): ReactElement | null => {
-  const handleSeacrhIconClick = (): void => {
-    selectMovie(null);
-  };
+const MovieDetails = ({ movie, onSelectMovie }: MovieDetailsProps): ReactElement | null => {
+  const handleSeacrhIconClick = useCallback((): void => {
+    onSelectMovie(null);
+  }, []);
 
   return (
     movie && (
