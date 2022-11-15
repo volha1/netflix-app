@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, memo, Dispatch, SetStateAction, useCallback } from 'react';
+import React, { ReactElement, memo, Dispatch, SetStateAction } from 'react';
 import './style.scss';
 import Movie from '../../entity/Movie';
 import menuIcon from '../../common/assets/svg/menu-icon.svg';
@@ -12,12 +12,11 @@ type MovieCardProps = {
 };
 
 const MovieCard = ({ movie, selectMovie }: MovieCardProps): ReactElement => {
-  const [isMenuVisible, setMenuVisible] = useState(false);
-  const handleMenuClose = useToggle(isMenuVisible, setMenuVisible);
+  const [isMenuVisible, toggleMenuVisible] = useToggle();
 
   const handleMenuIconClick = (event: Event): void => {
     event.stopPropagation();
-    handleMenuClose();
+    toggleMenuVisible();
   };
 
   const handleCardClick = (): void => {
@@ -29,7 +28,7 @@ const MovieCard = ({ movie, selectMovie }: MovieCardProps): ReactElement => {
       <div className="movie-cover">
         <img className="movie-img" src={movie.imgPath} alt={movie.title} />
         <img className="menu-icon" src={menuIcon} alt="Menu" onClick={handleMenuIconClick} />
-        <Menu isVisible={isMenuVisible} handleClose={handleMenuClose} />
+        <Menu isVisible={isMenuVisible} handleClose={toggleMenuVisible} />
       </div>
       <div className="title-wrapper">
         <p className="card-title">{movie.title}</p>

@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect, useCallback, useMemo } from 'react';
+import React, { ReactElement, useState, useEffect, useMemo } from 'react';
 import ErrorBoundary from '../components/ErrorBoundary/index';
 import Filter from '../components/Filter/index';
 import Footer from '../components/Footer/index';
@@ -16,19 +16,13 @@ import useToggle from '../hooks/useToggle';
 
 const Main = (): ReactElement => {
   const [movies, setMovies] = useState(moviesData);
-  const [isAddMovieFormVisible, setAddMovieFormVisible] = useState(false);
-  const [isEditMovieFormVisible, setEditMovieFormVisible] = useState(false);
-  const [isAddMovieMessageVisible, setAddMovieMessageVisible] = useState(false);
-  const [isEditMovieMessageVisible, setEditMovieMessageVisible] = useState(false);
-  const [isDeleteMovieMessageVisible, setDeleteMovieMessageVisible] = useState(false);
+  const [isAddMovieFormVisible, toggleAddMovieForm] = useToggle();
+  const [isEditMovieFormVisible, toggleEditMovieForm] = useToggle();
+  const [isAddMovieMessageVisible, toggleAddMovieMessage] = useToggle();
+  const [isEditMovieMessageVisible, toggleEditMovieMessage] = useToggle();
+  const [isDeleteMovieMessageVisible, toggleDeleteMovieMessage] = useToggle();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [sort, setSort] = useState('');
-
-  const handleDeleteMovieMessage = useToggle(isDeleteMovieMessageVisible, setDeleteMovieMessageVisible);
-  const handleAddMovieForm = useToggle(isAddMovieFormVisible, setAddMovieFormVisible);
-  const handleEditMovieForm = useToggle(isEditMovieFormVisible, setEditMovieFormVisible);
-  const handleAddMovieMessage = useToggle(isAddMovieMessageVisible, setAddMovieMessageVisible);
-  const handleEditMovieMessage = useToggle(isEditMovieMessageVisible, setEditMovieMessageVisible);
 
   useEffect(() => {
     if (sort) {
@@ -41,12 +35,12 @@ const Main = (): ReactElement => {
   }, [sort]);
 
   const handleMovieMenuFunctions = useMemo(() => {
-    return [handleEditMovieForm, handleDeleteMovieMessage];
-  }, [handleEditMovieForm, handleDeleteMovieMessage]);
+    return [toggleEditMovieForm, toggleDeleteMovieMessage];
+  }, [toggleEditMovieForm, toggleDeleteMovieMessage]);
 
   return (
     <div className="main">
-      <Header handleAddMovieForm={handleAddMovieForm} isVisible={!selectedMovie} />
+      <Header handleAddMovieForm={toggleAddMovieForm} isVisible={!selectedMovie} />
       <MovieDetails movie={selectedMovie} selectMovie={setSelectedMovie} />
       <Filter setSort={setSort} />
 
@@ -57,23 +51,23 @@ const Main = (): ReactElement => {
       </ErrorBoundary>
 
       <ModalWrapper isVisible={isAddMovieFormVisible}>
-        <MovieForm action="Add" handleMovieForm={handleAddMovieForm} handleChangeMovieMessage={handleAddMovieMessage} />
+        <MovieForm action="Add" handleMovieForm={toggleAddMovieForm} handleChangeMovieMessage={toggleAddMovieMessage} />
       </ModalWrapper>
       <ModalWrapper isVisible={isEditMovieFormVisible}>
         <MovieForm
           action="Edit"
-          handleMovieForm={handleEditMovieForm}
-          handleChangeMovieMessage={handleEditMovieMessage}
+          handleMovieForm={toggleEditMovieForm}
+          handleChangeMovieMessage={toggleEditMovieMessage}
         />
       </ModalWrapper>
       <ModalWrapper isVisible={isAddMovieMessageVisible}>
-        <ModifyMovieMessage handleClose={handleAddMovieMessage} text="added to" />
+        <ModifyMovieMessage handleClose={toggleAddMovieMessage} text="added to" />
       </ModalWrapper>
       <ModalWrapper isVisible={isEditMovieMessageVisible}>
-        <ModifyMovieMessage handleClose={handleEditMovieMessage} text="edited in" />
+        <ModifyMovieMessage handleClose={toggleEditMovieMessage} text="edited in" />
       </ModalWrapper>
       <ModalWrapper isVisible={isDeleteMovieMessageVisible}>
-        <DeleteMovieMessage handleClose={handleDeleteMovieMessage} />
+        <DeleteMovieMessage handleClose={toggleDeleteMovieMessage} />
       </ModalWrapper>
 
       <Footer />
