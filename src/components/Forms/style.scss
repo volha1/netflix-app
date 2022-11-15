@@ -1,0 +1,101 @@
+@import '../../common/scss/base.scss';
+
+.movie-form {
+  display: flex;
+  flex-direction: column;
+  padding: 35px;
+  position: relative;
+
+  .row {
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+  label {
+    color: $red;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  input,
+  select,
+  textarea {
+    margin-top: 5px;
+    padding: 5px 10px;
+    color: $white;
+    background-color: rgba(50, 50, 50, 0.8);
+    border: none;
+  }
+
+  textarea {
+    position: relative;
+  }
+
+  .left-field {
+    width: 500px;
+    height: 35px;
+    margin-right: 50px;
+  }
+
+  .right-field {
+    width: 250px;
+    height: 35px;
+  }
+
+  .btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+
+    button[type='reset'] {
+      margin-right: 15px;
+      border: 1px solid $red;
+      color: $red;
+      background-color: $black;
+
+      &:hover {
+        background-color: $gray;
+      }
+    }
+
+    button[type='submit'] {
+      background-color: $red;
+
+      &:hover {
+        background-color: $dark-red;
+      }
+    }
+  }
+}
+
+.genres-select {
+  input {
+    margin-right: 10px;
+  }
+  .select-title {
+    position: relative;
+  }
+
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .genres {
+    background-color: $black;
+    position: relative;
+    z-index: 1;
+
+    label {
+      display: block;
+      color: $white;
+      text-transform: none;
+
+      &:hover {
+        color: $red;
+      }
+    }
+  }
+}

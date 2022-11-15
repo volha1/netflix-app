@@ -1,0 +1,32 @@
+@import '../../common/scss/base.scss';
+
+.modal-window {
+  width: 580px;
+  padding-top: 10px;
+
+  &.add-movie {
+    .title,
+    p {
+      text-align: center;
+    }
+
+    .icon-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 50px;
+    }
+  }
+
+  p {
+    margin-bottom: 50px;
+  }
+
+  .btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  button {
+    background-color: $red;
+  }
+}

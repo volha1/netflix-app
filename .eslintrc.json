@@ -24,8 +24,11 @@
         "unnamedComponents": "arrow-function"
       }
     ],
-    "arrow-body-style": ["error", "always"],
+
     "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
     "jsx-a11y/label-has-associated-control": ["error", {
       "components": [],
       "required": {
@@ -34,7 +37,9 @@
       "allowChildren": false
     }],
     "@typescript-eslint/explicit-function-return-type": "error",
-    "@typescript-eslint/no-explicit-any": "error"
+    "@typescript-eslint/no-explicit-any": "error",
+    "react/button-has-type": ["error", {"reset": true}],
+    "arrow-body-style": ["error", "always"]
   },
   "settings": {
     "import/parsers": {

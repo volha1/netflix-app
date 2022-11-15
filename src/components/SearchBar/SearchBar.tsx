@@ -6,7 +6,7 @@ const SearchBar = (): ReactElement => {
     <div className="search-bar">
       <h1 className="title">Find your movie</h1>
       <input className="search-field" placeholder="What do you want to watch?" />
-      <button type="button" className="btn search-btn">
+      <button type="button" className="search-btn">
         Search
       </button>
     </div>

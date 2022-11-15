@@ -1,0 +1,15 @@
+@import '../../common/scss/base.scss';
+
+.close-btn::after {
+  display: flex;
+  position: relative;
+  justify-content: right;
+  content: '\00d7';
+  font-size: 60px;
+  font-weight: 300;
+  cursor: pointer;
+  top: -5px;
+  right: 5px;
+  line-height: 0;
+  z-index: 10;
+}

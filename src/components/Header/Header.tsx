@@ -3,11 +3,15 @@ import SearchBar from '../SearchBar';
 import TopHeader from '../TopHeader';
 import './style.scss';
 
-const Header = (): ReactElement => {
+type HeaderProps = {
+  handleAddMovieForm: () => void;
+};
+
+const Header = ({ handleAddMovieForm }: HeaderProps): ReactElement => {
   return (
     <div className="header">
       <div className="content">
-        <TopHeader />
+        <TopHeader handleMovieForm={handleAddMovieForm} />
         <SearchBar />
       </div>
     </div>
