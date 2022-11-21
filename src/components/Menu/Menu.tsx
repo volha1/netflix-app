@@ -1,17 +1,21 @@
 import React, { ReactElement, useContext, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import Context from '../../context/Context';
 import CloseBtn from '../CloseBtn';
 import './style.scss';
+import { markForDeletion } from '../../store/actionCreators';
 
 type SortingProps = {
   isVisible: boolean;
   onClose: () => void;
+  movieId: string;
 };
 
-const Menu = ({ isVisible, onClose }: SortingProps): ReactElement => {
+const Menu = ({ isVisible, onClose, movieId }: SortingProps): ReactElement => {
   const classes = classNames('menu', { active: isVisible });
   const [handleEditMovieForm, handleDeleteMovieMessage] = useContext(Context);
+  const dispatch = useDispatch();
 
   const handleEditBtn = useCallback((): void => {
     onClose();
@@ -19,6 +23,7 @@ const Menu = ({ isVisible, onClose }: SortingProps): ReactElement => {
   }, []);
 
   const handleDeleteBtn = useCallback((): void => {
+    dispatch(markForDeletion(movieId));
     onClose();
     handleDeleteMovieMessage();
   }, []);

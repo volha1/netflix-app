@@ -1,5 +1,8 @@
 import Movie from '../entity/Movie';
 
+const url = 'http://localhost:4000';
+const invalidImgPaths = ['https://image.tmdb.org/t/p/w500/sM33SANp9z6rXW8Itn7NnG1GOEs.jpg'];
+
 const movies: Array<Movie> = [
   {
     id: '1',
@@ -69,4 +72,4 @@ const movies: Array<Movie> = [
   },
 ];
 
-export default movies;
+export { movies, url, invalidImgPaths };

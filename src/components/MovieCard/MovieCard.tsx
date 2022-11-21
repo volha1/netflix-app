@@ -28,7 +28,7 @@ const MovieCard = ({ movie, onSelectMovie }: MovieCardProps): ReactElement => {
       <div className="movie-cover">
         <img className="movie-img" src={movie.imgPath} alt={movie.title} />
         <img className="menu-icon" src={menuIcon} alt="Menu" onClick={handleMenuIconClick} />
-        <Menu isVisible={isMenuVisible} onClose={toggleMenuVisible} />
+        <Menu isVisible={isMenuVisible} onClose={toggleMenuVisible} movieId={movie.id} />
       </div>
       <div className="title-wrapper">
         <p className="card-title">{movie.title}</p>

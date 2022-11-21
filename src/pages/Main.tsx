@@ -1,4 +1,5 @@
 import React, { ReactElement, useState, useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ErrorBoundary from '../components/ErrorBoundary/index';
 import Filter from '../components/Filter/index';
 import Footer from '../components/Footer/index';
@@ -13,6 +14,7 @@ import Movie from '../entity/Movie';
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
+import getMovies from '../api/moviesService';
 
 const Main = (): ReactElement => {
   const [isAddMovieFormVisible, toggleAddMovieForm] = useToggle();
@@ -22,15 +24,21 @@ const Main = (): ReactElement => {
   const [isDeleteMovieMessageVisible, toggleDeleteMovieMessage] = useToggle();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [sort, setSort] = useState('');
+  const dispatch = useDispatch();
+  const sortedMovies = useSelector((state) => state.movies);
 
-  const sortedArray = useMemo(() => {
-    if (sort) {
-      return moviesData.sort((a, b) => {
-        return (a[sort as keyof Movie] as string).localeCompare(b[sort as keyof Movie] as string);
-      });
-    }
-    return moviesData;
-  }, [sort]);
+  // const sortedMovies = useMemo(() => {
+  //   if (sort) {
+  //     return moviesData.sort((a, b) => {
+  //       return (a[sort as keyof Movie] as string).localeCompare(b[sort as keyof Movie] as string);
+  //     });
+  //   }
+  //   return moviesData;
+  // }, [sort]);
+
+  useEffect(() => {
+    dispatch(getMovies());
+  }, []);
 
   const handleMovieMenuFunctions = useMemo(() => {
     return [toggleEditMovieForm, toggleDeleteMovieMessage];
@@ -44,7 +52,7 @@ const Main = (): ReactElement => {
 
       <ErrorBoundary>
         <Context.Provider value={handleMovieMenuFunctions}>
-          <MoviesList movies={sortedArray} onSelectMovie={setSelectedMovie} />
+          <MoviesList movies={sortedMovies} onSelectMovie={setSelectedMovie} />
         </Context.Provider>
       </ErrorBoundary>
 
