@@ -1,34 +1,36 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useContext, useCallback } from 'react';
+import classNames from 'classnames';
+import Context from '../../context/Context';
 import CloseBtn from '../CloseBtn';
 import './style.scss';
 
 type SortingProps = {
-  visible: boolean;
-  handleClose: () => void;
-  deleteMovie: () => void;
-  editMovie: () => void;
+  isVisible: boolean;
+  onClose: () => void;
 };
 
-const Menu = ({ visible, handleClose, deleteMovie, editMovie }: SortingProps): ReactElement => {
-  const classes = ['menu'];
+const Menu = ({ isVisible, onClose }: SortingProps): ReactElement => {
+  const classes = classNames('menu', { active: isVisible });
+  const [handleEditMovieForm, handleDeleteMovieMessage] = useContext(Context);
 
-  if (visible) {
-    classes.push('active');
-  }
+  const handleEditBtn = useCallback((): void => {
+    onClose();
+    handleEditMovieForm();
+  }, []);
 
-  const handleEditBtn = (): void => {
-    handleClose();
-    editMovie();
-  };
-
-  const handleDeleteBtn = (): void => {
-    handleClose();
-    deleteMovie();
-  };
+  const handleDeleteBtn = useCallback((): void => {
+    onClose();
+    handleDeleteMovieMessage();
+  }, []);
 
   return (
-    <div className={classes.join(' ')}>
-      <CloseBtn handleClose={handleClose} />
+    <div
+      className={classes}
+      onClick={(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
+        event.stopPropagation();
+      }}
+    >
+      <CloseBtn onClose={onClose} />
       <ul>
         <li>
           <button type="button" onClick={handleEditBtn}>

@@ -4,14 +4,19 @@ import TopHeader from '../TopHeader';
 import './style.scss';
 
 type HeaderProps = {
-  handleAddMovieForm: () => void;
+  onAddMovieForm: () => void;
+  isVisible: boolean;
 };
 
-const Header = ({ handleAddMovieForm }: HeaderProps): ReactElement => {
+const Header = ({ onAddMovieForm, isVisible }: HeaderProps): ReactElement | null => {
+  if (!isVisible) {
+    return null;
+  }
+
   return (
     <div className="header">
       <div className="content">
-        <TopHeader handleMovieForm={handleAddMovieForm} />
+        <TopHeader onAddMovieForm={onAddMovieForm} />
         <SearchBar />
       </div>
     </div>

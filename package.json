@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/volbo/netflix-app#readme",
   "dependencies": {
+    "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -62,8 +63,16 @@
     "webpack-merge": "^5.8.0"
   },
   "lint-staged": {
-    "src/**/*.scss": ["prettier --write"],
-    "src/**/*.jsx": ["prettier --write", "eslint --fix"],
-    "src/**/*.tsx": ["prettier --write", "eslint --fix"]
+    "src/**/*.scss": [
+      "prettier --write"
+    ],
+    "src/**/*.jsx": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "src/**/*.tsx": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }

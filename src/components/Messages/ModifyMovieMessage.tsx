@@ -1,17 +1,17 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, memo } from 'react';
 import CloseBtn from '../CloseBtn/index';
 import successIcon from '../../common/assets/svg/success-icon.svg';
 import './style.scss';
 
 type ModifyMovieWindowProps = {
-  handleClose: () => void;
+  onClose: () => void;
   text: string;
 };
 
-const ModifyMovieWindow = ({ handleClose, text }: ModifyMovieWindowProps): ReactElement => {
+const ModifyMovieMessage = ({ onClose, text }: ModifyMovieWindowProps): ReactElement => {
   return (
     <div className="modal-window add-movie">
-      <CloseBtn handleClose={handleClose} />
+      <CloseBtn onClose={onClose} />
       <div className="icon-wrapper">
         <img className="menu-icon" src={successIcon} alt="Success" />
       </div>
@@ -21,4 +21,4 @@ const ModifyMovieWindow = ({ handleClose, text }: ModifyMovieWindowProps): React
   );
 };
 
-export default ModifyMovieWindow;
+export default memo(ModifyMovieMessage);
