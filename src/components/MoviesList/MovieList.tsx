@@ -1,7 +1,8 @@
 import React, { Dispatch, ReactElement, SetStateAction } from 'react';
+import { useSelector } from 'react-redux';
 import MovieCard from '../MovieCard';
-import './style.scss';
 import Movie from '../../entity/Movie';
+import './style.scss';
 
 type MoviesListProps = {
   movies: Movie[];
@@ -9,9 +10,13 @@ type MoviesListProps = {
 };
 
 const MoviesList = ({ movies, onSelectMovie }: MoviesListProps): ReactElement => {
+  const loadingStatus = useSelector((state) => {
+    return state.movies.loadingStatus;
+  });
+
   return (
     <div className="movies-list-wrapper content">
-      <p className="counter">{movies.length} movies found</p>
+      <p className="counter">{loadingStatus ? 'Loading...' : `${movies.length} movies found`}</p>
       {movies.length > 0 && (
         <div className="cards-list">
           {movies.map((movie: Movie) => {

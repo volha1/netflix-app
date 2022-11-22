@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import Context from '../../context/Context';
 import CloseBtn from '../CloseBtn';
+import { markMovieForDeletion } from '../../store/moviesSlice';
 import './style.scss';
-import { markForDeletion } from '../../store/actionCreators';
 
 type SortingProps = {
   isVisible: boolean;
@@ -23,7 +23,7 @@ const Menu = ({ isVisible, onClose, movieId }: SortingProps): ReactElement => {
   }, []);
 
   const handleDeleteBtn = useCallback((): void => {
-    dispatch(markForDeletion(movieId));
+    dispatch(markMovieForDeletion(movieId));
     onClose();
     handleDeleteMovieMessage();
   }, []);

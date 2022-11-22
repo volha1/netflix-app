@@ -1,20 +1,18 @@
 import React, { ReactElement, useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ErrorBoundary from '../components/ErrorBoundary/index';
 import Filter from '../components/Filter/index';
 import Footer from '../components/Footer/index';
 import Header from '../components/Header/index';
 import ModalWrapper from '../components/ModalWrapper/index';
 import MovieForm from '../components/Forms/index';
 import MoviesList from '../components/MoviesList';
-import moviesData from '../helpers/constants';
 import './style.scss';
 import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/index';
 import Movie from '../entity/Movie';
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
-import getMovies from '../api/moviesService';
+import { fetchMovies } from '../store/moviesSlice';
 
 const Main = (): ReactElement => {
   const [isAddMovieFormVisible, toggleAddMovieForm] = useToggle();
@@ -25,7 +23,13 @@ const Main = (): ReactElement => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [sort, setSort] = useState('');
   const dispatch = useDispatch();
-  const sortedMovies = useSelector((state) => state.movies);
+  const { errorStatus, movies } = useSelector((state) => {
+    return state.movies;
+  });
+
+  if (errorStatus) {
+    throw new Error();
+  }
 
   // const sortedMovies = useMemo(() => {
   //   if (sort) {
@@ -37,8 +41,8 @@ const Main = (): ReactElement => {
   // }, [sort]);
 
   useEffect(() => {
-    dispatch(getMovies());
-  }, []);
+    dispatch(fetchMovies());
+  }, [dispatch]);
 
   const handleMovieMenuFunctions = useMemo(() => {
     return [toggleEditMovieForm, toggleDeleteMovieMessage];
@@ -50,11 +54,9 @@ const Main = (): ReactElement => {
       <MovieDetails movie={selectedMovie} onSelectMovie={setSelectedMovie} />
       <Filter onSort={setSort} />
 
-      <ErrorBoundary>
-        <Context.Provider value={handleMovieMenuFunctions}>
-          <MoviesList movies={sortedMovies} onSelectMovie={setSelectedMovie} />
-        </Context.Provider>
-      </ErrorBoundary>
+      <Context.Provider value={handleMovieMenuFunctions}>
+        <MoviesList movies={movies} onSelectMovie={setSelectedMovie} />
+      </Context.Provider>
 
       <ModalWrapper isVisible={isAddMovieFormVisible}>
         <MovieForm actionText="Add" onCloseMovieForm={toggleAddMovieForm} onShowMovieMessage={toggleAddMovieMessage} />

@@ -1,8 +1,8 @@
 import React, { ReactElement, memo, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CloseBtn from '../CloseBtn/index';
+import { deleteMovieById } from '../../store/moviesSlice';
 import './style.scss';
-import { deleteMovie } from '../../store/actionCreators';
 
 type DeleteMovieWindowProps = {
   onClose: () => void;
@@ -10,11 +10,14 @@ type DeleteMovieWindowProps = {
 
 const DeleteMovieMessage = ({ onClose }: DeleteMovieWindowProps): ReactElement => {
   const dispatch = useDispatch();
+  const movieIdForDeletion = useSelector((state) => {
+    return state.movies.movieIdForDeletion;
+  });
 
   const handlehandleClick = useCallback((): void => {
-    dispatch(deleteMovie());
+    dispatch(deleteMovieById(movieIdForDeletion));
     onClose();
-  }, []);
+  }, [movieIdForDeletion]);
 
   return (
     <div className="modal-window">
