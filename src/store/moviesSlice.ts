@@ -4,6 +4,11 @@ import { getAll, deleteById } from '../api/moviesService';
 const fetchMovies = createAsyncThunk('movies/fetchMovies', getAll);
 const deleteMovieById = createAsyncThunk('movies/deleteById', deleteById);
 
+const setError = (state): void => {
+  state.loadingStatus = false;
+  state.errorStatus = true;
+};
+
 const moviesSlice = createSlice({
   name: 'movies',
   initialState: {
@@ -31,14 +36,12 @@ const moviesSlice = createSlice({
       state.loadingStatus = false;
       state.movies = action.payload;
     },
-    [fetchMovies.rejected]: (state) => {
-      state.loadingStatus = false;
-      state.errorStatus = true;
-    },
+    [fetchMovies.rejected]: setError,
+    [deleteMovieById.rejected]: setError,
   },
 });
 
-const { addMovies, deleteMovie, markMovieForDeletion } = moviesSlice.actions;
+const { deleteMovie, markMovieForDeletion } = moviesSlice.actions;
 
-export { fetchMovies, deleteMovieById, addMovies, deleteMovie, markMovieForDeletion };
+export { fetchMovies, deleteMovieById, deleteMovie, markMovieForDeletion };
 export default moviesSlice.reducer;

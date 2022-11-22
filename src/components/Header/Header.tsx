@@ -9,14 +9,18 @@ type HeaderProps = {
 };
 
 const Header = ({ onAddMovieForm, isVisible }: HeaderProps): ReactElement | null => {
-  return isVisible ? (
+  if (!isVisible) {
+    return null;
+  }
+
+  return (
     <div className="header">
       <div className="content">
         <TopHeader onAddMovieForm={onAddMovieForm} />
         <SearchBar />
       </div>
     </div>
-  ) : null;
+  );
 };
 
 export default Header;
