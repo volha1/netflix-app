@@ -5,6 +5,7 @@ import menuIcon from '../../common/assets/svg/menu-icon.svg';
 import Menu from '../Menu';
 import { getYear } from '../../helpers/utils';
 import useToggle from '../../hooks/useToggle';
+import setDefaultImage from '../../helpers/setDefaultImage';
 
 type MovieCardProps = {
   movie: Movie;
@@ -26,7 +27,7 @@ const MovieCard = ({ movie, onSelectMovie }: MovieCardProps): ReactElement => {
   return (
     <div className="card" onClick={handleCardClick}>
       <div className="movie-cover">
-        <img className="movie-img" src={movie.imgPath} alt={movie.title} />
+        <img className="movie-img" src={movie.imgPath} alt={movie.title} onError={setDefaultImage} />
         <img className="menu-icon" src={menuIcon} alt="Menu" onClick={handleMenuIconClick} />
         <Menu isVisible={isMenuVisible} onClose={toggleMenuVisible} movieId={movie.id} />
       </div>

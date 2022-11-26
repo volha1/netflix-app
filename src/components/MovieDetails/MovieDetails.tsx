@@ -2,6 +2,7 @@ import React, { ReactElement, useCallback } from 'react';
 import searchIcon from '../../common/assets/svg/search-icon.svg';
 import Movie from '../../entity/Movie';
 import { getMovieDuration, getYear } from '../../helpers/utils';
+import setDefaultImage from '../../helpers/setDefaultImage';
 import './style.scss';
 
 type MovieDetailsProps = {
@@ -23,7 +24,7 @@ const MovieDetails = ({ movie, onSelectMovie }: MovieDetailsProps): ReactElement
             <img className="search-icon" src={searchIcon} alt="Search" onClick={handleSeacrhIconClick} />
           </div>
           <div className="details-wrapper">
-            <img className="movie-img" src={movie.imgPath} alt={movie.title} />
+            <img className="movie-img" src={movie.imgPath} alt={movie.title} onError={setDefaultImage} />
             <div className="movie-description">
               <div className="title-wrapper">
                 <h1 className="title">

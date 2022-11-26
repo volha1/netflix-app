@@ -14,11 +14,11 @@
 
   .movie-cover {
     position: relative;
-    width: 322px;
+    width: $card-width;
     height: 455px;
 
     .movie-img {
-      width: 322px;
+      width: $card-width;
       height: 455px;
       margin-bottom: 20px;
     }
@@ -40,6 +40,7 @@
     opacity: 0.7;
     margin-top: 10px;
     margin-bottom: 5px;
+    width: 322px;
 
     .card-title {
       font-size: 18px;
@@ -53,6 +54,7 @@
   }
 
   .genres {
+    width: $card-width;
     font-size: 14px;
     opacity: 0.7;
   }

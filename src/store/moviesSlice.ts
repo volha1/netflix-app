@@ -1,10 +1,21 @@
+/* eslint-disable import/no-cycle */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getAll, deleteById } from '../api/moviesService';
+import { getAll, deleteById, getAllSorted } from '../api/moviesService';
+import Movie from '../entity/Movie';
 
 const fetchMovies = createAsyncThunk('movies/fetchMovies', getAll);
 const deleteMovieById = createAsyncThunk('movies/deleteById', deleteById);
+const sortMovies = createAsyncThunk('movies/sortMovies', getAllSorted);
 
-const setError = (state): void => {
+type StateType = {
+  movies: Movie[];
+  movieIdForDeletion: string;
+  loadingStatus: boolean;
+  errorStatus: boolean;
+  sort: { sortBy: string; sortOrder: string; filter: string };
+};
+
+const setError = (state: StateType): void => {
   state.loadingStatus = false;
   state.errorStatus = true;
 };
@@ -16,6 +27,7 @@ const moviesSlice = createSlice({
     movieIdForDeletion: '',
     loadingStatus: false,
     errorStatus: false,
+    sort: {},
   },
   reducers: {
     addMovies(state, action) {
@@ -25,14 +37,19 @@ const moviesSlice = createSlice({
       state.movieIdForDeletion = action.payload;
     },
     deleteMovie(state) {
-      state.movies = state.movies.filter((movie) => movie.id !== state.movieIdForDeletion);
+      state.movies = state.movies.filter((movie: Movie) => {
+        return movie.id !== state.movieIdForDeletion;
+      });
+    },
+    setSort(state, action) {
+      state.sort = { ...state.sort, ...action.payload };
     },
   },
   extraReducers: {
-    [fetchMovies.pending]: (state) => {
+    [fetchMovies.pending]: (state: StateType) => {
       state.loadingStatus = true;
     },
-    [fetchMovies.fulfilled]: (state, action) => {
+    [fetchMovies.fulfilled]: (state: StateType, action: { payload: Movie[] }) => {
       state.loadingStatus = false;
       state.movies = action.payload;
     },
@@ -41,7 +58,7 @@ const moviesSlice = createSlice({
   },
 });
 
-const { deleteMovie, markMovieForDeletion } = moviesSlice.actions;
+const { deleteMovie, markMovieForDeletion, addMovies, setSort } = moviesSlice.actions;
 
-export { fetchMovies, deleteMovieById, deleteMovie, markMovieForDeletion };
+export { fetchMovies, deleteMovieById, deleteMovie, markMovieForDeletion, sortMovies, addMovies, setSort };
 export default moviesSlice.reducer;

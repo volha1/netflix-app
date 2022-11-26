@@ -6,13 +6,12 @@ import Header from '../components/Header/index';
 import ModalWrapper from '../components/ModalWrapper/index';
 import MovieForm from '../components/Forms/index';
 import MoviesList from '../components/MoviesList';
-import './style.scss';
 import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/index';
-import Movie from '../entity/Movie';
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
 import { fetchMovies } from '../store/moviesSlice';
+import './style.scss';
 
 const Main = (): ReactElement => {
   const [isAddMovieFormVisible, toggleAddMovieForm] = useToggle();
@@ -21,7 +20,6 @@ const Main = (): ReactElement => {
   const [isEditMovieMessageVisible, toggleEditMovieMessage] = useToggle();
   const [isDeleteMovieMessageVisible, toggleDeleteMovieMessage] = useToggle();
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const [sort, setSort] = useState('');
   const dispatch = useDispatch();
   const { errorStatus, movies } = useSelector((state) => {
     return state.movies;
@@ -30,15 +28,6 @@ const Main = (): ReactElement => {
   if (errorStatus) {
     throw new Error();
   }
-
-  // const sortedMovies = useMemo(() => {
-  //   if (sort) {
-  //     return moviesData.sort((a, b) => {
-  //       return (a[sort as keyof Movie] as string).localeCompare(b[sort as keyof Movie] as string);
-  //     });
-  //   }
-  //   return moviesData;
-  // }, [sort]);
 
   useEffect(() => {
     dispatch(fetchMovies());
@@ -52,7 +41,7 @@ const Main = (): ReactElement => {
     <div className="main">
       <Header onAddMovieForm={toggleAddMovieForm} isVisible={!selectedMovie} />
       <MovieDetails movie={selectedMovie} onSelectMovie={setSelectedMovie} />
-      <Filter onSort={setSort} />
+      <Filter />
 
       <Context.Provider value={handleMovieMenuFunctions}>
         <MoviesList movies={movies} onSelectMovie={setSelectedMovie} />
