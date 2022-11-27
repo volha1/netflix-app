@@ -1,6 +1,4 @@
-import React, { ReactElement, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { sortMovies, setSort } from '../../store/moviesSlice';
+import React, { ReactElement, Dispatch, SetStateAction, useCallback } from 'react';
 import './style.scss';
 
 const sortOptions = {
@@ -10,17 +8,26 @@ const sortOptions = {
   vote_average_desc: { sortBy: 'vote_average', sortOrder: 'desc' },
 };
 
-const Sorting = (): ReactElement => {
-  const dispatch = useDispatch();
+type ParamsProps = { filter: string; sortOrder: string; sortBy: string };
+type SortingProps = {
+  onSort: Dispatch<SetStateAction<ParamsProps>>;
+  params: ParamsProps;
+};
 
-  const handleSelect = useCallback((event): void => {
-    dispatch(
-      setSort({
-        ...sortOptions[event.target.value],
-      })
-    );
-    dispatch(sortMovies({}));
-  }, []);
+const Sorting = ({ onSort, params }: SortingProps): ReactElement => {
+  const handleSelect = useCallback(
+    (event: { target: { value: string } }): void => {
+      const sorting = event.target.value;
+      onSort((prevState) => {
+        return {
+          ...prevState,
+          sortBy: sortOptions[sorting].sortBy,
+          sortOrder: sortOptions[sorting].sortOrder,
+        };
+      });
+    },
+    [params.sortOrder, params.sortBy]
+  );
 
   return (
     <div className="sorting">

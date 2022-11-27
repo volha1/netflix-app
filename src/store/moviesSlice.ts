@@ -41,9 +41,6 @@ const moviesSlice = createSlice({
         return movie.id !== state.movieIdForDeletion;
       });
     },
-    setSort(state, action) {
-      state.sort = { ...state.sort, ...action.payload };
-    },
   },
   extraReducers: {
     [fetchMovies.pending]: (state: StateType) => {
@@ -58,7 +55,7 @@ const moviesSlice = createSlice({
   },
 });
 
-const { deleteMovie, markMovieForDeletion, addMovies, setSort } = moviesSlice.actions;
+const { deleteMovie, markMovieForDeletion, addMovies } = moviesSlice.actions;
 
-export { fetchMovies, deleteMovieById, deleteMovie, markMovieForDeletion, sortMovies, addMovies, setSort };
+export { fetchMovies, deleteMovieById, deleteMovie, markMovieForDeletion, sortMovies, addMovies };
 export default moviesSlice.reducer;

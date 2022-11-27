@@ -1,28 +1,31 @@
-import React, { ReactElement, useState, useCallback } from 'react';
+import React, { ReactElement, Dispatch, SetStateAction, useCallback } from 'react';
 import classNames from 'classnames';
-import { useDispatch } from 'react-redux';
-import { sortMovies, setSort } from '../../store/moviesSlice';
 import './style.scss';
 
-const genres = ['All', 'Documentary', 'Comedy', 'Horror', 'Crime'];
+type ParamsProps = { filter: string; sortOrder: string; sortBy: string };
+type GenreFilterProps = {
+  onFilter: Dispatch<SetStateAction<ParamsProps>>;
+  params: ParamsProps;
+  genres: string[];
+};
 
-const GenreFilter = (): ReactElement => {
-  const [genre, setGenre] = useState(genres[0]);
-  const dispatch = useDispatch();
-
-  const handleClick = useCallback((event) => {
-    setGenre(event.target.text);
-    const genreToStore = event.target.text === genres[0] ? undefined : event.target.text;
-    dispatch(setSort({ filter: genreToStore }));
-    dispatch(sortMovies({}));
-  }, []);
+const GenreFilter = ({ onFilter, params, genres }: GenreFilterProps): ReactElement => {
+  const handleClick = useCallback(
+    (event) => {
+      const genreParam: string = event.target.text === genres[0] ? undefined : event.target.text;
+      onFilter((prevState: ParamsProps) => {
+        return { ...prevState, filter: genreParam };
+      });
+    },
+    [params.filter]
+  );
 
   return (
     <ul className="genres-list" onClick={handleClick}>
       {genres.map((item) => {
         return (
           <li key={item}>
-            <a href="#" className={classNames({ active: genre === item })}>
+            <a href="#" className={classNames({ active: params.filter === item })}>
               {item}
             </a>
           </li>

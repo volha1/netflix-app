@@ -40,7 +40,8 @@
     "react/button-has-type": ["error", {"reset": true}],
     "arrow-body-style": ["error", "always"],
     "no-param-reassign": ["error", { "props": false }],
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "react-hooks/exhaustive-deps": "off"
   },
   "settings": {
     "import/parsers": {

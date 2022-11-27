@@ -37,17 +37,16 @@ const deleteById = async (id: string, { dispatch }): Promise<void> => {
   dispatch(deleteMovie());
 };
 
-const getAllSorted = async (_, { dispatch, getState }): Promise<Movie[]> => {
-  const { sort } = getState().movies;
-  const params = [];
+const getAllSorted = async (params, { dispatch }): Promise<void> => {
+  const requestParams = [];
 
-  for (const [key, value] of Object.entries(sort)) {
+  for (const [key, value] of Object.entries(params)) {
     if (value) {
-      params.push(`${key}=${value}`);
+      requestParams.push(`${key}=${value}`);
     }
   }
 
-  const response = await fetch(`${url}/movies?${params.join('&')}`);
+  const response = await fetch(`${url}/movies?${requestParams.join('&')}`);
 
   if (!response.ok) {
     throw new Error();
