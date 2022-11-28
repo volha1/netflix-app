@@ -8,13 +8,14 @@ const sortOptions = {
   vote_average_desc: { sortBy: 'vote_average', sortOrder: 'desc' },
 };
 
-type ParamsProps = { filter: string; sortOrder: string; sortBy: string };
+type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string };
 type SortingProps = {
   onSort: Dispatch<SetStateAction<ParamsProps>>;
   params: ParamsProps;
 };
 
 const Sorting = ({ onSort, params }: SortingProps): ReactElement => {
+  console.log(params);
   const handleSelect = useCallback(
     (event: { target: { value: string } }): void => {
       const sorting = event.target.value;

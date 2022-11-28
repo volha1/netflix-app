@@ -8,7 +8,7 @@ import './style.scss';
 const genres = ['All', 'Documentary', 'Comedy', 'Horror', 'Crime'];
 
 const Filter = (): ReactElement => {
-  const [params, setParams] = useState({ filter: genres[0], sortOrder: '', sortBy: '' });
+  const [params, setParams] = useState({ filter: undefined, sortOrder: '', sortBy: '' });
   const dispatch = useDispatch();
 
   useEffect(() => {

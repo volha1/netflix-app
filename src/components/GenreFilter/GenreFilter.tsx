@@ -2,7 +2,7 @@ import React, { ReactElement, Dispatch, SetStateAction, useCallback } from 'reac
 import classNames from 'classnames';
 import './style.scss';
 
-type ParamsProps = { filter: string; sortOrder: string; sortBy: string };
+type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string };
 type GenreFilterProps = {
   onFilter: Dispatch<SetStateAction<ParamsProps>>;
   params: ParamsProps;
@@ -23,9 +23,10 @@ const GenreFilter = ({ onFilter, params, genres }: GenreFilterProps): ReactEleme
   return (
     <ul className="genres-list" onClick={handleClick}>
       {genres.map((item) => {
+        const genreParam = params.filter === undefined ? genres[0] : params.filter;
         return (
           <li key={item}>
-            <a href="#" className={classNames({ active: params.filter === item })}>
+            <a href="#" className={classNames({ active: genreParam === item })}>
               {item}
             </a>
           </li>
