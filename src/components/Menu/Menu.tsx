@@ -3,27 +3,29 @@ import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 import Context from '../../context/Context';
 import CloseBtn from '../CloseBtn';
-import { markMovieForDeletion } from '../../store/moviesSlice';
+import { markMovieForDeletion, saveMovieForEditing } from '../../store/moviesSlice';
 import './style.scss';
+import Movie from '../../entity/Movie';
 
 type SortingProps = {
   isVisible: boolean;
   onClose: () => void;
-  movieId: string;
+  movie: Movie;
 };
 
-const Menu = ({ isVisible, onClose, movieId }: SortingProps): ReactElement => {
+const Menu = ({ isVisible, onClose, movie }: SortingProps): ReactElement => {
   const classes = classNames('menu', { active: isVisible });
   const [handleEditMovieForm, handleDeleteMovieMessage] = useContext(Context);
   const dispatch = useDispatch();
 
   const handleEditBtn = useCallback((): void => {
+    dispatch(saveMovieForEditing(movie));
     onClose();
     handleEditMovieForm();
   }, []);
 
   const handleDeleteBtn = useCallback((): void => {
-    dispatch(markMovieForDeletion(movieId));
+    dispatch(markMovieForDeletion(movie.id));
     onClose();
     handleDeleteMovieMessage();
   }, []);

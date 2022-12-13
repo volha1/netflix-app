@@ -34,7 +34,7 @@ const MovieDetails = ({ movie, onSelectMovie }: MovieDetailsProps): ReactElement
               </div>
               <p className="genres">{movie.genres.join(', ')}</p>
               <p className="movie-characteristics">
-                <span>{getYear(movie.year)}</span>
+                <span>{getYear(movie.releaseDate)}</span>
                 {getMovieDuration(movie.runtime)}
               </p>
               <p className="overview">{movie.overview}</p>

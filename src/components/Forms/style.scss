@@ -17,6 +17,12 @@
     letter-spacing: 1px;
   }
 
+  span {
+    font-size: 10px;
+    color: red;
+    text-transform: none;
+  }
+
   input,
   select,
   textarea {
@@ -35,6 +41,10 @@
     width: 500px;
     height: 35px;
     margin-right: 50px;
+  }
+
+  .error-field {
+    border: 1px solid red;
   }
 
   .right-field {

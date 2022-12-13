@@ -1,5 +1,5 @@
 const getYear = (date: string): string => {
-  return date.substring(0, 4);
+  return date?.substring(0, 4);
 };
 
 const padToTwoDigits = (number: number): string => {
@@ -12,4 +12,14 @@ const getMovieDuration = (totalMinutes: number): string => {
   return `${hours}h ${padToTwoDigits(minutes)}m`;
 };
 
-export { getYear, getMovieDuration };
+const isValidUrl = (url: string): boolean => {
+  let link;
+  try {
+    link = new URL(url);
+  } catch (_) {
+    return false;
+  }
+  return link.protocol === "http:" || link.protocol === "https:";
+}
+
+export { getYear, getMovieDuration, isValidUrl };

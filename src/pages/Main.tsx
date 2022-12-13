@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect, useMemo } from 'react';
+import React, { ReactElement, useState, useEffect, useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Filter from '../components/Filter/index';
 import Footer from '../components/Footer/index';
@@ -10,10 +10,19 @@ import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/i
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
-import { fetchMovies } from '../store/moviesSlice';
+import { getAllMovies, createMovie, updateMovie } from '../store/moviesSlice';
 import './style.scss';
 
 const Main = (): ReactElement => {
+  const initialMovieState = {
+    title: '',
+    imgPath: '',
+    voteAverage: '',
+    genres: [],
+    runtime: '',
+    overview: '',
+    releaseDate: '',
+  };
   const [isAddMovieFormVisible, toggleAddMovieForm] = useToggle();
   const [isEditMovieFormVisible, toggleEditMovieForm] = useToggle();
   const [isAddMovieMessageVisible, toggleAddMovieMessage] = useToggle();
@@ -21,7 +30,7 @@ const Main = (): ReactElement => {
   const [isDeleteMovieMessageVisible, toggleDeleteMovieMessage] = useToggle();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const dispatch = useDispatch();
-  const { errorStatus, movies } = useSelector((state) => {
+  const { errorStatus, movies, movieForEditing } = useSelector((state) => {
     return state.movies;
   });
 
@@ -29,8 +38,24 @@ const Main = (): ReactElement => {
     throw new Error();
   }
 
+  const handleAddMovieFormSubmit = useCallback(async (movie: Movie): Promise<void> => {
+    dispatch(createMovie(movie)).then(() => {
+      dispatch(getAllMovies());
+      toggleAddMovieForm();
+      toggleAddMovieMessage();
+    });
+  }, []);
+
+  const handleEditMovieFormSubmit = useCallback(async (movie: Movie): Promise<void> => {
+    dispatch(updateMovie(movie)).then(() => {
+      dispatch(getAllMovies());
+      toggleEditMovieForm();
+      toggleEditMovieMessage();
+    });
+  }, []);
+
   useEffect(() => {
-    dispatch(fetchMovies());
+    dispatch(getAllMovies());
   }, [dispatch]);
 
   const handleMovieMenuFunctions = useMemo(() => {
@@ -48,13 +73,19 @@ const Main = (): ReactElement => {
       </Context.Provider>
 
       <ModalWrapper isVisible={isAddMovieFormVisible}>
-        <MovieForm actionText="Add" onCloseMovieForm={toggleAddMovieForm} onShowMovieMessage={toggleAddMovieMessage} />
+        <MovieForm
+          actionText="Add"
+          movie={initialMovieState}
+          onCloseMovieForm={toggleAddMovieForm}
+          onSubmit={handleAddMovieFormSubmit}
+        />
       </ModalWrapper>
       <ModalWrapper isVisible={isEditMovieFormVisible}>
         <MovieForm
           actionText="Edit"
+          movie={movieForEditing}
           onCloseMovieForm={toggleEditMovieForm}
-          onShowMovieMessage={toggleEditMovieMessage}
+          onSubmit={handleEditMovieFormSubmit}
         />
       </ModalWrapper>
       <ModalWrapper isVisible={isAddMovieMessageVisible}>

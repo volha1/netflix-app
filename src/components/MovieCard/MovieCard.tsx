@@ -29,11 +29,11 @@ const MovieCard = ({ movie, onSelectMovie }: MovieCardProps): ReactElement => {
       <div className="movie-cover">
         <img className="movie-img" src={movie.imgPath} alt={movie.title} onError={setDefaultImage} />
         <img className="menu-icon" src={menuIcon} alt="Menu" onClick={handleMenuIconClick} />
-        <Menu isVisible={isMenuVisible} onClose={toggleMenuVisible} movieId={movie.id} />
+        <Menu isVisible={isMenuVisible} onClose={toggleMenuVisible} movie={movie} />
       </div>
       <div className="title-wrapper">
         <p className="card-title">{movie.title}</p>
-        <p className="year">{getYear(movie.year)}</p>
+        <p className="year">{getYear(movie.releaseDate)}</p>
       </div>
       <p className="genres">{movie.genres.join(', ')}</p>
     </div>

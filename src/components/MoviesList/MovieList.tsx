@@ -14,6 +14,10 @@ const MoviesList = ({ movies, onSelectMovie }: MoviesListProps): ReactElement =>
     return state.movies.loadingStatus;
   });
 
+  if (!movies) {
+    return null;
+  }
+
   return (
     <div className="movies-list-wrapper content">
       <p className="counter">{loadingStatus ? 'Loading...' : `${movies.length} movies found`}</p>
