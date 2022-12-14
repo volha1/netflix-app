@@ -1,4 +1,6 @@
-import React, { ReactElement, memo, Dispatch, SetStateAction, useCallback } from 'react';
+import React, { ReactElement, memo, Dispatch, SetStateAction, useCallback, useContext } from 'react';
+import { useDispatch } from 'react-redux';
+import Context from '../../context/Context';
 import './style.scss';
 import Movie from '../../entity/Movie';
 import menuIcon from '../../common/assets/svg/menu-icon.svg';
@@ -6,6 +8,7 @@ import Menu from '../Menu';
 import { getYear } from '../../helpers/utils';
 import useToggle from '../../hooks/useToggle';
 import setDefaultImage from '../../helpers/setDefaultImage';
+import { markMovieForDeletion, saveMovieForEditing } from '../../store/moviesSlice';
 
 type MovieCardProps = {
   movie: Movie;
@@ -14,22 +17,39 @@ type MovieCardProps = {
 
 const MovieCard = ({ movie, onSelectMovie }: MovieCardProps): ReactElement => {
   const [isMenuVisible, toggleMenuVisible] = useToggle();
+  const [handleEditMovieForm, handleDeleteMovieMessage] = useContext(Context);
+  const dispatch = useDispatch();
 
-  const handleMenuIconClick = useCallback((event: Event): void => {
-    event.stopPropagation();
-    toggleMenuVisible();
-  }, []);
+  const handleMenuIconClick = useCallback(
+    (event: Event): void => {
+      event.stopPropagation();
+      toggleMenuVisible();
+    },
+    [movie]
+  );
 
   const handleCardClick = useCallback((): void => {
     onSelectMovie(movie);
-  }, []);
+  }, [movie]);
+
+  const handleEditBtn = useCallback((): void => {
+    dispatch(saveMovieForEditing(movie));
+    toggleMenuVisible();
+    handleEditMovieForm();
+  }, [movie]);
+
+  const handleDeleteBtn = useCallback((): void => {
+    dispatch(markMovieForDeletion(movie.id));
+    toggleMenuVisible();
+    handleDeleteMovieMessage();
+  }, [movie]);
 
   return (
     <div className="card" onClick={handleCardClick}>
       <div className="movie-cover">
         <img className="movie-img" src={movie.imgPath} alt={movie.title} onError={setDefaultImage} />
         <img className="menu-icon" src={menuIcon} alt="Menu" onClick={handleMenuIconClick} />
-        <Menu isVisible={isMenuVisible} onClose={toggleMenuVisible} movie={movie} />
+        <Menu isVisible={isMenuVisible} onClose={toggleMenuVisible} onDelete={handleDeleteBtn} onEdit={handleEditBtn} />
       </div>
       <div className="title-wrapper">
         <p className="card-title">{movie.title}</p>

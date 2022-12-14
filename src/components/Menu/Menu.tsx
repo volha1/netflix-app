@@ -1,34 +1,17 @@
-import React, { ReactElement, useContext, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { ReactElement } from 'react';
 import classNames from 'classnames';
-import Context from '../../context/Context';
 import CloseBtn from '../CloseBtn';
-import { markMovieForDeletion, saveMovieForEditing } from '../../store/moviesSlice';
 import './style.scss';
-import Movie from '../../entity/Movie';
 
 type SortingProps = {
   isVisible: boolean;
   onClose: () => void;
-  movie: Movie;
+  onDelete: () => void;
+  onEdit: () => void;
 };
 
-const Menu = ({ isVisible, onClose, movie }: SortingProps): ReactElement => {
+const Menu = ({ isVisible, onClose, onDelete, onEdit }: SortingProps): ReactElement => {
   const classes = classNames('menu', { active: isVisible });
-  const [handleEditMovieForm, handleDeleteMovieMessage] = useContext(Context);
-  const dispatch = useDispatch();
-
-  const handleEditBtn = useCallback((): void => {
-    dispatch(saveMovieForEditing(movie));
-    onClose();
-    handleEditMovieForm();
-  }, []);
-
-  const handleDeleteBtn = useCallback((): void => {
-    dispatch(markMovieForDeletion(movie.id));
-    onClose();
-    handleDeleteMovieMessage();
-  }, []);
 
   return (
     <div
@@ -40,12 +23,12 @@ const Menu = ({ isVisible, onClose, movie }: SortingProps): ReactElement => {
       <CloseBtn onClose={onClose} />
       <ul>
         <li>
-          <button type="button" onClick={handleEditBtn}>
+          <button type="button" onClick={onEdit}>
             Edit
           </button>
         </li>
         <li>
-          <button type="button" onClick={handleDeleteBtn}>
+          <button type="button" onClick={onDelete}>
             Delete
           </button>
         </li>

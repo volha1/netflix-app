@@ -8,8 +8,7 @@ import './style.scss';
 
 const genreValues = ['All', ...genres];
 
-const Filter = (): ReactElement => {
-  const [params, setParams] = useState({ filter: undefined, sortOrder: '', sortBy: '' });
+const Filter = ({ params, setParams }): ReactElement => {
   const dispatch = useDispatch();
 
   useEffect(() => {

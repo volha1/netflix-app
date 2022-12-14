@@ -16,30 +16,6 @@ const setError = (state: StateType): void => {
   state.errorStatus = true;
 };
 
-const getAllMovies = createAsyncThunk('movies/fetchMovies', async (): Promise<Movie[]> => {
-  const response = await fetch(`${url}/movies`);
-
-  if (!response.ok) {
-    throw new Error();
-  }
-
-  const json = await response.json();
-  const movies = json.data.map((movie) => {
-    return {
-      id: movie.id,
-      title: movie.title,
-      voteAverage: movie.vote_average,
-      releaseDate: movie.release_date,
-      imgPath: movie.poster_path,
-      genres: movie.genres,
-      overview: movie.overview,
-      runtime: movie.runtime,
-    };
-  });
-
-  return movies;
-});
-
 const deleteMovieById = createAsyncThunk('movies/deleteById', async (id: string): Promise<void> => {
   const response = await fetch(`${url}/movies/${id}`, { method: 'DELETE' });
 
@@ -48,7 +24,7 @@ const deleteMovieById = createAsyncThunk('movies/deleteById', async (id: string)
   }
 });
 
-const getAllMoviesSorted = createAsyncThunk('movies/sortMovies', async (params, { dispatch }): Promise<void> => {
+const getAllMoviesSorted = createAsyncThunk('movies/sortMovies', async (params): Promise<void> => {
   const requestParams = [];
 
   for (const [key, value] of Object.entries(params)) {
@@ -101,7 +77,7 @@ const createMovie = createAsyncThunk('movies/createMovie', async (movie: Movie):
   });
 
   if (!response.ok) {
-    throw new Error();
+    throw new Error(response.statusText);
   }
 });
 
@@ -153,28 +129,25 @@ const moviesSlice = createSlice({
     },
   },
   extraReducers: {
-    [getAllMovies.pending]: (state: StateType) => {
+    [getAllMoviesSorted.pending]: (state: StateType) => {
       state.loadingStatus = true;
     },
-    [getAllMovies.fulfilled]: (state: StateType, action: { payload: Movie[] }) => {
+    [getAllMoviesSorted.fulfilled]: (state: StateType, action: { payload: Movie[] }) => {
       state.loadingStatus = false;
       state.movies = action.payload;
     },
-    [getAllMovies.rejected]: setError,
+    [getAllMoviesSorted.rejected]: setError,
     [deleteMovieById.fulfilled]: (state: StateType) => {
       state.movies = state.movies.filter((movie: Movie) => {
         return movie.id !== state.movieIdForDeletion;
       });
     },
     [deleteMovieById.rejected]: setError,
-    [getAllMoviesSorted.fulfilled]: (state: StateType, action: { payload: Movie[] }) => {
-      state.loadingStatus = false;
-      state.movies = action.payload;
-    },
+    [createMovie.rejected]: setError,
   },
 });
 
 const { markMovieForDeletion, saveMovieForEditing, addMovies } = moviesSlice.actions;
 
-export { markMovieForDeletion, addMovies, saveMovieForEditing, getAllMovies, deleteMovieById, getAllMoviesSorted, createMovie, updateMovie };
+export { markMovieForDeletion, addMovies, saveMovieForEditing, deleteMovieById, getAllMoviesSorted, createMovie, updateMovie };
 export default moviesSlice.reducer;

@@ -10,7 +10,8 @@ import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/i
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
-import { getAllMovies, createMovie, updateMovie } from '../store/moviesSlice';
+import { createMovie, updateMovie, getAllMoviesSorted } from '../store/moviesSlice';
+import Movie from '../entity/Movie';
 import './style.scss';
 
 const Main = (): ReactElement => {
@@ -28,6 +29,7 @@ const Main = (): ReactElement => {
   const [isAddMovieMessageVisible, toggleAddMovieMessage] = useToggle();
   const [isEditMovieMessageVisible, toggleEditMovieMessage] = useToggle();
   const [isDeleteMovieMessageVisible, toggleDeleteMovieMessage] = useToggle();
+  const [params, setParams] = useState({ filter: undefined, sortOrder: '', sortBy: '' });
   const [selectedMovie, setSelectedMovie] = useState(null);
   const dispatch = useDispatch();
   const { errorStatus, movies, movieForEditing } = useSelector((state) => {
@@ -38,24 +40,30 @@ const Main = (): ReactElement => {
     throw new Error();
   }
 
-  const handleAddMovieFormSubmit = useCallback(async (movie: Movie): Promise<void> => {
-    dispatch(createMovie(movie)).then(() => {
-      dispatch(getAllMovies());
-      toggleAddMovieForm();
-      toggleAddMovieMessage();
-    });
-  }, []);
+  const handleAddMovieFormSubmit = useCallback(
+    async (movie: Movie): Promise<void> => {
+      dispatch(createMovie(movie)).then(() => {
+        dispatch(getAllMoviesSorted(params));
+        toggleAddMovieForm();
+        toggleAddMovieMessage();
+      });
+    },
+    [params.filter, params.sortOrder]
+  );
 
-  const handleEditMovieFormSubmit = useCallback(async (movie: Movie): Promise<void> => {
-    dispatch(updateMovie(movie)).then(() => {
-      dispatch(getAllMovies());
-      toggleEditMovieForm();
-      toggleEditMovieMessage();
-    });
-  }, []);
+  const handleEditMovieFormSubmit = useCallback(
+    async (movie: Movie): Promise<void> => {
+      dispatch(updateMovie(movie)).then(() => {
+        dispatch(getAllMoviesSorted(params));
+        toggleEditMovieForm();
+        toggleEditMovieMessage();
+      });
+    },
+    [params.filter, params.sortOrder]
+  );
 
   useEffect(() => {
-    dispatch(getAllMovies());
+    dispatch(getAllMoviesSorted(params));
   }, [dispatch]);
 
   const handleMovieMenuFunctions = useMemo(() => {
@@ -66,7 +74,7 @@ const Main = (): ReactElement => {
     <div className="main">
       <Header onAddMovieForm={toggleAddMovieForm} isVisible={!selectedMovie} />
       <MovieDetails movie={selectedMovie} onSelectMovie={setSelectedMovie} />
-      <Filter />
+      <Filter params={params} setParams={setParams} />
 
       <Context.Provider value={handleMovieMenuFunctions}>
         <MoviesList movies={movies} onSelectMovie={setSelectedMovie} />
