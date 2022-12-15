@@ -10,7 +10,8 @@ import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/i
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
-import { createMovie, updateMovie, getAllMoviesSorted } from '../store/moviesSlice';
+import { createMovie, updateMovie, getAllMoviesSorted, clearError } from '../store/moviesSlice';
+import { AppDispatch } from '../store';
 import Movie from '../entity/Movie';
 import './style.scss';
 
@@ -31,13 +32,14 @@ const Main = (): ReactElement => {
   const [isDeleteMovieMessageVisible, toggleDeleteMovieMessage] = useToggle();
   const [params, setParams] = useState({ filter: undefined, sortOrder: '', sortBy: '' });
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const dispatch = useDispatch();
-  const { errorStatus, movies, movieForEditing } = useSelector((state) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { error, movies, movieForEditing } = useSelector((state) => {
     return state.movies;
   });
 
-  if (errorStatus) {
-    throw new Error();
+  if (error) {
+    alert(error);
+    dispatch(clearError(''));
   }
 
   const handleAddMovieFormSubmit = useCallback(

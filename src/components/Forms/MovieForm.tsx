@@ -22,14 +22,14 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
     setGenresShown(!genresShown);
   }, [genresShown]);
 
-  const validateRequiredField = (value) => {
+  const validateRequiredField = (value: string): string | undefined => {
     if (!value) {
       return 'Required field';
     }
   };
 
-  const validateVoteAverage = (value) => {
-    if (isNaN(Number(value)) || Number(value) < 0) {
+  const validateVoteAverage = (value: string): string | undefined => {
+    if (Number.isNaN(Number(value)) || Number(value) < 0) {
       return 'Please, enter positive number';
     }
     if (Number(value) > 10) {
@@ -37,7 +37,7 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
     }
   };
 
-  const validateImgPath = (value) => {
+  const validateImgPath = (value: string): string | undefined => {
     if (!value) {
       return 'Required field';
     }
@@ -47,12 +47,12 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
     }
   };
 
-  const validateRuntime = (value) => {
+  const validateRuntime = (value: string): string | undefined => {
     if (!value) {
       return 'Required field';
     }
 
-    if (isNaN(Number(value)) || Number(value) < 0) {
+    if (Number.isNaN(Number(value)) || Number(value) < 0) {
       return 'Please, enter positive number';
     }
 
@@ -68,12 +68,12 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
       validationSchema={Yup.object().shape({
         genres: Yup.array().min(1, 'This field is required'),
       })}
-      onSubmit={(values, { resetForm }) => {
+      onSubmit={(values, { resetForm }): void => {
         onSubmit(values);
         resetForm();
       }}
     >
-      {({ values, errors, touched }) => {
+      {({ values, errors, touched }): ReactElement => {
         return (
           <Form className="movie-form">
             <CloseBtn onClose={onCloseMovieForm} />

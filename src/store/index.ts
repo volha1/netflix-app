@@ -3,4 +3,6 @@ import movieReducer from './moviesSlice';
 
 const store = configureStore({ reducer: { movies: movieReducer } });
 
-export default store;
+type AppDispatch = typeof store.dispatch;
+
+export { store, AppDispatch };
