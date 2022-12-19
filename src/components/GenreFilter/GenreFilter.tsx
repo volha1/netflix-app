@@ -2,7 +2,7 @@ import React, { ReactElement, Dispatch, SetStateAction, useCallback } from 'reac
 import classNames from 'classnames';
 import './style.scss';
 
-type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string };
+type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string; search: string };
 type GenreFilterProps = {
   onFilter: Dispatch<SetStateAction<ParamsProps>>;
   params: ParamsProps;

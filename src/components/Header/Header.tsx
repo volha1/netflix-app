@@ -1,14 +1,17 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Dispatch, SetStateAction } from 'react';
 import SearchBar from '../SearchBar';
 import TopHeader from '../TopHeader';
 import './style.scss';
 
+type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string; search: string };
 type HeaderProps = {
   onAddMovieForm: () => void;
   isVisible: boolean;
+  params: ParamsProps;
+  setParams: Dispatch<SetStateAction<ParamsProps>>;
 };
 
-const Header = ({ onAddMovieForm, isVisible }: HeaderProps): ReactElement | null => {
+const Header = ({ onAddMovieForm, isVisible, params, setParams }: HeaderProps): ReactElement | null => {
   if (!isVisible) {
     return null;
   }
@@ -17,7 +20,7 @@ const Header = ({ onAddMovieForm, isVisible }: HeaderProps): ReactElement | null
     <div className="header">
       <div className="content">
         <TopHeader onAddMovieForm={onAddMovieForm} />
-        <SearchBar />
+        <SearchBar params={params} />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ const sortOptions = {
   vote_average_desc: { sortBy: 'vote_average', sortOrder: 'desc' },
 };
 
-type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string };
+type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string; search: string };
 type SortingProps = {
   onSort: Dispatch<SetStateAction<ParamsProps>>;
   params: ParamsProps;

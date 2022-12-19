@@ -8,6 +8,7 @@ const baseConfig = {
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js',
+    publicPath: '/'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -42,6 +43,9 @@ const baseConfig = {
         },
       },
     ],
+  },
+  devServer: {
+    historyApiFallback: true,
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
