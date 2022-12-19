@@ -15,7 +15,6 @@ type SortingProps = {
 };
 
 const Sorting = ({ onSort, params }: SortingProps): ReactElement => {
-  console.log(params);
   const handleSelect = useCallback(
     (event: { target: { value: string } }): void => {
       const sorting = event.target.value;

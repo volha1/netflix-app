@@ -1,13 +1,14 @@
 import Movie from '../entity/Movie';
 
 const url = 'http://localhost:4000';
+const genres = ["Documentary", "Comedy", "Horror", "Crime"];
 
 const movies: Array<Movie> = [
   {
     id: '1',
     title: 'Fifty Shades Freed',
     voteAverage: '6.1',
-    year: '2018-02-07',
+    releaseDate: '2018-02-07',
     imgPath: 'https://image.tmdb.org/t/p/w500/3kcEGnYBHDeqmdYf8ZRbKdfmlUy.jpg',
     genres: ['Action', 'Adventure'],
     overview:
@@ -18,7 +19,7 @@ const movies: Array<Movie> = [
     id: '2',
     title: 'Bohemian Rhapsody',
     voteAverage: '7.4',
-    year: '2016-02-11',
+    releaseDate: '2016-02-11',
     imgPath: 'https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg',
     genres: ['Action', 'Adventure'],
     overview:
@@ -29,7 +30,7 @@ const movies: Array<Movie> = [
     id: '3',
     title: 'Kill Bill: Vol 2',
     voteAverage: '8.2',
-    year: '2017-12-13',
+    releaseDate: '2017-12-13',
     imgPath: 'https://image.tmdb.org/t/p/w500/kOVEVeg59E0wsnXmF9nrh6OmWII.jpg',
     genres: ['Action', 'Adventure'],
     overview:
@@ -40,7 +41,7 @@ const movies: Array<Movie> = [
     id: '4',
     title: 'Avengers: War of Infinity',
     voteAverage: '8.9',
-    year: '2018-02-13',
+    releaseDate: '2018-02-13',
     imgPath: 'https://image.tmdb.org/t/p/w500/eKi8dIrr8voobbaGzDpe8w0PVbC.jpg',
     genres: ['Action', 'Adventure'],
     overview:
@@ -51,7 +52,7 @@ const movies: Array<Movie> = [
     id: '5',
     title: 'Inception',
     voteAverage: '7.5',
-    year: '2015-03-28',
+    releaseDate: '2015-03-28',
     imgPath: 'https://image.tmdb.org/t/p/w500/pU1ULUq8D3iRxl1fdX2lZIzdHuI.jpg',
     genres: ['Action', 'Adventure'],
     overview:
@@ -62,7 +63,7 @@ const movies: Array<Movie> = [
     id: '6',
     title: 'Reservoir dogs',
     voteAverage: '6.8',
-    year: '2017-10-25',
+    releaseDate: '2017-10-25',
     imgPath: 'https://image.tmdb.org/t/p/w500/ePyN2nX9t8SOl70eRW47Q29zUFO.jpg',
     genres: ['Action', 'Adventure'],
     overview:
@@ -71,4 +72,4 @@ const movies: Array<Movie> = [
   },
 ];
 
-export { movies, url };
+export { movies, url, genres };

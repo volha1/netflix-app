@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect, useMemo } from 'react';
+import React, { ReactElement, useState, useEffect, useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Filter from '../components/Filter/index';
 import Footer from '../components/Footer/index';
@@ -10,27 +10,62 @@ import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/i
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
-import { fetchMovies } from '../store/moviesSlice';
+import { createMovie, updateMovie, getAllMoviesSorted, clearError } from '../store/moviesSlice';
+import { AppDispatch } from '../store';
+import Movie from '../entity/Movie';
 import './style.scss';
 
 const Main = (): ReactElement => {
+  const initialMovieState = {
+    title: '',
+    imgPath: '',
+    voteAverage: '',
+    genres: [],
+    runtime: '',
+    overview: '',
+    releaseDate: '',
+  };
   const [isAddMovieFormVisible, toggleAddMovieForm] = useToggle();
   const [isEditMovieFormVisible, toggleEditMovieForm] = useToggle();
   const [isAddMovieMessageVisible, toggleAddMovieMessage] = useToggle();
   const [isEditMovieMessageVisible, toggleEditMovieMessage] = useToggle();
   const [isDeleteMovieMessageVisible, toggleDeleteMovieMessage] = useToggle();
+  const [params, setParams] = useState({ filter: undefined, sortOrder: '', sortBy: '' });
   const [selectedMovie, setSelectedMovie] = useState(null);
-  const dispatch = useDispatch();
-  const { errorStatus, movies } = useSelector((state) => {
+  const dispatch = useDispatch<AppDispatch>();
+  const { error, movies, movieForEditing } = useSelector((state) => {
     return state.movies;
   });
 
-  if (errorStatus) {
-    throw new Error();
+  if (error) {
+    alert(error);
+    dispatch(clearError(''));
   }
 
+  const handleAddMovieFormSubmit = useCallback(
+    async (movie: Movie): Promise<void> => {
+      dispatch(createMovie(movie)).then(() => {
+        dispatch(getAllMoviesSorted(params));
+        toggleAddMovieForm();
+        toggleAddMovieMessage();
+      });
+    },
+    [params.filter, params.sortOrder]
+  );
+
+  const handleEditMovieFormSubmit = useCallback(
+    async (movie: Movie): Promise<void> => {
+      dispatch(updateMovie(movie)).then(() => {
+        dispatch(getAllMoviesSorted(params));
+        toggleEditMovieForm();
+        toggleEditMovieMessage();
+      });
+    },
+    [params.filter, params.sortOrder]
+  );
+
   useEffect(() => {
-    dispatch(fetchMovies());
+    dispatch(getAllMoviesSorted(params));
   }, [dispatch]);
 
   const handleMovieMenuFunctions = useMemo(() => {
@@ -41,20 +76,26 @@ const Main = (): ReactElement => {
     <div className="main">
       <Header onAddMovieForm={toggleAddMovieForm} isVisible={!selectedMovie} />
       <MovieDetails movie={selectedMovie} onSelectMovie={setSelectedMovie} />
-      <Filter />
+      <Filter params={params} setParams={setParams} />
 
       <Context.Provider value={handleMovieMenuFunctions}>
         <MoviesList movies={movies} onSelectMovie={setSelectedMovie} />
       </Context.Provider>
 
       <ModalWrapper isVisible={isAddMovieFormVisible}>
-        <MovieForm actionText="Add" onCloseMovieForm={toggleAddMovieForm} onShowMovieMessage={toggleAddMovieMessage} />
+        <MovieForm
+          actionText="Add"
+          movie={initialMovieState}
+          onCloseMovieForm={toggleAddMovieForm}
+          onSubmit={handleAddMovieFormSubmit}
+        />
       </ModalWrapper>
       <ModalWrapper isVisible={isEditMovieFormVisible}>
         <MovieForm
           actionText="Edit"
+          movie={movieForEditing}
           onCloseMovieForm={toggleEditMovieForm}
-          onShowMovieMessage={toggleEditMovieMessage}
+          onSubmit={handleEditMovieFormSubmit}
         />
       </ModalWrapper>
       <ModalWrapper isVisible={isAddMovieMessageVisible}>

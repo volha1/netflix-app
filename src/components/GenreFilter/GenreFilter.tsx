@@ -10,6 +10,7 @@ type GenreFilterProps = {
 };
 
 const GenreFilter = ({ onFilter, params, genres }: GenreFilterProps): ReactElement => {
+  const genreParam = params.filter === undefined ? genres[0] : params.filter;
   const handleClick = useCallback(
     (event) => {
       const genreParam: string = event.target.text === genres[0] ? undefined : event.target.text;
@@ -23,7 +24,6 @@ const GenreFilter = ({ onFilter, params, genres }: GenreFilterProps): ReactEleme
   return (
     <ul className="genres-list" onClick={handleClick}>
       {genres.map((item) => {
-        const genreParam = params.filter === undefined ? genres[0] : params.filter;
         return (
           <li key={item}>
             <a href="#" className={classNames({ active: genreParam === item })}>
