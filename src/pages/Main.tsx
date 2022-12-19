@@ -46,22 +46,26 @@ const Main = (): ReactElement => {
 
   const handleAddMovieFormSubmit = useCallback(
     async (movie: Movie): Promise<void> => {
-      dispatch(createMovie(movie)).then(() => {
-        dispatch(getAllMoviesSorted(params));
-        toggleAddMovieForm();
-        toggleAddMovieMessage();
-      });
+      dispatch(createMovie(movie))
+        .unwrap()
+        .then(() => {
+          dispatch(getAllMoviesSorted(params));
+          toggleAddMovieForm();
+          toggleAddMovieMessage();
+        });
     },
     [params.filter, params.sortOrder, params.search]
   );
 
   const handleEditMovieFormSubmit = useCallback(
     async (movie: Movie): Promise<void> => {
-      dispatch(updateMovie(movie)).then(() => {
-        dispatch(getAllMoviesSorted(params));
-        toggleEditMovieForm();
-        toggleEditMovieMessage();
-      });
+      dispatch(updateMovie(movie))
+        .unwrap()
+        .then(() => {
+          dispatch(getAllMoviesSorted(params));
+          toggleEditMovieForm();
+          toggleEditMovieMessage();
+        });
     },
     [params.filter, params.sortOrder, params.search]
   );

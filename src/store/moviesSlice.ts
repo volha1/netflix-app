@@ -81,7 +81,7 @@ const createMovie = createAsyncThunk('movies/createMovie', async (movie: Movie):
   }
 });
 
-const updateMovie = createAsyncThunk('movies/createMovie', async (movie: Movie): Promise<void> => {
+const updateMovie = createAsyncThunk('movies/createMovie', async (movie: Movie): Promise<any> => {
   const movieItem = {
     id: movie.id,
     title: movie.title,

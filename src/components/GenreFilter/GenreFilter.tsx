@@ -10,7 +10,7 @@ type GenreFilterProps = {
 };
 
 const GenreFilter = ({ onFilter, params, genres }: GenreFilterProps): ReactElement => {
-  const genreParam = params.filter === undefined ? genres[0] : params.filter;
+  const genreParam = params.filter || genres[0];
   const handleClick = useCallback(
     (event) => {
       const genreParam: string = event.target.text === genres[0] ? undefined : event.target.text;

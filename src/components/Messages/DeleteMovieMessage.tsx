@@ -14,7 +14,7 @@ const DeleteMovieMessage = ({ onClose }: DeleteMovieWindowProps): ReactElement =
     return state.movies.movieIdForDeletion;
   });
 
-  const handlehandleClick = useCallback((): void => {
+  const handleClick = useCallback((): void => {
     dispatch(deleteMovieById(movieIdForDeletion));
     onClose();
   }, [movieIdForDeletion]);
@@ -25,7 +25,7 @@ const DeleteMovieMessage = ({ onClose }: DeleteMovieWindowProps): ReactElement =
       <h1 className="title">Delete movie</h1>
       <p>Are you sure you want to delete this movie?</p>
       <div className="btn-wrapper">
-        <button type="button" className="btn" onClick={handlehandleClick}>
+        <button type="button" className="btn" onClick={handleClick}>
           Confirm
         </button>
       </div>
