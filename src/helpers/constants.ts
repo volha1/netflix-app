@@ -1,5 +1,7 @@
 import Movie from '../entity/Movie';
 
+const url = 'http://localhost:4000';
+
 const movies: Array<Movie> = [
   {
     id: '1',
@@ -69,4 +71,4 @@ const movies: Array<Movie> = [
   },
 ];
 
-export default movies;
+export { movies, url };

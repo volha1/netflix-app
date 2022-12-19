@@ -1,26 +1,37 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, Dispatch, SetStateAction, useCallback } from 'react';
+import classNames from 'classnames';
 import './style.scss';
 
-const GenreFilter = (): ReactElement => {
+type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string };
+type GenreFilterProps = {
+  onFilter: Dispatch<SetStateAction<ParamsProps>>;
+  params: ParamsProps;
+  genres: string[];
+};
+
+const GenreFilter = ({ onFilter, params, genres }: GenreFilterProps): ReactElement => {
+  const handleClick = useCallback(
+    (event) => {
+      const genreParam: string = event.target.text === genres[0] ? undefined : event.target.text;
+      onFilter((prevState: ParamsProps) => {
+        return { ...prevState, filter: genreParam };
+      });
+    },
+    [params.filter]
+  );
+
   return (
-    <ul className="genres-list">
-      <li>
-        <a href="#" className="active">
-          All
-        </a>
-      </li>
-      <li>
-        <a href="#">Documentary</a>
-      </li>
-      <li>
-        <a href="#">Comedy</a>
-      </li>
-      <li>
-        <a href="#">Horror</a>
-      </li>
-      <li>
-        <a href="#">Crime</a>
-      </li>
+    <ul className="genres-list" onClick={handleClick}>
+      {genres.map((item) => {
+        const genreParam = params.filter === undefined ? genres[0] : params.filter;
+        return (
+          <li key={item}>
+            <a href="#" className={classNames({ active: genreParam === item })}>
+              {item}
+            </a>
+          </li>
+        );
+      })}
     </ul>
   );
 };

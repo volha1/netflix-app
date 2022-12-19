@@ -1,17 +1,24 @@
-import React, { Dispatch, ReactElement, SetStateAction } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import GenreFilter from '../GenreFilter';
 import Sorting from '../Sorting';
+import { sortMovies } from '../../store/moviesSlice';
 import './style.scss';
 
-type FilterProps = {
-  onSort: Dispatch<SetStateAction<string>>;
-};
+const genres = ['All', 'Documentary', 'Comedy', 'Horror', 'Crime'];
 
-const Filter = ({ onSort }: FilterProps): ReactElement => {
+const Filter = (): ReactElement => {
+  const [params, setParams] = useState({ filter: undefined, sortOrder: '', sortBy: '' });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(sortMovies(params));
+  }, [params.filter, params.sortOrder]);
+
   return (
     <div className="filter content">
-      <GenreFilter />
-      <Sorting onSort={onSort} />
+      <GenreFilter params={params} onFilter={setParams} genres={genres} />
+      <Sorting params={params} onSort={setParams} />
     </div>
   );
 };
