@@ -10,15 +10,17 @@ type GenreFilterProps = {
 };
 
 const GenreFilter = ({ onFilter, params, genres }: GenreFilterProps): ReactElement => {
-  const genreParam = params.filter || genres[0];
+  const genreParam = params.get('filter') || genres[0];
   const handleClick = useCallback(
     (event) => {
       const genreParam: string = event.target.text === genres[0] ? undefined : event.target.text;
-      onFilter((prevState: ParamsProps) => {
-        return { ...prevState, filter: genreParam };
-      });
+      const next = {
+        ...[...params.entries()].reduce((o, [key, value]) => ({ ...o, [key]: value }), {}),
+        filter: genreParam,
+      };
+      onFilter(next);
     },
-    [params.filter]
+    [params.get('sortOrder'), params.get('sortBy'), params.get('filter')]
   );
 
   return (

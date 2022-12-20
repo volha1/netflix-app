@@ -8,7 +8,6 @@ const App = (): ReactElement => {
       <Routes>
         <Route path="/" element={<Navigate to="/search" replace />} />
         <Route path="/search" element={<Main />} />
-        <Route path="/search/:search" element={<Main />} />
         <Route path="*" element={<Navigate to="/search" replace />} />
       </Routes>
     </BrowserRouter>

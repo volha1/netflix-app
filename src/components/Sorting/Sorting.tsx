@@ -14,19 +14,18 @@ type SortingProps = {
   params: ParamsProps;
 };
 
-const Sorting = ({ onSort, params }: SortingProps): ReactElement => {
+const Sorting = ({ onSort, params }): ReactElement => {
   const handleSelect = useCallback(
     (event: { target: { value: string } }): void => {
       const sorting = event.target.value;
-      onSort((prevState) => {
-        return {
-          ...prevState,
-          sortBy: sortOptions[sorting].sortBy,
-          sortOrder: sortOptions[sorting].sortOrder,
-        };
-      });
+      const next = {
+        ...[...params.entries()].reduce((o, [key, value]) => ({ ...o, [key]: value }), {}),
+        sortBy: sortOptions[sorting].sortBy,
+        sortOrder: sortOptions[sorting].sortOrder,
+      };
+      onSort(next);
     },
-    [params.sortOrder, params.sortBy]
+    [params.get('sortOrder'), params.get('sortBy'), params.get('filter')]
   );
 
   return (
@@ -34,7 +33,13 @@ const Sorting = ({ onSort, params }: SortingProps): ReactElement => {
       <label htmlFor="params" className="sorting-label">
         Sort by
       </label>
-      <select name="params" id="params" defaultValue="default" onChange={handleSelect}>
+      <select
+        name="params"
+        id="params"
+        defaultValue="default"
+        onChange={handleSelect}
+        value={`${params.get('sortBy')}_${params.get('sortOrder')}`}
+      >
         <option disabled value="default">
           Choose here...
         </option>

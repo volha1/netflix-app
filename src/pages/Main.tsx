@@ -71,14 +71,9 @@ const Main = (): ReactElement => {
   );
 
   useEffect(() => {
-    dispatch(getAllMoviesSorted(params));
-    const searchParamsObject = {};
-    if (params.search) searchParamsObject.search = params.search;
-    if (params.filter) searchParamsObject.filter = params.filter;
-    if (params.sortBy) searchParamsObject.sortBy = params.sortBy;
-    if (params.sortOrder) searchParamsObject.sortOrder = params.sortOrder;
-    setSearchParams(searchParamsObject);
-  }, [dispatch, params.filter, params.sortOrder, params.search]);
+    const newSearchParams = {...[...searchParams.entries()].reduce((o, [key, value]) => ({ ...o, [key]: value }), {})};
+    dispatch(getAllMoviesSorted(newSearchParams));
+  }, [dispatch, searchParams.get('filter'), searchParams.get('sortOrder'), searchParams.get('search')]);
 
   const handleMovieMenuFunctions = useMemo(() => {
     return [toggleEditMovieForm, toggleDeleteMovieMessage];
@@ -88,7 +83,7 @@ const Main = (): ReactElement => {
     <div className="main">
       <Header onAddMovieForm={toggleAddMovieForm} isVisible={!selectedMovie} params={params} setParams={setParams} />
       <MovieDetails movie={selectedMovie} onSelectMovie={setSelectedMovie} />
-      <Filter params={params} setParams={setParams} />
+      <Filter params={searchParams} setParams={setSearchParams} />
 
       <Context.Provider value={handleMovieMenuFunctions}>
         <MoviesList movies={movies} onSelectMovie={setSelectedMovie} />
