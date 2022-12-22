@@ -1,7 +1,7 @@
-import Movie from '../entity/Movie';
+import Movie from '../types/Movie';
 
 const url = 'http://localhost:4000';
-const genres = ["Documentary", "Comedy", "Horror", "Crime"];
+const genres = ['Documentary', 'Comedy', 'Horror', 'Crime'];
 
 const movies: Array<Movie> = [
   {

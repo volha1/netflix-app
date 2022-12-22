@@ -6,7 +6,7 @@ import CloseBtn from '../CloseBtn/index';
 import { isValidUrl } from '../../helpers/utils';
 import { genres } from '../../helpers/constants';
 import './style.scss';
-import Movie from '../../entity/Movie';
+import Movie from '../../types/Movie';
 
 type MovieFormProps = {
   actionText: string;

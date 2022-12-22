@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { url } from '../helpers/constants';
-import Movie from '../entity/Movie';
+import Movie from '../types/Movie';
 
 type StateType = {
   movies: Movie[];
   movieIdForDeletion: string;
   loadingStatus: boolean;
   error: string;
-  sort: { sortBy: string; sortOrder: string; filter: string };
   movieForEditing: Movie;
+  movieForDisplay: Movie;
 };
 
 const setError = (state: StateType, action): void => {
@@ -114,8 +114,8 @@ const moviesSlice = createSlice({
     movieIdForDeletion: '',
     loadingStatus: false,
     error: '',
-    sort: {},
     movieForEditing: {},
+    movieForDisplay: null,
   },
   reducers: {
     addMovies(state, action) {
@@ -129,6 +129,16 @@ const moviesSlice = createSlice({
     },
     clearError(state, action) {
       state.error = action.payload;
+    },
+    setMovieForDisplay(state, action) {
+      console.log(action.payload);
+
+      state.movies.forEach((item) => {
+        console.log(item.id);
+      });
+      const movie = state.movies.find((movie) => movie.id == action.payload);
+
+      state.movieForDisplay = movie || null;
     },
   },
   extraReducers: {
@@ -150,7 +160,7 @@ const moviesSlice = createSlice({
   },
 });
 
-const { markMovieForDeletion, saveMovieForEditing, addMovies, clearError } = moviesSlice.actions;
+const { markMovieForDeletion, saveMovieForEditing, addMovies, clearError, setMovieForDisplay } = moviesSlice.actions;
 
 export {
   markMovieForDeletion,
@@ -161,5 +171,6 @@ export {
   createMovie,
   updateMovie,
   clearError,
+  setMovieForDisplay,
 };
 export default moviesSlice.reducer;

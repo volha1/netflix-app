@@ -1,18 +1,21 @@
 import React, { ReactElement, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import searchIcon from '../../common/assets/svg/search-icon.svg';
-import Movie from '../../entity/Movie';
+import Movie from '../../types/Movie';
 import { getMovieDuration, getYear } from '../../helpers/utils';
 import setDefaultImage from '../../helpers/setDefaultImage';
 import './style.scss';
+import { setMovieForDisplay } from '../../store/moviesSlice';
 
 type MovieDetailsProps = {
   movie: Movie | null;
-  onSelectMovie: (value: null) => void;
 };
 
-const MovieDetails = ({ movie, onSelectMovie }: MovieDetailsProps): ReactElement | null => {
+const MovieDetails = ({ movie }: MovieDetailsProps): ReactElement | null => {
+  const dispatch = useDispatch();
+
   const handleSeacrhIconClick = useCallback((): void => {
-    onSelectMovie(null);
+    dispatch(setMovieForDisplay(null));
   }, []);
 
   return (

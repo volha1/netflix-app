@@ -1,14 +1,14 @@
 import React, { ReactElement, Dispatch, SetStateAction } from 'react';
+import SearchParams from '../../types/SearchParams';
 import SearchBar from '../SearchBar';
 import TopHeader from '../TopHeader';
 import './style.scss';
 
-type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string; search: string };
 type HeaderProps = {
   onAddMovieForm: () => void;
   isVisible: boolean;
-  params: ParamsProps;
-  setParams: Dispatch<SetStateAction<ParamsProps>>;
+  params: SearchParams;
+  setParams: Dispatch<SetStateAction<SearchParams>>;
 };
 
 const Header = ({ onAddMovieForm, isVisible, params, setParams }: HeaderProps): ReactElement | null => {
@@ -20,7 +20,7 @@ const Header = ({ onAddMovieForm, isVisible, params, setParams }: HeaderProps): 
     <div className="header">
       <div className="content">
         <TopHeader onAddMovieForm={onAddMovieForm} />
-        <SearchBar params={params} />
+        <SearchBar params={params} onSearch={setParams} />
       </div>
     </div>
   );

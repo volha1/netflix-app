@@ -1,19 +1,22 @@
+/* eslint-disable arrow-body-style */
 import { useSearchParams } from 'react-router-dom';
 
-const useSearchParamsState = (): readonly [
-  searchParamsState: string,
-  setSearchParamsState: (newState: string) => void
-] => {
+const useSearchParamsState = (): readonly [searchParamsState: string, setSearchParamsState: (newState) => void] => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const setSearchParamsState = (field: string, value: string) => {
+  const searchParamsObject = {
+    ...[...searchParams.entries()].reduce((o, [key, value]) => ({ ...o, [key]: value }), {}),
+  };
+
+  const setSearchParamsState = (object: { [key: string]: string }): void => {
     const next = {
-      ...[...searchParams.entries()].reduce((o, [key, value]) => ({ ...o, [key]: value }), {}),
-      [filed]: value,
+      ...searchParamsObject,
+      ...[...Object.entries(object)].reduce((o, [key, value]) => ({ ...o, [key]: value }), {}),
     };
     setSearchParams(next);
   };
-  return [searchParamsState, setSearchParamsState];
+
+  return [searchParamsObject, setSearchParamsState];
 };
 
 export default useSearchParamsState;

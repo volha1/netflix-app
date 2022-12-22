@@ -1,4 +1,5 @@
 import React, { ReactElement, Dispatch, SetStateAction, useCallback } from 'react';
+import SearchParams from '../../types/SearchParams';
 import './style.scss';
 
 const sortOptions = {
@@ -8,24 +9,19 @@ const sortOptions = {
   vote_average_desc: { sortBy: 'vote_average', sortOrder: 'desc' },
 };
 
-type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string; search: string };
+type SortProps = { sortOrder: string; sortBy: string };
 type SortingProps = {
-  onSort: Dispatch<SetStateAction<ParamsProps>>;
-  params: ParamsProps;
+  onSort: Dispatch<SetStateAction<SortProps>>;
+  params: SearchParams;
 };
 
-const Sorting = ({ onSort, params }): ReactElement => {
+const Sorting = ({ onSort, params }: SortingProps): ReactElement => {
   const handleSelect = useCallback(
     (event: { target: { value: string } }): void => {
       const sorting = event.target.value;
-      const next = {
-        ...[...params.entries()].reduce((o, [key, value]) => ({ ...o, [key]: value }), {}),
-        sortBy: sortOptions[sorting].sortBy,
-        sortOrder: sortOptions[sorting].sortOrder,
-      };
-      onSort(next);
+      onSort({ sortBy: sortOptions[sorting].sortBy, sortOrder: sortOptions[sorting].sortOrder });
     },
-    [params.get('sortOrder'), params.get('sortBy'), params.get('filter')]
+    [params]
   );
 
   return (
@@ -38,7 +34,7 @@ const Sorting = ({ onSort, params }): ReactElement => {
         id="params"
         defaultValue="default"
         onChange={handleSelect}
-        value={`${params.get('sortBy')}_${params.get('sortOrder')}`}
+        value={`${params.sortBy}_${params.sortOrder}`}
       >
         <option disabled value="default">
           Choose here...

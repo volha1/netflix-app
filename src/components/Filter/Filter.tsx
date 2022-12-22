@@ -3,13 +3,13 @@ import GenreFilter from '../GenreFilter';
 import Sorting from '../Sorting';
 import { genres } from '../../helpers/constants';
 import './style.scss';
+import SearchParams from '../../types/SearchParams';
 
 const genreValues = ['All', ...genres];
 
-type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string; search: string };
 type FilterProps = {
-  params: ParamsProps;
-  setParams: Dispatch<SetStateAction<ParamsProps>>;
+  params: SearchParams;
+  setParams: Dispatch<SetStateAction<SearchParams>>;
 };
 
 const Filter = ({ params, setParams }: FilterProps): ReactElement => {
