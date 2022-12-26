@@ -10,7 +10,7 @@ import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/i
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
-import { createMovie, updateMovie, getAllMoviesSorted, clearError, setMovieForDisplay } from '../store/moviesSlice';
+import { createMovie, updateMovie, getAllMoviesSorted, clearError } from '../store/moviesSlice';
 import { AppDispatch } from '../store';
 import Movie from '../types/Movie';
 import './style.scss';
@@ -33,7 +33,7 @@ const Main = (): ReactElement => {
   const [isDeleteMovieMessageVisible, toggleDeleteMovieMessage] = useToggle();
   const [searchParams, setSearchParams, removeSearchParams] = useSearchParamsState();
   const dispatch = useDispatch<AppDispatch>();
-  const { error, movies, movieForEditing, movieForDisplay } = useSelector((state) => {
+  const { error, movies, movieForEditing } = useSelector((state) => {
     return state.movies;
   });
 
@@ -71,6 +71,7 @@ const Main = (): ReactElement => {
   useEffect(() => {
     dispatch(getAllMoviesSorted(searchParams));
   }, [dispatch, searchParams.filter, searchParams.search, searchParams.sortBy]);
+
   const handleMovieMenuFunctions = useMemo(() => {
     return [toggleEditMovieForm, toggleDeleteMovieMessage];
   }, [toggleEditMovieForm, toggleDeleteMovieMessage]);

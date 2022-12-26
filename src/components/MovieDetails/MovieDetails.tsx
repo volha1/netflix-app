@@ -4,7 +4,6 @@ import searchIcon from '../../common/assets/svg/search-icon.svg';
 import { getMovieDuration, getYear } from '../../helpers/utils';
 import setDefaultImage from '../../helpers/setDefaultImage';
 import './style.scss';
-import { setMovieForDisplay } from '../../store/moviesSlice';
 
 type MovieDetailsProps = {
   movieId: string | null;

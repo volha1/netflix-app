@@ -8,7 +8,7 @@ import Menu from '../Menu';
 import { getYear } from '../../helpers/utils';
 import useToggle from '../../hooks/useToggle';
 import setDefaultImage from '../../helpers/setDefaultImage';
-import { markMovieForDeletion, saveMovieForEditing, setMovieForDisplay } from '../../store/moviesSlice';
+import { markMovieForDeletion, saveMovieForEditing } from '../../store/moviesSlice';
 
 type MovieSearchProps = { movie: string };
 type MovieCardProps = {
