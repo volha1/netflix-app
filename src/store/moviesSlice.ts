@@ -8,7 +8,6 @@ type StateType = {
   loadingStatus: boolean;
   error: string;
   movieForEditing: Movie;
-  movieForDisplay: Movie;
 };
 
 const setError = (state: StateType, action): void => {
@@ -115,7 +114,6 @@ const moviesSlice = createSlice({
     loadingStatus: false,
     error: '',
     movieForEditing: {},
-    movieForDisplay: null,
   },
   reducers: {
     addMovies(state, action) {
