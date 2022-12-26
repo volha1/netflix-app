@@ -9,9 +9,16 @@ type HeaderProps = {
   isVisible: boolean;
   params: SearchParams;
   setParams: Dispatch<SetStateAction<SearchParams>>;
+  removeSearchParams: Dispatch<SetStateAction<string>>;
 };
 
-const Header = ({ onAddMovieForm, isVisible, params, setParams }: HeaderProps): ReactElement | null => {
+const Header = ({
+  onAddMovieForm,
+  isVisible,
+  params,
+  setParams,
+  removeSearchParams,
+}: HeaderProps): ReactElement | null => {
   if (!isVisible) {
     return null;
   }
@@ -20,7 +27,7 @@ const Header = ({ onAddMovieForm, isVisible, params, setParams }: HeaderProps): 
     <div className="header">
       <div className="content">
         <TopHeader onAddMovieForm={onAddMovieForm} />
-        <SearchBar params={params} onSearch={setParams} />
+        <SearchBar params={params} onSearch={setParams} removeSearchParams={removeSearchParams}/>
       </div>
     </div>
   );

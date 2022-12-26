@@ -130,16 +130,6 @@ const moviesSlice = createSlice({
     clearError(state, action) {
       state.error = action.payload;
     },
-    setMovieForDisplay(state, action) {
-      console.log(action.payload);
-
-      state.movies.forEach((item) => {
-        console.log(item.id);
-      });
-      const movie = state.movies.find((movie) => movie.id == action.payload);
-
-      state.movieForDisplay = movie || null;
-    },
   },
   extraReducers: {
     [getAllMoviesSorted.pending.toString()]: (state: StateType) => {
@@ -160,7 +150,7 @@ const moviesSlice = createSlice({
   },
 });
 
-const { markMovieForDeletion, saveMovieForEditing, addMovies, clearError, setMovieForDisplay } = moviesSlice.actions;
+const { markMovieForDeletion, saveMovieForEditing, addMovies, clearError } = moviesSlice.actions;
 
 export {
   markMovieForDeletion,
@@ -171,6 +161,5 @@ export {
   createMovie,
   updateMovie,
   clearError,
-  setMovieForDisplay,
 };
 export default moviesSlice.reducer;

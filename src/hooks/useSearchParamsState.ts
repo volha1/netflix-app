@@ -1,7 +1,11 @@
 /* eslint-disable arrow-body-style */
 import { useSearchParams } from 'react-router-dom';
 
-const useSearchParamsState = (): readonly [searchParamsState: string, setSearchParamsState: (newState) => void] => {
+const useSearchParamsState = (): readonly [
+  searchParamsState: string,
+  setSearchParamsState: (newState) => void,
+  removeQueryParams: (paramName) => void
+] => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const searchParamsObject = {
@@ -16,7 +20,17 @@ const useSearchParamsState = (): readonly [searchParamsState: string, setSearchP
     setSearchParams(next);
   };
 
-  return [searchParamsObject, setSearchParamsState];
+  const removeQueryParams = (paramName): void => {
+    const param = searchParams.get(paramName);
+
+    if (param) {
+      searchParams.delete(paramName);
+
+      setSearchParams(searchParams);
+    }
+  };
+
+  return [searchParamsObject, setSearchParamsState, removeQueryParams];
 };
 
 export default useSearchParamsState;

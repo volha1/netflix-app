@@ -10,12 +10,13 @@ const genreValues = ['All', ...genres];
 type FilterProps = {
   params: SearchParams;
   setParams: Dispatch<SetStateAction<SearchParams>>;
+  removeSearchParams: Dispatch<SetStateAction<string>>;
 };
 
-const Filter = ({ params, setParams }: FilterProps): ReactElement => {
+const Filter = ({ params, setParams, removeSearchParams }: FilterProps): ReactElement => {
   return (
     <div className="filter content">
-      <GenreFilter params={params} onFilter={setParams} genres={genreValues} />
+      <GenreFilter params={params} onFilter={setParams} genres={genreValues} removeSearchParams={removeSearchParams} />
       <Sorting params={params} onSort={setParams} />
     </div>
   );

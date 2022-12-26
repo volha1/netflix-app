@@ -1,22 +1,27 @@
-import React, { ReactElement, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { ReactElement, useCallback, useMemo, Dispatch, SetStateAction } from 'react';
+import { useSelector } from 'react-redux';
 import searchIcon from '../../common/assets/svg/search-icon.svg';
-import Movie from '../../types/Movie';
 import { getMovieDuration, getYear } from '../../helpers/utils';
 import setDefaultImage from '../../helpers/setDefaultImage';
 import './style.scss';
-import { setMovieForDisplay } from '../../store/moviesSlice';
 
 type MovieDetailsProps = {
-  movie: Movie | null;
+  movieId: string | null;
+  removeSearchParams: Dispatch<SetStateAction<string>>;
 };
 
-const MovieDetails = ({ movie }: MovieDetailsProps): ReactElement | null => {
-  const dispatch = useDispatch();
+const MovieDetails = ({ movieId, removeSearchParams }: MovieDetailsProps): ReactElement | null => {
+  const { movies } = useSelector((state) => {
+    return state.movies;
+  });
+
+  const movie = useMemo(() => {
+    return movies.find((movie) => movie.id == movieId);
+  }, [movieId, movies]);
 
   const handleSeacrhIconClick = useCallback((): void => {
-    dispatch(setMovieForDisplay(null));
-  }, []);
+    removeSearchParams('movie');
+  }, [movieId, movies]);
 
   return (
     movie && (

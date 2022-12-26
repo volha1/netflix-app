@@ -1,4 +1,4 @@
-import React, { ReactElement, useState, useEffect, useMemo, useCallback } from 'react';
+import React, { ReactElement, useEffect, useMemo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Filter from '../components/Filter/index';
 import Footer from '../components/Footer/index';
@@ -10,7 +10,7 @@ import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/i
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
-import { createMovie, updateMovie, getAllMoviesSorted, clearError, setMovieForDisplay } from '../store/moviesSlice';
+import { createMovie, updateMovie, getAllMoviesSorted, clearError } from '../store/moviesSlice';
 import { AppDispatch } from '../store';
 import Movie from '../types/Movie';
 import './style.scss';
@@ -31,9 +31,9 @@ const Main = (): ReactElement => {
   const [isAddMovieMessageVisible, toggleAddMovieMessage] = useToggle();
   const [isEditMovieMessageVisible, toggleEditMovieMessage] = useToggle();
   const [isDeleteMovieMessageVisible, toggleDeleteMovieMessage] = useToggle();
-  const [searchParams, setSearchParams] = useSearchParamsState();
+  const [searchParams, setSearchParams, removeSearchParams] = useSearchParamsState();
   const dispatch = useDispatch<AppDispatch>();
-  const { error, movies, movieForEditing, movieForDisplay } = useSelector((state) => {
+  const { error, movies, movieForEditing } = useSelector((state) => {
     return state.movies;
   });
 
@@ -70,11 +70,7 @@ const Main = (): ReactElement => {
 
   useEffect(() => {
     dispatch(getAllMoviesSorted(searchParams));
-  }, [dispatch, searchParams.filter, searchParams.sortOrder, searchParams.search]);
-
-  useEffect(() => {
-    dispatch(setMovieForDisplay(searchParams.movie));
-  }, [dispatch, searchParams.movie]);
+  }, [dispatch, searchParams.filter, searchParams.search, searchParams.sortBy]);
 
   const handleMovieMenuFunctions = useMemo(() => {
     return [toggleEditMovieForm, toggleDeleteMovieMessage];
@@ -84,12 +80,13 @@ const Main = (): ReactElement => {
     <div className="main">
       <Header
         onAddMovieForm={toggleAddMovieForm}
-        isVisible={!movieForDisplay}
+        isVisible={!searchParams.movie}
         params={searchParams}
         setParams={setSearchParams}
+        removeSearchParams={removeSearchParams}
       />
-      <MovieDetails movie={movieForDisplay} />
-      <Filter params={searchParams} setParams={setSearchParams} />
+      <MovieDetails movieId={searchParams.movie} removeSearchParams={removeSearchParams} />
+      <Filter params={searchParams} setParams={setSearchParams} removeSearchParams={removeSearchParams} />
 
       <Context.Provider value={handleMovieMenuFunctions}>
         <MoviesList movies={movies} setParams={setSearchParams} />

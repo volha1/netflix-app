@@ -6,20 +6,24 @@ type SearchProps = { search: string; searchBy: string };
 type SearchBarProps = {
   onSearch: Dispatch<SetStateAction<SearchProps>>;
   params: SearchParams;
+  removeSearchParams: Dispatch<SetStateAction<string>>;
 };
 
-const SearchBar = ({ params, onSearch }: SearchBarProps): ReactElement => {
+const SearchBar = ({ params, onSearch, removeSearchParams }: SearchBarProps): ReactElement => {
   const [search, setSearch] = useState(params.search);
 
   const handleChange = useCallback(
     (event) => {
+      if (!event.target.value.trim()) {
+        removeSearchParams('search');
+        removeSearchParams('searchBy');
+      }
       setSearch(event.target.value);
     },
     [search]
   );
 
   const handleClick = useCallback(() => {
-    console.log(search);
     onSearch({ search, searchBy: 'title' });
   }, [params, search]);
 

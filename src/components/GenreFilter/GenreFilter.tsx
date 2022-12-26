@@ -8,14 +8,18 @@ type GenreFilterProps = {
   onFilter: Dispatch<SetStateAction<FilterProps>>;
   params: SearchParams;
   genres: string[];
+  removeSearchParams: Dispatch<SetStateAction<string>>;
 };
 
-const GenreFilter = ({ onFilter, params, genres }: GenreFilterProps): ReactElement => {
+const GenreFilter = ({ onFilter, params, genres, removeSearchParams }: GenreFilterProps): ReactElement => {
   const genreParamSelected = params.filter || genres[0];
   const handleClick = useCallback(
     (event) => {
-      const genreParam: string = event.target.text === genres[0] ? undefined : event.target.text;
-      onFilter({ filter: genreParam });
+      if (event.target.text === genres[0]) {
+        removeSearchParams('filter');
+      } else {
+        onFilter({ filter: event.target.text });
+      }
     },
     [params]
   );
