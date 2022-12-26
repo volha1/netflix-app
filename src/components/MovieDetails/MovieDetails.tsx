@@ -16,7 +16,7 @@ const MovieDetails = ({ movieId, removeSearchParams }: MovieDetailsProps): React
   });
 
   const movie = useMemo(() => {
-    return movies.find((movie) => movie.id == movieId);
+    return movies.find((item) => item.id == movieId);
   }, [movieId, movies]);
 
   const handleSeacrhIconClick = useCallback((): void => {

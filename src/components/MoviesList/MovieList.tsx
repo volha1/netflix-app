@@ -10,7 +10,7 @@ type MoviesListProps = {
   setParams: Dispatch<SetStateAction<SearchParams>>;
 };
 
-const MoviesList = ({ movies, setParams }: MoviesListProps): ReactElement => {
+const MoviesList = ({ movies, setParams }: MoviesListProps): ReactElement | null => {
   const loadingStatus = useSelector((state) => {
     return state.movies.loadingStatus;
   });
