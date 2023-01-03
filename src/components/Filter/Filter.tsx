@@ -1,30 +1,22 @@
-import React, { ReactElement, useEffect, Dispatch, SetStateAction } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
+import React, { ReactElement, Dispatch, SetStateAction } from 'react';
 import GenreFilter from '../GenreFilter';
 import Sorting from '../Sorting';
-import { getAllMoviesSorted } from '../../store/moviesSlice';
 import { genres } from '../../helpers/constants';
 import './style.scss';
+import SearchParams from '../../types/SearchParams';
 
 const genreValues = ['All', ...genres];
 
-type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string };
 type FilterProps = {
-  params: ParamsProps;
-  setParams: Dispatch<SetStateAction<ParamsProps>>;
+  params: SearchParams;
+  setParams: Dispatch<SetStateAction<SearchParams>>;
+  removeSearchParams: Dispatch<SetStateAction<string>>;
 };
 
-const Filter = ({ params, setParams }: FilterProps): ReactElement => {
-  const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    dispatch(getAllMoviesSorted(params));
-  }, [params.filter, params.sortOrder]);
-
+const Filter = ({ params, setParams, removeSearchParams }: FilterProps): ReactElement => {
   return (
     <div className="filter content">
-      <GenreFilter params={params} onFilter={setParams} genres={genreValues} />
+      <GenreFilter params={params} onFilter={setParams} genres={genreValues} removeSearchParams={removeSearchParams} />
       <Sorting params={params} onSort={setParams} />
     </div>
   );

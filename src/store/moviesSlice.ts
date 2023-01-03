@@ -1,13 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { url } from '../helpers/constants';
-import Movie from '../entity/Movie';
+import Movie from '../types/Movie';
 
 type StateType = {
   movies: Movie[];
   movieIdForDeletion: string;
   loadingStatus: boolean;
   error: string;
-  sort: { sortBy: string; sortOrder: string; filter: string };
   movieForEditing: Movie;
 };
 
@@ -81,7 +80,7 @@ const createMovie = createAsyncThunk('movies/createMovie', async (movie: Movie):
   }
 });
 
-const updateMovie = createAsyncThunk('movies/createMovie', async (movie: Movie): Promise<void> => {
+const updateMovie = createAsyncThunk('movies/createMovie', async (movie: Movie): Promise<any> => {
   const movieItem = {
     id: movie.id,
     title: movie.title,
@@ -114,7 +113,6 @@ const moviesSlice = createSlice({
     movieIdForDeletion: '',
     loadingStatus: false,
     error: '',
-    sort: {},
     movieForEditing: {},
   },
   reducers: {

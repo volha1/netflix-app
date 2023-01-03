@@ -1,15 +1,16 @@
 import React, { Dispatch, ReactElement, SetStateAction } from 'react';
 import { useSelector } from 'react-redux';
 import MovieCard from '../MovieCard';
-import Movie from '../../entity/Movie';
+import Movie from '../../types/Movie';
+import SearchParams from '../../types/SearchParams';
 import './style.scss';
 
 type MoviesListProps = {
   movies: Movie[];
-  onSelectMovie: Dispatch<SetStateAction<Movie>>;
+  setParams: Dispatch<SetStateAction<SearchParams>>;
 };
 
-const MoviesList = ({ movies, onSelectMovie }: MoviesListProps): ReactElement => {
+const MoviesList = ({ movies, setParams }: MoviesListProps): ReactElement | null => {
   const loadingStatus = useSelector((state) => {
     return state.movies.loadingStatus;
   });
@@ -24,7 +25,7 @@ const MoviesList = ({ movies, onSelectMovie }: MoviesListProps): ReactElement =>
       {movies.length > 0 && (
         <div className="cards-list">
           {movies.map((movie: Movie) => {
-            return <MovieCard key={movie.id} movie={movie} onSelectMovie={onSelectMovie} />;
+            return <MovieCard key={movie.id} movie={movie} onClick={setParams} />;
           })}
         </div>
       )}

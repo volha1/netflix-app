@@ -6,7 +6,7 @@ import CloseBtn from '../CloseBtn/index';
 import { isValidUrl } from '../../helpers/utils';
 import { genres } from '../../helpers/constants';
 import './style.scss';
-import Movie from '../../entity/Movie';
+import Movie from '../../types/Movie';
 
 type MovieFormProps = {
   actionText: string;
@@ -15,6 +15,27 @@ type MovieFormProps = {
   movie: Movie;
 };
 
+const MovieSchema = Yup.object().shape({
+  title: Yup.string().required('Required field'),
+  voteAverage: Yup.number()
+    .typeError('Please, enter number')
+    .required('Required field')
+    .min(1, 'Please, enter number more or equal to 1')
+    .max(10, 'Please, enter number less or equal to 10'),
+  imgPath: Yup.string()
+    .required('Required field')
+    .trim()
+    .test('test-url', 'Invalid url', (value) => {
+      return isValidUrl(value);
+    }),
+  runtime: Yup.number()
+    .typeError('Please, enter number')
+    .required('Required field')
+    .min(1, 'Please, enter number more or equal to 1'),
+  genres: Yup.array().min(1, 'This field is required'),
+  overview: Yup.string().required('Required field'),
+});
+
 const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: MovieFormProps): ReactElement => {
   const [genresShown, setGenresShown] = useState(false);
 
@@ -22,58 +43,17 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
     setGenresShown(!genresShown);
   }, [genresShown]);
 
-  const validateRequiredField = (value: string): string | undefined => {
-    if (!value) {
-      return 'Required field';
-    }
-  };
-
-  const validateVoteAverage = (value: string): string | undefined => {
-    if (Number.isNaN(Number(value)) || Number(value) < 0) {
-      return 'Please, enter positive number';
-    }
-    if (Number(value) > 10) {
-      return 'Please, enter number less or equal to 10';
-    }
-  };
-
-  const validateImgPath = (value: string): string | undefined => {
-    if (!value) {
-      return 'Required field';
-    }
-
-    if (!isValidUrl(value)) {
-      return 'Please, enter valid url address';
-    }
-  };
-
-  const validateRuntime = (value: string): string | undefined => {
-    if (!value) {
-      return 'Required field';
-    }
-
-    if (Number.isNaN(Number(value)) || Number(value) < 0) {
-      return 'Please, enter positive number';
-    }
-
-    if (Math.floor(Number(value)) !== Number(value)) {
-      return 'Please, enter integer number';
-    }
-  };
-
   return (
     <Formik
       initialValues={movie}
       enableReinitialize
-      validationSchema={Yup.object().shape({
-        genres: Yup.array().min(1, 'This field is required'),
-      })}
+      validationSchema={MovieSchema}
       onSubmit={(values, { resetForm }): void => {
         onSubmit(values);
         resetForm();
       }}
     >
-      {({ values, errors, touched }): ReactElement => {
+      {({ errors, touched }): ReactElement => {
         return (
           <Form className="movie-form">
             <CloseBtn onClose={onCloseMovieForm} />
@@ -83,11 +63,8 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
                 Title
                 <br />
                 <Field
-                  type="text"
                   name="title"
                   className={classNames('left-field', { 'error-field': errors.title && touched.title })}
-                  value={values.title}
-                  validate={validateRequiredField}
                 />
                 <br />
                 {errors.title && touched.title && <span>{errors.title}</span>}
@@ -96,7 +73,7 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
               <label>
                 Release date
                 <br />
-                <Field type="date" name="releaseDate" className="right-field" value={values.releaseDate} />
+                <Field type="date" name="releaseDate" className="right-field" />
               </label>
             </div>
 
@@ -109,8 +86,6 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
                   name="imgPath"
                   className={classNames('left-field', { 'error-field': errors.imgPath && touched.imgPath })}
                   placeholder="https://"
-                  value={values.imgPath}
-                  validate={validateImgPath}
                 />
                 <br />
                 {errors.imgPath && touched.imgPath && <span>{errors.imgPath}</span>}
@@ -119,12 +94,9 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
                 Rating
                 <br />
                 <Field
-                  type="text"
                   name="voteAverage"
                   className={classNames('right-field', { 'error-field': errors.voteAverage && touched.voteAverage })}
                   placeholder="7.8"
-                  value={values.voteAverage}
-                  validate={validateVoteAverage}
                 />
                 <br />
                 {errors.voteAverage && touched.voteAverage && <span>{errors.voteAverage}</span>}
@@ -161,12 +133,9 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
                 Runtime
                 <br />
                 <Field
-                  type="text"
                   name="runtime"
                   className={classNames('right-field', { 'error-field': errors.runtime && touched.runtime })}
                   placeholder="minutes"
-                  value={values.runtime}
-                  validate={validateRuntime}
                 />
                 <br />
                 {errors.runtime && touched.runtime && <span>{errors.runtime}</span>}
@@ -183,7 +152,6 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
                   rows={8}
                   cols={87}
                   placeholder="Movie description"
-                  validate={validateRequiredField}
                 />
                 <br />
                 {errors.overview && touched.overview && <span>{errors.overview}</span>}

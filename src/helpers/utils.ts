@@ -12,14 +12,17 @@ const getMovieDuration = (totalMinutes: number): string => {
   return `${hours}h ${padToTwoDigits(minutes)}m`;
 };
 
-const isValidUrl = (url: string): boolean => {
+const isValidUrl = (url: string | undefined): boolean => {
+  if (!url) {
+    return false;
+  }
   let link;
   try {
     link = new URL(url);
   } catch (_) {
     return false;
   }
-  return link.protocol === "http:" || link.protocol === "https:";
-}
+  return link.protocol === 'http:' || link.protocol === 'https:';
+};
 
 export { getYear, getMovieDuration, isValidUrl };

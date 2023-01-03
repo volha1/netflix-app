@@ -2,7 +2,7 @@ import React, { ReactElement, memo, Dispatch, SetStateAction, useCallback, useCo
 import { useDispatch } from 'react-redux';
 import Context from '../../context/Context';
 import './style.scss';
-import Movie from '../../entity/Movie';
+import Movie from '../../types/Movie';
 import menuIcon from '../../common/assets/svg/menu-icon.svg';
 import Menu from '../Menu';
 import { getYear } from '../../helpers/utils';
@@ -10,12 +10,13 @@ import useToggle from '../../hooks/useToggle';
 import setDefaultImage from '../../helpers/setDefaultImage';
 import { markMovieForDeletion, saveMovieForEditing } from '../../store/moviesSlice';
 
+type MovieSearchProps = { movie: string };
 type MovieCardProps = {
   movie: Movie;
-  onSelectMovie: Dispatch<SetStateAction<Movie>>;
+  onClick: Dispatch<SetStateAction<MovieSearchProps>>;
 };
 
-const MovieCard = ({ movie, onSelectMovie }: MovieCardProps): ReactElement => {
+const MovieCard = ({ movie, onClick }: MovieCardProps): ReactElement => {
   const [isMenuVisible, toggleMenuVisible] = useToggle();
   const [handleEditMovieForm, handleDeleteMovieMessage] = useContext(Context);
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const MovieCard = ({ movie, onSelectMovie }: MovieCardProps): ReactElement => {
   );
 
   const handleCardClick = useCallback((): void => {
-    onSelectMovie(movie);
+    onClick({ movie: movie.id });
   }, [movie]);
 
   const handleEditBtn = useCallback((): void => {

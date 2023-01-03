@@ -1,24 +1,27 @@
 import React, { ReactElement, Dispatch, SetStateAction, useCallback } from 'react';
 import classNames from 'classnames';
 import './style.scss';
+import SearchParams from '../../types/SearchParams';
 
-type ParamsProps = { filter: string | undefined; sortOrder: string; sortBy: string };
+type FilterProps = { filter: string | undefined };
 type GenreFilterProps = {
-  onFilter: Dispatch<SetStateAction<ParamsProps>>;
-  params: ParamsProps;
+  onFilter: Dispatch<SetStateAction<FilterProps>>;
+  params: SearchParams;
   genres: string[];
+  removeSearchParams: Dispatch<SetStateAction<string>>;
 };
 
-const GenreFilter = ({ onFilter, params, genres }: GenreFilterProps): ReactElement => {
-  const genreParam = params.filter === undefined ? genres[0] : params.filter;
+const GenreFilter = ({ onFilter, params, genres, removeSearchParams }: GenreFilterProps): ReactElement => {
+  const genreParamSelected = params.filter || genres[0];
   const handleClick = useCallback(
     (event) => {
-      const genreParam: string = event.target.text === genres[0] ? undefined : event.target.text;
-      onFilter((prevState: ParamsProps) => {
-        return { ...prevState, filter: genreParam };
-      });
+      if (event.target.text === genres[0]) {
+        removeSearchParams('filter');
+      } else {
+        onFilter({ filter: event.target.text });
+      }
     },
-    [params.filter]
+    [params]
   );
 
   return (
@@ -26,7 +29,7 @@ const GenreFilter = ({ onFilter, params, genres }: GenreFilterProps): ReactEleme
       {genres.map((item) => {
         return (
           <li key={item}>
-            <a href="#" className={classNames({ active: genreParam === item })}>
+            <a href="#" className={classNames({ active: genreParamSelected === item })}>
               {item}
             </a>
           </li>

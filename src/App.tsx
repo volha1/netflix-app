@@ -1,12 +1,16 @@
 import React, { ReactElement } from 'react';
-import ErrorBoundary from './components/ErrorBoundary';
-import Main from './pages/index';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { Main, NotFound } from './pages/index';
 
 const App = (): ReactElement => {
   return (
-    <ErrorBoundary>
-      <Main />
-    </ErrorBoundary>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/search" replace />} />
+        <Route path="/search" element={<Main />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
