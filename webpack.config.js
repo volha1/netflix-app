@@ -37,9 +37,6 @@ const baseConfig = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-          options: {
-            presets: [['@babel/preset-env', { targets: { esmodules: false, node: 'current' } }], '@babel/preset-react', '@babel/preset-typescript'],
-          },
         },
       },
     ],

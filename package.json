@@ -12,9 +12,6 @@
     "prepare": "husky install",
     "test": "jest"
   },
-  "jestWebpackResolver": {
-    "webpackConfig": "./webpack.config.dev.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/volbo/netflix-app.git"
@@ -94,13 +91,8 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node",
     "transform": {
-      "node_modules/variables/.+\\.(j|t)sx?$": "ts-jest"
-    },
-    "transformIgnorePatterns": [
-      "node_modules/(?!variables/.*)"
-    ],
-    "resolver": "jest-webpack-resolver"
+      "^.+\\.(ts|tsx|js|jsx)$": "ts-jest"
+    }
   }
 }
