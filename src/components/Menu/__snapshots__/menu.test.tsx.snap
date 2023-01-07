@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu snapshot 1`] = `
+<div
+  className="menu active"
+  onClick={[Function]}
+>
+  <div
+    className="close-btn"
+    onClick={[MockFunction]}
+  />
+  <ul>
+    <li>
+      <button
+        onClick={[MockFunction]}
+        type="button"
+      >
+        Edit
+      </button>
+    </li>
+    <li>
+      <button
+        onClick={[MockFunction]}
+        type="button"
+      >
+        Delete
+      </button>
+    </li>
+  </ul>
+</div>
+`;

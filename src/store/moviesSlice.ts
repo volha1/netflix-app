@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { url } from '../helpers/constants';
 import Movie from '../types/Movie';
@@ -10,7 +11,18 @@ type StateType = {
   movieForEditing: Movie;
 };
 
-const setError = (state: StateType, action): void => {
+type MovieItem = {
+  id?: any;
+  title: any;
+  vote_average: any;
+  release_date?: any;
+  poster_path: any;
+  genres: any;
+  overview: any;
+  runtime: any;
+};
+
+const setError = (state: StateType, action: { error: { message: string } }): void => {
   state.loadingStatus = false;
   state.error = action.error.message;
 };
@@ -23,40 +35,43 @@ const deleteMovieById = createAsyncThunk('movies/deleteById', async (id: string)
   }
 });
 
-const getAllMoviesSorted = createAsyncThunk('movies/sortMovies', async (params): Promise<void> => {
-  const requestParams = [];
+const getAllMoviesSorted = createAsyncThunk(
+  'movies/sortMovies',
+  async (params: Record<string, unknown>): Promise<void> => {
+    const requestParams = [];
 
-  for (const [key, value] of Object.entries(params)) {
-    if (value) {
-      requestParams.push(`${key}=${value}`);
+    for (const [key, value] of Object.entries(params)) {
+      if (value) {
+        requestParams.push(`${key}=${value}`);
+      }
     }
+
+    const response = await fetch(`${url}/movies?${requestParams.join('&')}`);
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    const json = await response?.json();
+    const movies = json.data.map((movie: MovieItem) => {
+      return {
+        id: movie.id,
+        title: movie.title,
+        voteAverage: movie.vote_average,
+        releaseDate: movie.release_date,
+        imgPath: movie.poster_path,
+        genres: movie.genres,
+        overview: movie.overview,
+        runtime: movie.runtime,
+      };
+    });
+
+    return movies;
   }
-
-  const response = await fetch(`${url}/movies?${requestParams.join('&')}`);
-
-  if (!response.ok) {
-    throw new Error(response.statusText);
-  }
-
-  const json = await response?.json();
-  const movies = json.data.map((movie) => {
-    return {
-      id: movie.id,
-      title: movie.title,
-      voteAverage: movie.vote_average,
-      releaseDate: movie.release_date,
-      imgPath: movie.poster_path,
-      genres: movie.genres,
-      overview: movie.overview,
-      runtime: movie.runtime,
-    };
-  });
-
-  return movies;
-});
+);
 
 const createMovie = createAsyncThunk('movies/createMovie', async (movie: Movie): Promise<void> => {
-  const movieItem = {
+  const movieItem: MovieItem = {
     title: movie.title,
     vote_average: Number(movie.voteAverage),
     poster_path: movie.imgPath,
@@ -81,7 +96,7 @@ const createMovie = createAsyncThunk('movies/createMovie', async (movie: Movie):
 });
 
 const updateMovie = createAsyncThunk('movies/createMovie', async (movie: Movie): Promise<any> => {
-  const movieItem = {
+  const movieItem: MovieItem = {
     id: movie.id,
     title: movie.title,
     vote_average: Number(movie.voteAverage),
@@ -106,7 +121,7 @@ const updateMovie = createAsyncThunk('movies/createMovie', async (movie: Movie):
   }
 });
 
-const moviesSlice = createSlice({
+const moviesSlice: any = createSlice({
   name: 'movies',
   initialState: {
     movies: [],
@@ -116,9 +131,6 @@ const moviesSlice = createSlice({
     movieForEditing: {},
   },
   reducers: {
-    addMovies(state, action) {
-      state.movies = action.payload;
-    },
     markMovieForDeletion(state, action) {
       state.movieIdForDeletion = action.payload;
     },
@@ -146,13 +158,35 @@ const moviesSlice = createSlice({
     [deleteMovieById.rejected.toString()]: setError,
     [createMovie.rejected.toString()]: setError,
   },
+  // extraReducers: (builder) => {
+  //   builder.addCase(getAllMoviesSorted.pending.toString(), (state, action) => {
+  //     state.loadingStatus = true;
+  //   });
+  //   builder.addCase(getAllMoviesSorted.fulfilled.toString(), (state, action) => {
+  //     state.loadingStatus = false;
+  //     state.movies = action.payload;
+  //   });
+  //   builder.addCase(getAllMoviesSorted.rejected.toString(), (state, action) => {
+  //     setError(state, action);
+  //   });
+  //   builder.addCase(deleteMovieById.fulfilled.toString(), (state, action) => {
+  //     state.movies = state.movies.filter((movie: Movie) => {
+  //       return movie.id !== state.movieIdForDeletion;
+  //     });
+  //   });
+  //   builder.addCase(deleteMovieById.rejected.toString(), (state, action) => {
+  //     setError(state, action);
+  //   });
+  //   builder.addCase(createMovie.rejected.toString(), (state, action) => {
+  //     setError(state, action);
+  //   });
+  // },
 });
 
-const { markMovieForDeletion, saveMovieForEditing, addMovies, clearError } = moviesSlice.actions;
+const { markMovieForDeletion, saveMovieForEditing, clearError } = moviesSlice.actions;
 
 export {
   markMovieForDeletion,
-  addMovies,
   saveMovieForEditing,
   deleteMovieById,
   getAllMoviesSorted,

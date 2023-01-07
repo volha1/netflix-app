@@ -1,3 +1,5 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { ReactElement, Dispatch, SetStateAction, useCallback, useState } from 'react';
 import SearchParams from '../../types/SearchParams';
 import './style.scss';
@@ -13,7 +15,7 @@ const SearchBar = ({ params, onSearch, removeSearchParams }: SearchBarProps): Re
   const [search, setSearch] = useState(params.search);
 
   const handleChange = useCallback(
-    (event) => {
+    (event: any) => {
       if (!event.target.value.trim()) {
         removeSearchParams('search');
         removeSearchParams('searchBy');
