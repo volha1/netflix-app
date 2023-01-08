@@ -70,7 +70,7 @@ const Main = (): ReactElement => {
 
   useEffect(() => {
     dispatch(getAllMoviesSorted(searchParams));
-  }, [dispatch, searchParams.filter, searchParams.search, searchParams.sortBy]);
+  }, [dispatch, searchParams.filter, searchParams.search, searchParams.sortBy, searchParams.sortOrder]);
 
   const handleMovieMenuFunctions = useMemo(() => {
     return [toggleEditMovieForm, toggleDeleteMovieMessage];

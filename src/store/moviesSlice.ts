@@ -22,11 +22,6 @@ type MovieItem = {
   runtime: any;
 };
 
-const setError = (state: StateType, action: { error: { message: string } }): void => {
-  state.loadingStatus = false;
-  state.error = action.error.message;
-};
-
 const deleteMovieById = createAsyncThunk('movies/deleteById', async (id: string): Promise<void> => {
   const response = await fetch(`${url}/movies/${id}`, { method: 'DELETE' });
 
@@ -35,40 +30,37 @@ const deleteMovieById = createAsyncThunk('movies/deleteById', async (id: string)
   }
 });
 
-const getAllMoviesSorted = createAsyncThunk(
-  'movies/sortMovies',
-  async (params: Record<string, unknown>): Promise<void> => {
-    const requestParams = [];
+const getAllMoviesSorted = createAsyncThunk<Movie[], any>('movies/sortMovies', async (params): Promise<Movie[]> => {
+  const requestParams = [];
 
-    for (const [key, value] of Object.entries(params)) {
-      if (value) {
-        requestParams.push(`${key}=${value}`);
-      }
+  for (const [key, value] of Object.entries(params)) {
+    if (value) {
+      requestParams.push(`${key}=${value}`);
     }
-
-    const response = await fetch(`${url}/movies?${requestParams.join('&')}`);
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    const json = await response?.json();
-    const movies = json.data.map((movie: MovieItem) => {
-      return {
-        id: movie.id,
-        title: movie.title,
-        voteAverage: movie.vote_average,
-        releaseDate: movie.release_date,
-        imgPath: movie.poster_path,
-        genres: movie.genres,
-        overview: movie.overview,
-        runtime: movie.runtime,
-      };
-    });
-
-    return movies;
   }
-);
+
+  const response = await fetch(`${url}/movies?${requestParams.join('&')}`);
+
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+
+  const json = await response?.json();
+  const movies = json.data.map((movie: MovieItem) => {
+    return {
+      id: movie.id,
+      title: movie.title,
+      voteAverage: movie.vote_average,
+      releaseDate: movie.release_date,
+      imgPath: movie.poster_path,
+      genres: movie.genres,
+      overview: movie.overview,
+      runtime: movie.runtime,
+    };
+  });
+
+  return movies;
+});
 
 const createMovie = createAsyncThunk('movies/createMovie', async (movie: Movie): Promise<void> => {
   const movieItem: MovieItem = {
@@ -121,10 +113,15 @@ const updateMovie = createAsyncThunk('movies/createMovie', async (movie: Movie):
   }
 });
 
+const setError = (state: any, action: any): void => {
+  state.loadingStatus = false;
+  state.error = action.error.message || 'Server error';
+};
+
 const moviesSlice: any = createSlice({
   name: 'movies',
   initialState: {
-    movies: [],
+    movies: [] as Movie[],
     movieIdForDeletion: '',
     loadingStatus: false,
     error: '',
@@ -141,46 +138,46 @@ const moviesSlice: any = createSlice({
       state.error = action.payload;
     },
   },
-  extraReducers: {
-    [getAllMoviesSorted.pending.toString()]: (state: StateType) => {
-      state.loadingStatus = true;
-    },
-    [getAllMoviesSorted.fulfilled.toString()]: (state: StateType, action: { payload: Movie[] }) => {
-      state.loadingStatus = false;
-      state.movies = action.payload;
-    },
-    [getAllMoviesSorted.rejected.toString()]: setError,
-    [deleteMovieById.fulfilled.toString()]: (state: StateType) => {
-      state.movies = state.movies.filter((movie: Movie) => {
-        return movie.id !== state.movieIdForDeletion;
-      });
-    },
-    [deleteMovieById.rejected.toString()]: setError,
-    [createMovie.rejected.toString()]: setError,
-  },
-  // extraReducers: (builder) => {
-  //   builder.addCase(getAllMoviesSorted.pending.toString(), (state, action) => {
+  // extraReducers: {
+  //   [getAllMoviesSorted.pending.toString()]: (state: StateType) => {
   //     state.loadingStatus = true;
-  //   });
-  //   builder.addCase(getAllMoviesSorted.fulfilled.toString(), (state, action) => {
+  //   },
+  //   [getAllMoviesSorted.fulfilled.toString()]: (state: StateType, action: { payload: Movie[] }) => {
   //     state.loadingStatus = false;
   //     state.movies = action.payload;
-  //   });
-  //   builder.addCase(getAllMoviesSorted.rejected.toString(), (state, action) => {
-  //     setError(state, action);
-  //   });
-  //   builder.addCase(deleteMovieById.fulfilled.toString(), (state, action) => {
+  //   },
+  //   [getAllMoviesSorted.rejected.toString()]: setError,
+  //   [deleteMovieById.fulfilled.toString()]: (state: StateType) => {
   //     state.movies = state.movies.filter((movie: Movie) => {
   //       return movie.id !== state.movieIdForDeletion;
   //     });
-  //   });
-  //   builder.addCase(deleteMovieById.rejected.toString(), (state, action) => {
-  //     setError(state, action);
-  //   });
-  //   builder.addCase(createMovie.rejected.toString(), (state, action) => {
-  //     setError(state, action);
-  //   });
+  //   },
+  //   [deleteMovieById.rejected.toString()]: setError,
+  //   [createMovie.rejected.toString()]: setError,
   // },
+  extraReducers: (builder) => {
+    builder.addCase(getAllMoviesSorted.pending, (state) => {
+      state.loadingStatus = true;
+    });
+    builder.addCase(getAllMoviesSorted.fulfilled, (state, action) => {
+      state.loadingStatus = false;
+      state.movies = action.payload;
+    });
+    builder.addCase(getAllMoviesSorted.rejected, (state, action) => {
+      setError(state, action);
+    });
+    builder.addCase(deleteMovieById.fulfilled, (state) => {
+      state.movies = state.movies.filter((movie: Movie) => {
+        return movie.id !== state.movieIdForDeletion;
+      });
+    });
+    builder.addCase(deleteMovieById.rejected, (state, action) => {
+      setError(state, action);
+    });
+    builder.addCase(createMovie.rejected, (state, action) => {
+      setError(state, action);
+    });
+  },
 });
 
 const { markMovieForDeletion, saveMovieForEditing, clearError } = moviesSlice.actions;
