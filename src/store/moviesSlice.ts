@@ -1,15 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 import { url } from '../helpers/constants';
 import Movie from '../types/Movie';
-
-type StateType = {
-  movies: Movie[];
-  movieIdForDeletion: string;
-  loadingStatus: boolean;
-  error: string;
-  movieForEditing: Movie;
-};
 
 type MovieItem = {
   id?: any;
@@ -113,9 +105,8 @@ const updateMovie = createAsyncThunk('movies/createMovie', async (movie: Movie):
   }
 });
 
-const setError = (state: any, action: any): void => {
-  state.loadingStatus = false;
-  state.error = action.error.message || 'Server error';
+const isError = (action: AnyAction): boolean => {
+  return action.type.endsWith('rejected');
 };
 
 const moviesSlice: any = createSlice({
@@ -138,23 +129,6 @@ const moviesSlice: any = createSlice({
       state.error = action.payload;
     },
   },
-  // extraReducers: {
-  //   [getAllMoviesSorted.pending.toString()]: (state: StateType) => {
-  //     state.loadingStatus = true;
-  //   },
-  //   [getAllMoviesSorted.fulfilled.toString()]: (state: StateType, action: { payload: Movie[] }) => {
-  //     state.loadingStatus = false;
-  //     state.movies = action.payload;
-  //   },
-  //   [getAllMoviesSorted.rejected.toString()]: setError,
-  //   [deleteMovieById.fulfilled.toString()]: (state: StateType) => {
-  //     state.movies = state.movies.filter((movie: Movie) => {
-  //       return movie.id !== state.movieIdForDeletion;
-  //     });
-  //   },
-  //   [deleteMovieById.rejected.toString()]: setError,
-  //   [createMovie.rejected.toString()]: setError,
-  // },
   extraReducers: (builder) => {
     builder.addCase(getAllMoviesSorted.pending, (state) => {
       state.loadingStatus = true;
@@ -163,19 +137,14 @@ const moviesSlice: any = createSlice({
       state.loadingStatus = false;
       state.movies = action.payload;
     });
-    builder.addCase(getAllMoviesSorted.rejected, (state, action) => {
-      setError(state, action);
-    });
     builder.addCase(deleteMovieById.fulfilled, (state) => {
       state.movies = state.movies.filter((movie: Movie) => {
         return movie.id !== state.movieIdForDeletion;
       });
     });
-    builder.addCase(deleteMovieById.rejected, (state, action) => {
-      setError(state, action);
-    });
-    builder.addCase(createMovie.rejected, (state, action) => {
-      setError(state, action);
+    builder.addMatcher(isError, (state, action) => {
+      state.loadingStatus = false;
+      state.error = action.error.message || 'Server error';
     });
   },
 });

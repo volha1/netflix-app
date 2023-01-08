@@ -1,6 +1,7 @@
 module.exports = {
   moduleNameMapper: {
-    '\\.(css|less|scss)$': 'identity-obj-proxy',
+    '\\.(css|less|scss|png)$': 'identity-obj-proxy',
+    '^.+\\.svg$': 'jest-svg-transformer',
   },
   preset: 'ts-jest',
   transform: {

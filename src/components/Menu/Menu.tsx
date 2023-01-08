@@ -24,12 +24,12 @@ const Menu = ({ isVisible, onClose, onDelete, onEdit }: SortingProps): ReactElem
       <CloseBtn onClose={onClose} />
       <ul>
         <li>
-          <button type="button" onClick={onEdit}>
+          <button type="button" onClick={onEdit} data-testid="edit-btn">
             Edit
           </button>
         </li>
         <li>
-          <button type="button" onClick={onDelete}>
+          <button type="button" onClick={onDelete} data-testid="delete-btn">
             Delete
           </button>
         </li>

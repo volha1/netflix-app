@@ -34,7 +34,7 @@ const Main = (): ReactElement => {
   const [searchParams, setSearchParams, removeSearchParams] = useSearchParamsState();
   const dispatch = useDispatch<AppDispatch>();
   const { error, movies, movieForEditing } = useSelector((state) => {
-    return state.movies;
+    return state.moviesReducer;
   });
 
   if (error) {

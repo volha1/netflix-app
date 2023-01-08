@@ -6,7 +6,7 @@ type CloseBtnProps = {
 };
 
 const CloseBtn = ({ onClose }: CloseBtnProps): ReactElement => {
-  return <div className="close-btn" onClick={onClose} />;
+  return <div data-testid="close-btn" className="close-btn" onClick={onClose} />;
 };
 
 export default memo(CloseBtn);

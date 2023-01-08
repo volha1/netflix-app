@@ -1,17 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Menu snapshot 1`] = `
+exports[`Menu test Menu snapshot 1`] = `
 <div
   className="menu active"
   onClick={[Function]}
 >
   <div
     className="close-btn"
+    data-testid="close-btn"
     onClick={[MockFunction]}
   />
   <ul>
     <li>
       <button
+        data-testid="edit-btn"
         onClick={[MockFunction]}
         type="button"
       >
@@ -20,6 +22,7 @@ exports[`Menu snapshot 1`] = `
     </li>
     <li>
       <button
+        data-testid="delete-btn"
         onClick={[MockFunction]}
         type="button"
       >

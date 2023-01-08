@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopHeader test TopHeader snapshot 1`] = `
+<div
+  className="top-header"
+>
+  <p
+    className="logo"
+  >
+    <span>
+      netflix
+    </span>
+    roulette
+  </p>
+  <button
+    className="btn add-btn"
+    onClick={[MockFunction]}
+    type="button"
+  >
+    + Add movie
+  </button>
+</div>
+`;

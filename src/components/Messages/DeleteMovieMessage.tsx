@@ -11,7 +11,7 @@ type DeleteMovieWindowProps = {
 const DeleteMovieMessage = ({ onClose }: DeleteMovieWindowProps): ReactElement => {
   const dispatch = useDispatch();
   const movieIdForDeletion = useSelector((state) => {
-    return state.movies.movieIdForDeletion;
+    return state.moviesReducer.movieIdForDeletion;
   });
 
   const handleClick = useCallback((): void => {

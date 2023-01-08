@@ -12,7 +12,7 @@ type MovieDetailsProps = {
 
 const MovieDetails = ({ movieId, removeSearchParams }: MovieDetailsProps): ReactElement | null => {
   const { movies } = useSelector((state) => {
-    return state.movies;
+    return state.moviesReducer;
   });
 
   const movie = useMemo(() => {

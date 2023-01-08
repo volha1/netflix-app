@@ -1,4 +1,4 @@
-import React, { ReactElement, memo, Dispatch, SetStateAction, useCallback, useContext } from 'react';
+import React, { ReactElement, memo, Dispatch, SetStateAction, useCallback, useContext, MouseEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import Context from '../../context/Context';
 import './style.scss';
@@ -22,7 +22,7 @@ const MovieCard = ({ movie, onClick }: MovieCardProps): ReactElement => {
   const dispatch = useDispatch();
 
   const handleMenuIconClick = useCallback(
-    (event: Event): void => {
+    (event: MouseEvent<HTMLImageElement>): void => {
       event.stopPropagation();
       toggleMenuVisible();
     },
@@ -46,7 +46,7 @@ const MovieCard = ({ movie, onClick }: MovieCardProps): ReactElement => {
   }, [movie]);
 
   return (
-    <div className="card" onClick={handleCardClick}>
+    <div data-testid="card" className="card" onClick={handleCardClick}>
       <div className="movie-cover">
         <img className="movie-img" src={movie.imgPath} alt={movie.title} onError={setDefaultImage} />
         <img className="menu-icon" src={menuIcon} alt="Menu" onClick={handleMenuIconClick} />

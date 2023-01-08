@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieCard test MovieCard snapshot 1`] = `
+<div
+  className="card"
+  data-testid="card"
+  onClick={[Function]}
+>
+  <div
+    className="movie-cover"
+  >
+    <img
+      alt="title"
+      className="movie-img"
+      onError={[Function]}
+      src="https://test.com"
+    />
+    <img
+      alt="Menu"
+      className="menu-icon"
+      onClick={[Function]}
+    />
+    <div
+      className="menu"
+      onClick={[Function]}
+    >
+      <div
+        className="close-btn"
+        data-testid="close-btn"
+        onClick={[Function]}
+      />
+      <ul>
+        <li>
+          <button
+            data-testid="edit-btn"
+            onClick={[Function]}
+            type="button"
+          >
+            Edit
+          </button>
+        </li>
+        <li>
+          <button
+            data-testid="delete-btn"
+            onClick={[Function]}
+            type="button"
+          >
+            Delete
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div
+    className="title-wrapper"
+  >
+    <p
+      className="card-title"
+    >
+      title
+    </p>
+    <p
+      className="year"
+    >
+      2022
+    </p>
+  </div>
+  <p
+    className="genres"
+  >
+    Horror
+  </p>
+</div>
+`;
