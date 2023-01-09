@@ -10,12 +10,8 @@ const sortOptions = {
 };
 
 type SortProps = { sortOrder: string; sortBy: string };
-type SortingProps = {
-  onSort: Dispatch<SetStateAction<SortProps>>;
-  params: SearchParams;
-};
 
-const Sorting = ({ onSort, params }: SortingProps): ReactElement => {
+const Sorting = ({ onSort, params }): ReactElement => {
   const handleSelect = useCallback(
     (event: { target: { value: string } }): void => {
       const sorting = event.target.value;

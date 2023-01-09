@@ -71,7 +71,6 @@ const Main = (): ReactElement => {
   useEffect(() => {
     dispatch(getAllMoviesSorted(searchParams));
   }, [dispatch, searchParams.filter, searchParams.search, searchParams.sortBy]);
-
   const handleMovieMenuFunctions = useMemo(() => {
     return [toggleEditMovieForm, toggleDeleteMovieMessage];
   }, [toggleEditMovieForm, toggleDeleteMovieMessage]);
