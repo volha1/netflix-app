@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieForm test MovieForm snapshot 1`] = `
+<form
+  action="#"
+  className="movie-form"
+  onReset={[Function]}
+  onSubmit={[Function]}
+>
+  <div
+    className="close-btn"
+    data-testid="close-btn"
+    onClick={[MockFunction]}
+  />
+  <h1
+    className="title"
+  >
+     movie
+  </h1>
+  <div
+    className="row"
+  >
+    <label>
+      Title
+      <br />
+      <input
+        className="left-field"
+        name="title"
+        onBlur={[Function]}
+        onChange={[Function]}
+        value=""
+      />
+      <br />
+    </label>
+    <label
+      htmlFor="release-date-field"
+    >
+      Release date
+      <br />
+      <input
+        className="right-field"
+        id="release-date-field"
+        name="releaseDate"
+        onBlur={[Function]}
+        onChange={[Function]}
+        type="date"
+        value=""
+      />
+    </label>
+  </div>
+  <div
+    className="row"
+  >
+    <label>
+      Movie url
+      <br />
+      <input
+        className="left-field"
+        name="imgPath"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="https://"
+        type="url"
+        value=""
+      />
+      <br />
+    </label>
+    <label>
+      Rating
+      <br />
+      <input
+        className="right-field"
+        name="voteAverage"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="7.8"
+        value=""
+      />
+      <br />
+    </label>
+  </div>
+  <div
+    className="row"
+  >
+    <div
+      className="left-field genres-select"
+    >
+      <div
+        className="select-title"
+        data-testid="select-title"
+        onClick={[Function]}
+      >
+        <label>
+          Genre
+          <br />
+          <select
+            className="left-field"
+          >
+            <option>
+              Select genre
+            </option>
+          </select>
+        </label>
+        <br />
+        <div
+          className="overSelect"
+        />
+      </div>
+    </div>
+    <label>
+      Runtime
+      <br />
+      <input
+        className="right-field"
+        name="runtime"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="minutes"
+        value={0}
+      />
+      <br />
+    </label>
+  </div>
+  <div
+    className="row"
+  >
+    <label>
+      Overview
+      <br />
+      <textarea
+        className=""
+        cols={87}
+        name="overview"
+        onBlur={[Function]}
+        onChange={[Function]}
+        placeholder="Movie description"
+        rows={8}
+        value=""
+      />
+      <br />
+    </label>
+  </div>
+  <div
+    className="btn-wrapper"
+  >
+    <button
+      className="btn"
+      type="reset"
+    >
+      Reset
+    </button>
+    <button
+      className="btn"
+      data-testid="submit-btn"
+      type="submit"
+    >
+      Submit
+    </button>
+  </div>
+</form>
+`;

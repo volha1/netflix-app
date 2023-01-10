@@ -3,9 +3,8 @@ import classNames from 'classnames';
 import './style.scss';
 import SearchParams from '../../types/SearchParams';
 
-type FilterProps = { filter: string | undefined };
 type GenreFilterProps = {
-  onFilter: Dispatch<SetStateAction<FilterProps>>;
+  onFilter: Dispatch<SetStateAction<SearchParams>>;
   params: SearchParams;
   genres: string[];
   removeSearchParams: Dispatch<SetStateAction<string>>;
@@ -14,25 +13,28 @@ type GenreFilterProps = {
 const GenreFilter = ({ onFilter, params, genres, removeSearchParams }: GenreFilterProps): ReactElement => {
   const genreParamSelected = params.filter || genres[0];
   const handleClick = useCallback(
-    (event) => {
-      if (event.target.text === genres[0]) {
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (event.target && event.currentTarget.innerText === genres[0]) {
         removeSearchParams('filter');
       } else {
-        onFilter({ filter: event.target.text });
+        onFilter({ ...params, filter: event.currentTarget.innerText.toLowerCase() });
       }
     },
     [params]
   );
 
   return (
-    <ul className="genres-list" onClick={handleClick}>
+    <ul className="genres-list">
       {genres.map((item) => {
         return (
-          <li key={item}>
-            <a href="#" className={classNames({ active: genreParamSelected === item })}>
-              {item}
-            </a>
-          </li>
+          <button
+            type="button"
+            key={item}
+            className={classNames({ active: genreParamSelected === item })}
+            onClick={handleClick}
+          >
+            {item}
+          </button>
         );
       })}
     </ul>

@@ -4,9 +4,8 @@ import React, { ReactElement, Dispatch, SetStateAction, useCallback, useState } 
 import SearchParams from '../../types/SearchParams';
 import './style.scss';
 
-type SearchProps = { search: string; searchBy: string };
 type SearchBarProps = {
-  onSearch: Dispatch<SetStateAction<SearchProps>>;
+  onSearch: Dispatch<SetStateAction<SearchParams>>;
   params: SearchParams;
   removeSearchParams: Dispatch<SetStateAction<string>>;
 };
@@ -26,7 +25,7 @@ const SearchBar = ({ params, onSearch, removeSearchParams }: SearchBarProps): Re
   );
 
   const handleClick = useCallback(() => {
-    onSearch({ search, searchBy: 'title' });
+    onSearch({ ...params, search, searchBy: 'title' });
   }, [params, search]);
 
   return (

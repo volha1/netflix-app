@@ -10,7 +10,7 @@ type ChangeMovieWindowProps = {
 const ModalWrapper = ({ children, isVisible }: ChangeMovieWindowProps): ReactElement => {
   const classes = classNames('modal', { active: isVisible });
 
-  const handleClick = useCallback((e: Event): void => {
+  const handleClick = useCallback((e: React.MouseEvent<HTMLDivElement>): void => {
     e.stopPropagation();
   }, []);
 

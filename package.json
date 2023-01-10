@@ -11,7 +11,7 @@
     "prettier": "prettier . --write",
     "prepare": "husky install",
     "test": "jest",
-    "coverage": "jest --collect-coverage"
+    "coverage": "jest --coverage"
   },
   "repository": {
     "type": "git",

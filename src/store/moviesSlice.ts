@@ -109,15 +109,25 @@ const isError = (action: AnyAction): boolean => {
   return action.type.endsWith('rejected');
 };
 
+interface MoviesState {
+  movies: Movie[];
+  movieIdForDeletion: string;
+  loadingStatus: boolean;
+  error: string;
+  movieForEditing: Movie | object;
+}
+
+const initialState: MoviesState = {
+  movies: [],
+  movieIdForDeletion: '',
+  loadingStatus: false,
+  error: '',
+  movieForEditing: {},
+};
+
 const moviesSlice: any = createSlice({
   name: 'movies',
-  initialState: {
-    movies: [] as Movie[],
-    movieIdForDeletion: '',
-    loadingStatus: false,
-    error: '',
-    movieForEditing: {},
-  },
+  initialState,
   reducers: {
     markMovieForDeletion(state, action) {
       state.movieIdForDeletion = action.payload;
@@ -150,6 +160,26 @@ const moviesSlice: any = createSlice({
 });
 
 const { markMovieForDeletion, saveMovieForEditing, clearError } = moviesSlice.actions;
+
+export const moviesSelector = (state: any): Movie[] => {
+  return (state.movieReducer as MoviesState).movies;
+};
+
+export const errorSelector = (state: any): string => {
+  return (state.movieReducer as MoviesState).error;
+};
+
+export const movieForEditingSelector = (state: any): Movie | object => {
+  return (state.movieReducer as MoviesState).movieForEditing;
+};
+
+export const loadingStatusSelector = (state: any): boolean => {
+  return (state.movieReducer as MoviesState).loadingStatus;
+};
+
+export const movieIdForDeletionSelector = (state: any): string => {
+  return (state.movieReducer as MoviesState).movieIdForDeletion;
+};
 
 export {
   markMovieForDeletion,

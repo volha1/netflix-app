@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModifyMovieMessage test ModifyMovieMessage snapshot 1`] = `
+<div
+  className="modal-window add-movie"
+>
+  <div
+    className="close-btn"
+    data-testid="close-btn"
+    onClick={[MockFunction]}
+  />
+  <div
+    className="icon-wrapper"
+  >
+    <img
+      alt="Success"
+      className="menu-icon"
+    />
+  </div>
+  <h1
+    className="title"
+  >
+    Congratulations!
+  </h1>
+  <p>
+    The movie has been 
+     database successfully
+  </p>
+</div>
+`;

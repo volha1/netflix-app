@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Dispatch, ReactElement, SetStateAction } from 'react';
-import { useSelector } from 'react-redux';
 import MovieCard from '../MovieCard';
 import Movie from '../../types/Movie';
 import './style.scss';
+import { loadingStatusSelector } from '../../store/moviesSlice';
+import { useAppSelector } from '../../store';
 
 type MovieSearchProps = { movie: string };
 type MoviesListProps = {
@@ -12,9 +13,7 @@ type MoviesListProps = {
 };
 
 const MoviesList = ({ movies, setParams }: MoviesListProps): ReactElement | null => {
-  const loadingStatus = useSelector((state: any) => {
-    return state.moviesReducer.loadingStatus;
-  });
+  const loadingStatus = useAppSelector(loadingStatusSelector);
 
   if (!movies) {
     return null;

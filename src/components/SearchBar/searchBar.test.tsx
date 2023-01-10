@@ -36,7 +36,14 @@ describe('Search bar test', () => {
     await userEvent.click(screen.getByRole('button'));
 
     expect(onSearch).toHaveBeenCalled();
-    expect(onSearch).toHaveBeenCalledWith({ search: textForSearch, searchBy: 'title' });
+    expect(onSearch).toHaveBeenCalledWith({
+      filter: '',
+      movie: '',
+      sortBy: '',
+      sortOrder: '',
+      search: textForSearch,
+      searchBy: 'title',
+    });
   });
 
   it('removeSearchParams function works', async () => {

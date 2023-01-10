@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useMemo, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Filter from '../components/Filter/index';
 import Footer from '../components/Footer/index';
 import Header from '../components/Header/index';
@@ -10,8 +10,16 @@ import { ModifyMovieMessage, DeleteMovieMessage } from '../components/Messages/i
 import MovieDetails from '../components/MovieDetails';
 import Context from '../context/Context';
 import useToggle from '../hooks/useToggle';
-import { createMovie, updateMovie, getAllMoviesSorted, clearError } from '../store/moviesSlice';
-import { AppDispatch } from '../store';
+import {
+  createMovie,
+  updateMovie,
+  getAllMoviesSorted,
+  clearError,
+  moviesSelector,
+  errorSelector,
+  movieForEditingSelector,
+} from '../store/moviesSlice';
+import { AppDispatch, useAppSelector } from '../store';
 import Movie from '../types/Movie';
 import './style.scss';
 import useSearchParamsState from '../hooks/useSearchParamsState';
@@ -33,9 +41,9 @@ const Main = (): ReactElement => {
   const [isDeleteMovieMessageVisible, toggleDeleteMovieMessage] = useToggle();
   const [searchParams, setSearchParams, removeSearchParams] = useSearchParamsState();
   const dispatch = useDispatch<AppDispatch>();
-  const { error, movies, movieForEditing } = useSelector((state) => {
-    return state.moviesReducer;
-  });
+  const movies = useAppSelector(moviesSelector);
+  const error = useAppSelector(errorSelector);
+  const movieForEditing = useAppSelector(movieForEditingSelector);
 
   if (error) {
     alert(error);
