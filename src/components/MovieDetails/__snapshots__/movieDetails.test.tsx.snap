@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MovieDetails test MovieDetails snapshot 1`] = `
+<div
+  className="movie-details"
+>
+  <div
+    className="movie-details-wrapper content"
+  >
+    <div
+      className="nav-block"
+    >
+      <p
+        className="logo"
+      >
+        netflixroulette
+      </p>
+      <img
+        alt="Search"
+        className="search-icon"
+        data-testid="search-icon"
+        onClick={[Function]}
+      />
+    </div>
+    <div
+      className="details-wrapper"
+    >
+      <img
+        alt="title"
+        className="movie-img"
+        onError={[Function]}
+        src="https://test.com"
+      />
+      <div
+        className="movie-description"
+      >
+        <div
+          className="title-wrapper"
+        >
+          <h1
+            className="title"
+          >
+            title
+            <span
+              className="rating"
+            >
+              10
+            </span>
+          </h1>
+        </div>
+        <p
+          className="genres"
+        >
+          Horror
+        </p>
+        <p
+          className="movie-characteristics"
+        >
+          <span>
+            2022
+          </span>
+          1h 50m
+        </p>
+        <p
+          className="overview"
+        >
+          overview text
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;

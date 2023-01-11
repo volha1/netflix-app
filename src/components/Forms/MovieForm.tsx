@@ -36,7 +36,21 @@ const MovieSchema = Yup.object().shape({
   overview: Yup.string().required('Required field'),
 });
 
-const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: MovieFormProps): ReactElement => {
+const MovieForm = ({
+  actionText,
+  onCloseMovieForm,
+  onSubmit,
+  movie = {
+    id: '',
+    title: '',
+    voteAverage: '',
+    releaseDate: '',
+    imgPath: '',
+    genres: [],
+    overview: '',
+    runtime: 0,
+  },
+}: MovieFormProps): ReactElement => {
   const [genresShown, setGenresShown] = useState(false);
 
   const showGenres = useCallback((): void => {
@@ -70,10 +84,10 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
                 {errors.title && touched.title && <span>{errors.title}</span>}
               </label>
 
-              <label>
+              <label htmlFor="release-date-field">
                 Release date
                 <br />
-                <Field type="date" name="releaseDate" className="right-field" />
+                <Field type="date" name="releaseDate" className="right-field" id="release-date-field" />
               </label>
             </div>
 
@@ -104,7 +118,7 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
             </div>
             <div className="row">
               <div className="left-field genres-select">
-                <div className="select-title" onClick={showGenres}>
+                <div className="select-title" onClick={showGenres} data-testid="select-title">
                   <label>
                     Genre
                     <br />
@@ -121,7 +135,7 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
                     {genres.map((genre) => {
                       return (
                         <label key={genre}>
-                          <Field type="checkbox" name="genres" value={genre} />
+                          <Field type="checkbox" name="genres" value={genre} data-testid={genre} />
                           {genre}
                         </label>
                       );
@@ -161,7 +175,7 @@ const MovieForm = ({ actionText, onCloseMovieForm, onSubmit, movie = {} }: Movie
               <button type="reset" className="btn">
                 Reset
               </button>
-              <button type="submit" className="btn">
+              <button type="submit" className="btn" data-testid="submit-btn">
                 Submit
               </button>
             </div>

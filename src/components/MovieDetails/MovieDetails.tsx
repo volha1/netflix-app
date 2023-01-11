@@ -1,9 +1,10 @@
 import React, { ReactElement, useCallback, useMemo, Dispatch, SetStateAction } from 'react';
-import { useSelector } from 'react-redux';
 import searchIcon from '../../common/assets/svg/search-icon.svg';
 import { getMovieDuration, getYear } from '../../helpers/utils';
 import setDefaultImage from '../../helpers/setDefaultImage';
 import './style.scss';
+import { useAppSelector } from '../../store/index';
+import { moviesSelector } from '../../store/moviesSlice';
 
 type MovieDetailsProps = {
   movieId: string | null;
@@ -11,12 +12,14 @@ type MovieDetailsProps = {
 };
 
 const MovieDetails = ({ movieId, removeSearchParams }: MovieDetailsProps): ReactElement | null => {
-  const { movies } = useSelector((state) => {
-    return state.movies;
-  });
+  const movies = useAppSelector(moviesSelector);
 
   const movie = useMemo(() => {
-    return movies.find((item) => item.id == movieId);
+    return (
+      movies.find((item) => {
+        return item.id.toString() === movieId?.toString();
+      }) || null
+    );
   }, [movieId, movies]);
 
   const handleSeacrhIconClick = useCallback((): void => {
@@ -29,7 +32,13 @@ const MovieDetails = ({ movieId, removeSearchParams }: MovieDetailsProps): React
         <div className="movie-details-wrapper content">
           <div className="nav-block">
             <p className="logo">netflixroulette</p>
-            <img className="search-icon" src={searchIcon} alt="Search" onClick={handleSeacrhIconClick} />
+            <img
+              className="search-icon"
+              src={searchIcon}
+              alt="Search"
+              onClick={handleSeacrhIconClick}
+              data-testid="search-icon"
+            />
           </div>
           <div className="details-wrapper">
             <img className="movie-img" src={movie.imgPath} alt={movie.title} onError={setDefaultImage} />

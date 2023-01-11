@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Search bar test Search bar snapshot 1`] = `
+<div
+  className="search-bar"
+>
+  <h1
+    className="title"
+  >
+    Find your movie
+  </h1>
+  <input
+    className="search-field"
+    onChange={[Function]}
+    placeholder="What do you want to watch?"
+    value=""
+  />
+  <button
+    className="search-btn"
+    onClick={[Function]}
+    type="button"
+  >
+    Search
+  </button>
+</div>
+`;

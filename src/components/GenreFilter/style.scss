@@ -17,3 +17,16 @@
     color: $red;
   }
 }
+
+.genres-list button {
+  color: $white;
+  background-color: $black;
+  margin-right: 30px;
+  letter-spacing: 1px;
+  cursor: pointer;
+
+  &.active,
+  &:hover {
+    color: $red;
+  }
+}

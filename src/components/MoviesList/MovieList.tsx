@@ -1,19 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Dispatch, ReactElement, SetStateAction } from 'react';
-import { useSelector } from 'react-redux';
 import MovieCard from '../MovieCard';
 import Movie from '../../types/Movie';
-import SearchParams from '../../types/SearchParams';
 import './style.scss';
+import { loadingStatusSelector } from '../../store/moviesSlice';
+import { useAppSelector } from '../../store';
 
+type MovieSearchProps = { movie: string };
 type MoviesListProps = {
   movies: Movie[];
-  setParams: Dispatch<SetStateAction<SearchParams>>;
+  setParams: Dispatch<SetStateAction<MovieSearchProps>>;
 };
 
 const MoviesList = ({ movies, setParams }: MoviesListProps): ReactElement | null => {
-  const loadingStatus = useSelector((state) => {
-    return state.movies.loadingStatus;
-  });
+  const loadingStatus = useAppSelector(loadingStatusSelector);
 
   if (!movies) {
     return null;

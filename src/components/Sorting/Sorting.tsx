@@ -2,16 +2,15 @@ import React, { ReactElement, Dispatch, SetStateAction, useCallback } from 'reac
 import SearchParams from '../../types/SearchParams';
 import './style.scss';
 
-const sortOptions = {
+const sortOptions: Record<string, { sortBy: string; sortOrder: string }> = {
   release_date_asc: { sortBy: 'release_date', sortOrder: 'asc' },
   release_date_desc: { sortBy: 'release_date', sortOrder: 'desc' },
   vote_average_asc: { sortBy: 'vote_average', sortOrder: 'asc' },
   vote_average_desc: { sortBy: 'vote_average', sortOrder: 'desc' },
 };
 
-type SortProps = { sortOrder: string; sortBy: string };
 type SortingProps = {
-  onSort: Dispatch<SetStateAction<SortProps>>;
+  onSort: Dispatch<SetStateAction<SearchParams>>;
   params: SearchParams;
 };
 
@@ -19,7 +18,7 @@ const Sorting = ({ onSort, params }: SortingProps): ReactElement => {
   const handleSelect = useCallback(
     (event: { target: { value: string } }): void => {
       const sorting = event.target.value;
-      onSort({ sortBy: sortOptions[sorting].sortBy, sortOrder: sortOptions[sorting].sortOrder });
+      onSort({ ...params, sortBy: sortOptions[sorting].sortBy, sortOrder: sortOptions[sorting].sortOrder });
     },
     [params]
   );

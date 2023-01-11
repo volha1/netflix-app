@@ -27,7 +27,7 @@ const Header = ({
     <div className="header">
       <div className="content">
         <TopHeader onAddMovieForm={onAddMovieForm} />
-        <SearchBar params={params} onSearch={setParams} removeSearchParams={removeSearchParams}/>
+        <SearchBar params={params} onSearch={setParams} removeSearchParams={removeSearchParams} />
       </div>
     </div>
   );

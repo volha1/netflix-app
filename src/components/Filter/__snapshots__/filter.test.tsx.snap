@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filter test Filter snapshot 1`] = `
+<div
+  className="filter content"
+>
+  <ul
+    className="genres-list"
+  >
+    <button
+      className="active"
+      onClick={[Function]}
+      type="button"
+    >
+      All
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+      type="button"
+    >
+      documentary
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+      type="button"
+    >
+      comedy
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+      type="button"
+    >
+      horror
+    </button>
+    <button
+      className=""
+      onClick={[Function]}
+      type="button"
+    >
+      crime
+    </button>
+  </ul>
+  <div
+    className="sorting"
+  >
+    <label
+      className="sorting-label"
+      htmlFor="params"
+    >
+      Sort by
+    </label>
+    <select
+      defaultValue="default"
+      id="params"
+      name="params"
+      onChange={[Function]}
+      value="_"
+    >
+      <option
+        disabled={true}
+        value="default"
+      >
+        Choose here...
+      </option>
+      <option
+        value="release_date_asc"
+      >
+        Release date (asc)
+      </option>
+      <option
+        value="release_date_desc"
+      >
+        Release date (desc)
+      </option>
+      <option
+        value="vote_average_asc"
+      >
+        Rating (asc)
+      </option>
+      <option
+        value="vote_average_desc"
+      >
+        Rating (desc)
+      </option>
+    </select>
+  </div>
+</div>
+`;

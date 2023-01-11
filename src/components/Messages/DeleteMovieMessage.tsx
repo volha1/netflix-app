@@ -1,8 +1,9 @@
 import React, { ReactElement, memo, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CloseBtn from '../CloseBtn/index';
-import { deleteMovieById } from '../../store/moviesSlice';
+import { deleteMovieById, movieIdForDeletionSelector } from '../../store/moviesSlice';
 import './style.scss';
+import { useAppSelector } from '../../store';
 
 type DeleteMovieWindowProps = {
   onClose: () => void;
@@ -10,9 +11,7 @@ type DeleteMovieWindowProps = {
 
 const DeleteMovieMessage = ({ onClose }: DeleteMovieWindowProps): ReactElement => {
   const dispatch = useDispatch();
-  const movieIdForDeletion = useSelector((state) => {
-    return state.movies.movieIdForDeletion;
-  });
+  const movieIdForDeletion = useAppSelector(movieIdForDeletionSelector);
 
   const handleClick = useCallback((): void => {
     dispatch(deleteMovieById(movieIdForDeletion));
